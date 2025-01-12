@@ -6,6 +6,16 @@ import { defineConfig } from 'vite'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  server: {
+    hmr: {
+      overlay: false,
+    },
+  },
+  resolve: {
+    alias: {
+      '@': "/src",
+    },
+  },
   plugins: [
     react(),
     legacy()
