@@ -32,7 +32,7 @@ export default function DashLayout({
   const [startingChat, setStartingChat] = useState(false);
    
   const { totalUnreadMessages} = useAppSelector((state: StoreState) => state.app);
-
+  const { user } = useAppSelector((state: StoreState) => state.user);
   const router = useIonRouter();
 
   const dispatch = useAppDispatch();
@@ -110,6 +110,7 @@ export default function DashLayout({
         {children}
       </div>
       
+      { user?.store_id && 
       <div className="fixed end-4 xs:bottom-16 sm:bottom-4" id="btn-chat">
         <Button className="btn-fab rounded-full p-4 w-10 h-10" onClick={startChatClicked}>
           {!startingChat ? (
@@ -119,7 +120,7 @@ export default function DashLayout({
           )}
         </Button>
         {totalUnreadMessages >0 && <Badge variant={"destructive"} className="absolute end-[-5px] top-[-5px] rounded-full" color="warning">{totalUnreadMessages}</Badge>}
-      </div>
+      </div> }
       
     </div>
   );

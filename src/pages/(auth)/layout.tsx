@@ -23,7 +23,7 @@ export default function AuthLayout({
   return (
     <>
       <OnboardHeader></OnboardHeader>
-      <div className="max-w-5xl mx-auto p-[24px]" suppressHydrationWarning={true}>
+      <div className="max-w-5xl mx-auto p-[24px] mb-[80px]" suppressHydrationWarning={true}>
         {children}
       </div>
     </>

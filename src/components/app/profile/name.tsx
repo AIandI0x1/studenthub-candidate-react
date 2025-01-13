@@ -35,10 +35,11 @@ export function Name() {
 
     return (
         <div className="w-full h-20 justify-start items-center gap-4 inline-flex mt-4">
-            { user.candidate_personal_photo && <img className="w-20 h-20 relative rounded-[44px] cursor-pointer" onClick={updatePhotoClicked} src={import.meta.env.VITE_CLOUDINARY_URL + 'candidate-photo/' + 
+            <div className="w-20 h-20 relative rounded-[44px] cursor-pointer overflow-hidden" onClick={updatePhotoClicked}>
+            { user.candidate_personal_photo && <img  src={import.meta.env.VITE_CLOUDINARY_URL + 'candidate-photo/' + 
                 user.candidate_personal_photo} /> }
             { !user.candidate_personal_photo && <img src="/assets/images/avatar.jpg" /> }
-
+            </div>
             <div className="grow shrink basis-0 flex-col justify-start items-start gap-1 inline-flex">
                 <div className="w-full justify-start items-center gap-6 inline-flex">
                     <div className="grow shrink basis-0 text-[#22223d] text-2xl font-bold leading-loose">

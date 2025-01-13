@@ -83,8 +83,8 @@ const InvitationListPage = () => {
                     ))}
                     {!loading && invitations.length === 0 && (
                         <NoItems image="assets/icons/no-invitation.svg" 
-                            title={ 'There are no assignments yet!' }
-                            message={ 'Our team is working hard to find you the suitable assigment for you. Stay tight!' } />
+                            title={ t('There are no assignments yet!') }
+                            message={ t('Our team is working hard to find you the suitable assigment for you. Stay tight!') } />
                     )}
                 </div>
                 

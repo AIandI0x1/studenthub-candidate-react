@@ -104,13 +104,15 @@ npx next export`
 This generates a out folder containing your static files.
 
 # todo 
-- hide store related feature if not assigned to store
 - Test oneSignal
-- html getting messed in arabic
-- name validation for full name 
 - api call to check video upload status if uploaded but not processed
-- need to test whole app in arabic 
+- need to test whole app in arabic (chat, track, log pages remaine to be tested)
+- area page in arabic not working 
+- civil id page not loading because of date format in arabic on fresh new profile 
+- remove/ delete profile not asking for confirmation
 
+# improvements 
+- search icon in education page inputs
 
 # to test in mobile app 
 - OneSignal 

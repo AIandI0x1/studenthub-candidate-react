@@ -10,6 +10,8 @@ export default function Navigation() {
 // typeof window !== undefined? window.location.pathname : 
 
     const { path } = useAppSelector((state: StoreState) => state.app);
+    const { user } = useAppSelector((state: StoreState) => state.user);
+
     const dispatch = useAppDispatch();
 
     const { t } = useTranslation();
@@ -64,6 +66,7 @@ export default function Navigation() {
                                 </Badge>}
                     </div>
 
+                    { user?.store_id && 
                     <div onClick={() => open("/work-log/track-work")} className="cursor-pointer grow shrink basis-0 xs:flex-col sm:flex-row justify-center items-center gap-0.5 inline-flex">
 
                         <svg className={`rounded-[10px] ${path == "/work-log/track-work" ? 'bg-[#f4f6ff]' : ''}`} width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -76,7 +79,7 @@ export default function Navigation() {
                         <div className={`sm:mt-3 sm:ms-2 self-stretch text-center ${path == "/work-log/track-work" ? 'text-[#4c6ff2]' : 'text-[#7d7d8d]'}  text-xs font-semibold leading-none`}>
                             {t('Track')}
                         </div>
-                    </div>
+                    </div> }
 
                     <div onClick={() => open("/payments")} className="cursor-pointer grow shrink basis-0 xs:flex-col sm:flex-row justify-center items-center gap-0.5 inline-flex">
                         <svg className={`rounded-[10px] ${path == "/payments" ? 'bg-[#f4f6ff]' : ''}`} width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -105,7 +108,7 @@ export default function Navigation() {
                         </div>
                     </div>
 
-                    <div onClick={() => open("/discounts")} className="cursor-pointer grow shrink basis-0 xs:flex-col sm:flex-row justify-center items-center gap-0.5 inline-flex">
+                    {/*<div onClick={() => open("/discounts")} className="cursor-pointer grow shrink basis-0 xs:flex-col sm:flex-row justify-center items-center gap-0.5 inline-flex">
                         <svg className={`rounded-[10px] ${path == "/discounts" ? 'bg-[#f4f6ff]' : ''}`} width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <rect x="8" y="8" width="20" height="20" rx="10" stroke={path == "/discounts" ? '#4C70F2' : '#7d7d8d'} strokeWidth="2" />
                             <path d="M17.3916 12.6032V13.297C16.0293 13.5505 15 14.6302 15 15.9215C15 16.8083 15.4964 17.9908 17.8518 18.5882C19.1352 18.9139 19.7893 19.4146 19.7893 20.0784C19.7893 20.893 18.9901 21.5565 18.003 21.5565C17.016 21.5565 16.2168 20.893 16.2168 20.0784C16.2168 19.7466 15.9444 19.4752 15.6115 19.4752C15.2785 19.4752 15.0061 19.7466 15.0061 20.0784C15.0061 21.3695 16.0354 22.4554 17.3977 22.7029V23.3968C17.3977 23.7286 17.6701 24 18.003 24C18.336 24 18.6084 23.7286 18.6084 23.3968V22.7029C19.9707 22.4494 21 21.3697 21 20.0784C21 19.1916 20.5036 18.0092 18.1482 17.4179C16.8648 17.0921 16.2107 16.5914 16.2107 15.9216C16.2107 15.107 17.0099 14.4435 17.997 14.4435C18.984 14.4435 19.7832 15.107 19.7832 15.9216C19.7832 16.2534 20.0556 16.5248 20.3885 16.5248C20.7215 16.5248 20.9939 16.2534 20.9939 15.9216C20.9939 14.6305 19.9646 13.5446 18.6023 13.2971V12.6032C18.6023 12.2714 18.3299 12 17.997 12C17.664 11.9997 17.3916 12.2654 17.3916 12.6032V12.6032Z"
@@ -116,7 +119,7 @@ export default function Navigation() {
                         <div className={`sm:mt-3 sm:ms-2 self-stretch text-center ${path == "/discounts" ? 'text-[#4c6ff2]' : 'text-[#7d7d8d]'} text-xs font-semibold leading-none`}>
                             {t('Discounts')}
                         </div>
-                    </div>
+                    </div>*/}
                     
                     {/* 
                     <div onClick={() => open("/activity")} className="sm:hidden relative cursor-pointer grow shrink basis-0 xs:flex-col sm:flex-row justify-center items-center gap-0.5 inline-flex">

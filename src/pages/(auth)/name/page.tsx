@@ -16,12 +16,13 @@ import { Suspense, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { setUser } from "@/store/slices/userSlice";
 import { useIonRouter } from "@ionic/react"; 
-import { profile } from "@/providers/logged-in/account.service";
+import { profile, updateNames } from "@/providers/logged-in/account.service";
 import { page, track } from "@/providers/analytics.service";
 import { useTranslation } from "react-i18next";
 import Loading from "./loading";
 import { useQuery } from "@/utils/common";
 import AuthLayout from "../layout";
+import { alertDialog } from "@/hooks/use-alert-dialog";
 
 export default function NamePage() {
 
@@ -39,12 +40,21 @@ export default function NamePage() {
   // 1. Define your form.
 
   const formSchema = z.object({
-    name_en: z.string().min(2, {
-      message: t("Name in English must be at least 2 characters."),
-    }),
-    name_ar: z.string().min(2, {
+    name_en: z.string()
+    .refine((data: any) => {
+      const nameParts = data.split(' ');
+      return nameParts.length >= 2 && nameParts[0] && nameParts[1];
+    }, {
+      message: t("Please enter your first and last name."),
+    }),  
+    name_ar: z.string().refine((data: any) => {
+      const nameParts = data.split(' ');
+      return nameParts.length >= 2 && nameParts[0] && nameParts[1];
+    }, {
+      message: t("Please enter your first and last name in Arabic."),
+    }),/*.min(2, {
       message: t("Name in Arabic must be at least 2 characters."),
-    }),
+    })*/
   })
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -90,17 +100,55 @@ export default function NamePage() {
   function onSubmit(values: z.infer<typeof formSchema>) {
     //setLoading(true); 
 
-    dispatch(setUser({
-      user: {
-        candidate_name: values.name_en,
-        candidate_name_ar: values.name_ar,
-      }
-    }));
+    const nameParts = values.name_en.split(' ');
+    if (nameParts.length < 2 || !nameParts[0] || !nameParts[1]) {
+      form.setError('name_en', { message: t("Please enter your first and last name.") });
+      return;
+    }
 
-    if (query.get('fromProfile'))
-      router.push('/profile');
-    else
+    const namePartsAr = values.name_ar.split(' ');
+    if (namePartsAr.length < 2 || !namePartsAr[0] || !namePartsAr[1]) {
+      form.setError('name_ar', { message: t("Please enter your first and last name in Arabic.") });
+      return;
+    }
+     
+    if (query.get('fromProfile')) {
+       
+      setLoading(true);
+
+      updateNames(values.name_en, values.name_ar).then(res => {
+         
+        if (res.operation == 'success') {
+
+          dispatch(setUser({
+            user: {
+              candidate_name: values.name_en,
+              candidate_name_ar: values.name_ar,
+            }
+          }));
+          
+          router.push('/profile');
+        } else {
+          alertDialog({
+            title: t("Error"),
+            description: res.message,
+          });
+        }
+      }).finally(() => {
+        setLoading(false);
+      });
+
+    } else {
+
+      dispatch(setUser({
+        user: {
+          candidate_name: values.name_en,
+          candidate_name_ar: values.name_ar,
+        }
+      }));
+      
       router.push("/email");
+    }
   } 
 
   return (
@@ -113,7 +161,7 @@ export default function NamePage() {
       </h5>
 
       <Form {...form} >
-        <form suppressHydrationWarning={true} onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 max-w-[560px] m-auto mb-[100px]">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 max-w-[560px] m-auto mb-[100px]">
 
           <FormInput
             name="name_en"

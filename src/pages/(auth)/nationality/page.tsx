@@ -32,7 +32,7 @@ import AuthLayout from "../layout";
 
 export default function NationalityPage() {
 
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   
   const [loading, setLoading] = useState(false);
   const { user } = useAppSelector(state => state.user);
@@ -166,13 +166,13 @@ export default function NationalityPage() {
             </Popover>
           </p>
 
-          <RadioGroup defaultValue="option-one" className="mt-[0]">
-            <div className="flex items-center space-x-2">
-              <RadioGroupItem value="option-one" id="option-one" />
-              <Label htmlFor="option-one">{t("Yes")}</Label>
+          <RadioGroup defaultValue="option-one" className="mt-[0]" dir={i18n.language == 'ar' ? 'rtl' : 'ltr'}>
+            <div className={ `flex items-center space-x-2` }>
+              <RadioGroupItem value="option-one" id="option-one" className="mx-1" />
+              <Label htmlFor="option-one"> {t("Yes")}</Label>
             </div>
-            <div className="flex items-center space-x-2">
-              <RadioGroupItem value="option-two" id="option-two" />
+            <div className={ `flex items-center space-x-2` }>
+              <RadioGroupItem value="option-two" id="option-two" className="mx-1" />
               <Label htmlFor="option-two">{t("No")}</Label>
             </div>
           </RadioGroup>

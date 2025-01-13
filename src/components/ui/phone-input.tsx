@@ -25,6 +25,7 @@ import {
 import { cn } from "@/lib/utils";
 import { ScrollArea } from "./scroll-area";
 import { FormControl, FormLabel } from "./form";
+import { useTranslation } from "react-i18next";
 
 type PhoneInputProps = Omit<
   React.ComponentProps<"input">,
@@ -33,7 +34,7 @@ type PhoneInputProps = Omit<
   Omit<RPNInput.Props<typeof RPNInput.default>, "onChange"> & {
     onChange?: (value: RPNInput.Value) => void;
   };
-
+ 
 const PhoneInput: React.ForwardRefExoticComponent<PhoneInputProps> =
   React.forwardRef<React.ElementRef<typeof RPNInput.default>, PhoneInputProps>(
     ({ className, onChange, ...props }, ref) => {
@@ -65,62 +66,67 @@ const PhoneInput: React.ForwardRefExoticComponent<PhoneInputProps> =
 PhoneInput.displayName = "PhoneInput";
 
 const InputComponent = React.forwardRef<HTMLInputElement, React.ComponentProps<"input">>(
-  ({ className, ...props }, ref) => (
+  ({ className, ...props }, ref) => {
+    
 
-    //${fieldState.error 
-    //? 'border-destructive focus:border-destructive focus:ring-destructive' 
-    //: 'focus:border-primary focus:ring-primary'}
+      //${fieldState.error 
+      //? 'border-destructive focus:border-destructive focus:ring-destructive' 
+      //: 'focus:border-primary focus:ring-primary'}
+  
+      //${fieldState.error ? 'text-destructive' : 'text-gray-500 peer-focus:text-primary'}
+    
+      const { t, i18n } = useTranslation();
 
-    //${fieldState.error ? 'text-destructive' : 'text-gray-500 peer-focus:text-primary'}
+      return (
+      <>
+  
+      <FormControl className="relative w-full">
+          <Input
+              placeholder=" "  // Empty space needed for peer styling
+              className={`peer h-[72px] py-[16px] px-[24px] border-gray-300 w-full 
+                  border-[color:var(--Neutral-30,#EEEEF0)] rounded-2xl text-[#23233D]
+                  placeholder-transparent focus:ring-1
+                  focus:pt-[32px]
+                  [&:not(:placeholder-shown)]:pt-[32px]
+                  ${i18n.language != 'ar' ? 'rounded-e-lg rounded-s-none' : 'rounded-e-none rounded-s-lg'}
+                  ${cn("", className)}
+  
+                  `}
+              {...props}
+              ref={ref}
+              />
+      </FormControl>
+      <FormLabel
+                      
+              className={`absolute start-[82px] z-10 bg-white px-4 transition-all duration-200
+              top-1/2 -translate-y-1/2 scale-100
+              text-[color:var(--Neutral-70,#7D7D8D)] text-base font-normal leading-6
+              
+              
+              peer-focus:top-3.5 
+              peer-focus:start-[63px] 
+              peer-focus:-translate-y-0 peer-focus:scale-75
+              peer-focus:text-[color:var(--Neutral-80,#68687A)] 
+              peer-focus:font-medium 
+              peer-focus:leading-4
+              
+              peer-[&:not(:placeholder-shown)]:top-3.5 
+              peer-[&:not(:placeholder-shown)]:start-[63px]
+              peer-[&:not(:placeholder-shown)]:-translate-y-0
+              peer-[&:not(:placeholder-shown)]:scale-75
+              peer-[&:not(:placeholder-shown)]:text-[color:var(--Neutral-80,#68687A)] 
+              peer-[&:not(:placeholder-shown)]:font-medium 
+              peer-[&:not(:placeholder-shown)]:leading-4
+  
+              `}
+          >
+          {t("Your phone number")}
+      </FormLabel>
+  
+      </>
+      );
+  });
 
-    <>
-
-    <FormControl className="relative w-full">
-        <Input
-            placeholder=" "  // Empty space needed for peer styling
-            className={`peer h-[72px] py-[16px] px-[24px] border-gray-300 w-full 
-                border-[color:var(--Neutral-30,#EEEEF0)] rounded-2xl text-[#23233D]
-                placeholder-transparent focus:ring-1
-                focus:pt-[32px]
-                [&:not(:placeholder-shown)]:pt-[32px]
-                
-                ${cn("rounded-e-lg rounded-s-none", className)}
-
-                `}
-            {...props}
-            ref={ref}
-            />
-    </FormControl>
-    <FormLabel
-                    
-            className={`absolute start-[82px] z-10 bg-white px-4 transition-all duration-200
-            top-1/2 -translate-y-1/2 scale-100
-            text-[color:var(--Neutral-70,#7D7D8D)] text-base font-normal leading-6
-            
-            
-            peer-focus:top-3.5 
-            peer-focus:start-[63px] 
-            peer-focus:-translate-y-0 peer-focus:scale-75
-            peer-focus:text-[color:var(--Neutral-80,#68687A)] 
-            peer-focus:font-medium 
-            peer-focus:leading-4
-            
-            peer-[&:not(:placeholder-shown)]:top-3.5 
-            peer-[&:not(:placeholder-shown)]:start-[63px]
-            peer-[&:not(:placeholder-shown)]:-translate-y-0
-            peer-[&:not(:placeholder-shown)]:scale-75
-            peer-[&:not(:placeholder-shown)]:text-[color:var(--Neutral-80,#68687A)] 
-            peer-[&:not(:placeholder-shown)]:font-medium 
-            peer-[&:not(:placeholder-shown)]:leading-4
-
-            `}
-        >
-        Your phone number
-    </FormLabel>
-
-    </>
-  ),
-);
 InputComponent.displayName = "InputComponent";
 
 type CountryEntry = { label: string; value: RPNInput.Country | undefined };
@@ -150,7 +156,7 @@ const CountrySelect = ({
           type="button"
           variant="outline"
           
-          className="[background:var(--Neutral-20,#F5F5F7)] flex gap-1 h-[72px] w-[82px] rounded-e-none rounded-s-lg px-3 border-r-0 focus:z-10"
+          className="[background:var(--Neutral-20,#F5F5F7)] flex gap-1 h-[72px] w-[82px] rounded-e-none rounded-s-lg px-3 border-e-0 focus:z-10"
           disabled={disabled}
         >
           <FlagComponent
@@ -159,7 +165,7 @@ const CountrySelect = ({
           />
           <ChevronsUpDown
             className={cn(
-              "-mr-2 size-4 opacity-50",
+              "-me-2 size-4 opacity-50",
               disabled ? "hidden" : "opacity-100",
             )}
           />
@@ -210,7 +216,7 @@ const CountrySelectOption = ({
       <span className="flex-1 text-sm">{countryName}</span>
       <span className="text-foreground/50 text-sm">{`+${RPNInput.getCountryCallingCode(country)}`}</span>
       <CheckIcon
-        className={`ml-auto size-4 ${country === selectedCountry ? 
+        className={`ms-auto size-4 ${country === selectedCountry ? 
             "opacity-100" : "opacity-0"}`}
       />
     </CommandItem>

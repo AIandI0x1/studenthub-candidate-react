@@ -177,7 +177,7 @@ export default function SkillsPage() {
                 type="text"
                 className="flex-1 bg-transparent border-none outline-none p-0 text-base 
                   placeholder:text-[var(--Neutral-70,#7D7D8D)]"
-                placeholder={skills.length === 0 ? "Type your skills" : ""}
+                placeholder={skills.length === 0 ? t("Type your skills") : ""}
                 onKeyDown={handleKeyDown}
               />
             </div>

@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "dev:krushn": "vite --mode krushn",
+    "kk": "vite --mode krushn",
     "dev:docker": "vite --mode docker",
     "dev:khalid": "vite --mode khalid",
     "build": "tsc && vite build",

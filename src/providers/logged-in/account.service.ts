@@ -232,6 +232,15 @@ import axios from "@/providers/AxiosService";
     return response.data;
   }
 
+  export async function updateNames(name_en: string, name_ar: string): Promise<any> {
+    const url = `${_accountEndpoint}` + '/update-names';
+    const response = await axios.post(url, {
+      name_en: name_en,
+      name_ar: name_ar
+    });
+    return response.data;
+  }
+
   /**
    * update name
    * @param name string

@@ -181,7 +181,7 @@ const HomePage = () => {
                     )}
 
                     {/* Video Recording Card */}
-                    {user?.candidate_job_search_status && !user?.candidate_video && (
+                    { !user?.candidate_video && (
                         <Card className="p-0 mb-4">
                             <CardHeader>
                             <CardTitle className='font-bold'>
