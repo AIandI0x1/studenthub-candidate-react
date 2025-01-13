@@ -25,6 +25,7 @@ import { page, track } from "@/providers/analytics.service";
 import { alertDialog } from "@/hooks/use-alert-dialog";
 import Loading from "./loading";
 import { useIonRouter } from "@ionic/react";
+import AuthLayout from "../layout";
  
 export default function ExperiencesPage() {
 
@@ -135,88 +136,90 @@ export default function ExperiencesPage() {
 
   return (
     <Suspense fallback={<Loading />}>
-    <div className="mb-[100px]">
-      { !query.get('fromProfile') && <OnboardProgress arrProgress={[100, 75, 0]}></OnboardProgress> }
+      <AuthLayout>  
+      <div className="mb-[100px]">
+        { !query.get('fromProfile') && <OnboardProgress arrProgress={[100, 75, 0]}></OnboardProgress> }
 
-      <h5 className="mt-[102px] mb-[40px] text-center text-[40px] font-bold leading-[56px]">
-        { t("Do you have any work experience?")}
-      </h5>
+        <h5 className="mt-[102px] mb-[40px] text-center text-[40px] font-bold leading-[56px]">
+          { t("Do you have any work experience?")}
+        </h5>
 
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 max-w-[650px] m-auto mb-[100px]">
-          {fields?.map((field: { id: string }, index: number) => (
-            <div key={field.id} className="space-y-4">
-              <FormInput
-                name={`experiences.${index}.experience`}
-                label={ t("Job Title") }
-                form={form as any}
-              />
-
-              <div className="sm:flex">
-                <div className="xs:w-full sm:w-[318px] me-[16px]">
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 max-w-[650px] m-auto mb-[100px]">
+            {fields?.map((field: { id: string }, index: number) => (
+              <div key={field.id} className="space-y-4">
                 <FormInput
-                    name={`experiences.${index}.employer`}
-                    label={ t("Employer") }
-                    form={form as any}
+                  name={`experiences.${index}.experience`}
+                  label={ t("Job Title") }
+                  form={form as any}
                 />
-                </div>  
 
-            <div className="flex xs:mt-[16px] sm:mt-0">
-                <div className="flex-col me-[16px]">
-                <FormInput
-                    name={`experiences.${index}.start_year`}
-                    label={ t("Start Year") }
-                    form={form as any}
-                    type="number"
-                />
-                </div>  
+                <div className="sm:flex">
+                  <div className="xs:w-full sm:w-[318px] me-[16px]">
+                  <FormInput
+                      name={`experiences.${index}.employer`}
+                      label={ t("Employer") }
+                      form={form as any}
+                  />
+                  </div>  
 
-                <div className="flex-col">
-                <FormInput
-                    name={`experiences.${index}.end_year`}
-                    label={ t("End Year") }
-                    form={form as any}
-                    type="number"
-                />
-                </div>  
+              <div className="flex xs:mt-[16px] sm:mt-0">
+                  <div className="flex-col me-[16px]">
+                  <FormInput
+                      name={`experiences.${index}.start_year`}
+                      label={ t("Start Year") }
+                      form={form as any}
+                      type="number"
+                  />
+                  </div>  
+
+                  <div className="flex-col">
+                  <FormInput
+                      name={`experiences.${index}.end_year`}
+                      label={ t("End Year") }
+                      form={form as any}
+                      type="number"
+                  />
+                  </div>  
+                </div>
+                </div>
+                {fields.length > 1 && (
+                  
+                      <Button
+                          variant={'ghost'}
+                          type="button"
+                          onClick={() => remove(index)}
+                          className="text-red-500"
+                          >
+                          { t("Remove") }
+                      </Button>)
+                }
+
+                {index != fields.length -1 && (
+                      <div className="w-[114px] h-0.5 [background:var(--Neutral-40,#E2E2E6)] rounded-[1px] m-auto"></div>
+                  ) 
+                }
               </div>
-              </div>
-              {fields.length > 1 && (
-                
-                    <Button
-                        variant={'ghost'}
-                        type="button"
-                        onClick={() => remove(index)}
-                        className="text-red-500"
-                        >
-                        { t("Remove") }
-                    </Button>)
-               }
-
-               {index != fields.length -1 && (
-                    <div className="w-[114px] h-0.5 [background:var(--Neutral-40,#E2E2E6)] rounded-[1px] m-auto"></div>
-                ) 
-               }
-            </div>
-          ))}
-          
-          <Button
-            variant={'ghost'}
-            type="button"
-            onClick={() => append({ candidate_experience_id: "", experience: '', employer: '', start_year: undefined, end_year: undefined })}
-            className="text-[color:var(--Primary-Main,#4C70F2)] text-sm font-medium leading-5"
-          >
+            ))}
             
-            <img src="/assets/icons/plus.svg" /> { t("Add experience") }
-          </Button>
+            <Button
+              variant={'ghost'}
+              type="button"
+              onClick={() => append({ candidate_experience_id: "", experience: '', employer: '', start_year: undefined, end_year: undefined })}
+              className="text-[color:var(--Primary-Main,#4C70F2)] text-sm font-medium leading-5"
+            >
+              
+              <img src="/assets/icons/plus.svg" /> { t("Add experience") }
+            </Button>
 
-          { /**!form.formState.isValid || */}
-          <SubmitButton disabled={ loading } loading={loading}></SubmitButton>
-        </form>
-      </Form>
+            { /**!form.formState.isValid || */}
+            <SubmitButton disabled={ loading } loading={loading}></SubmitButton>
+          </form>
+        </Form>
 
-      <OnboardFooter />
-    </div>
+        <OnboardFooter />
+      </div>
+      </AuthLayout>
     </Suspense>
   )
 }

@@ -8,6 +8,7 @@ import { useIonRouter } from "@ionic/react";
 import { Suspense, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import Loading from "./loading";
+import AuthLayout from "../layout";
 
 export default function PersonalInfoCompletePage() {
 
@@ -36,6 +37,7 @@ export default function PersonalInfoCompletePage() {
 
     return (
         <Suspense fallback={<Loading />}>
+            <AuthLayout>  
             <div className="flex  min-h-screen flex-col items-center  text-center px-4 p-[16px]">
 
                 <div className="w-[240px] h-[240px] bg-[#f9f9f9] rounded-[118px] flex justify-center items-center mb-[40px] xs:mt-[87px] sm:mt-[40px]">
@@ -60,6 +62,7 @@ export default function PersonalInfoCompletePage() {
 
                 <OnboardFooter></OnboardFooter>      
             </div>
+            </AuthLayout>
         </Suspense>
     );
 }

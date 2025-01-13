@@ -20,6 +20,7 @@ import { FormControl, FormItem, FormLabel, FormMessage } from "../ui/form";
 import { filterUniversities } from "@/providers/university.service";
 import { langContent } from "@/utils/common";
 import { useTranslation } from "react-i18next";
+import { filterCountries } from "@/providers/country.service";
 
 interface NationalityInputProps {
     selectedCountry: any;
@@ -37,13 +38,13 @@ export default function NationalityInput({ selectedCountry, onSelect }: National
     useEffect(() => {
         setLoading(true);
 
-        filterUniversities().then((res) => {
+        filterCountries().then((res) => {
             setCountryList(res.data);
         }).finally(() => {
             setLoading(false);
         });
 
-    }, [countryList]);
+    }, []);
 
     const handleSelect = (country: any) => {
         onSelect(country);

@@ -15,6 +15,7 @@ import { ChatMessageComponent } from '@/components/app/chat-message';
 import { alertDialog } from '@/hooks/use-alert-dialog';
 import { errorMessage } from '@/utils/common';
 import Loading from '../loading';
+import DashLayout from '../../layout';
 
 
 const ChatViewPage = () => {
@@ -342,6 +343,7 @@ const ChatViewPage = () => {
 
     return (
         <Suspense fallback={<Loading />}>
+            <DashLayout>
             <div className=' bg-white'>
                 <div className="max-w-4xl mx-auto px-6 shadow-[0px_10px_20px_0px_rgba(0,0,0,0.05) xs:pt-0 sm:pt-6 pb-6">
 
@@ -403,6 +405,7 @@ const ChatViewPage = () => {
                     </Button>
                 </div>
             </footer>
+            </DashLayout>
         </Suspense>
     );
 };

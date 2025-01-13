@@ -23,6 +23,7 @@ import { page, track } from "@/providers/analytics.service";
 import { alertDialog } from "@/hooks/use-alert-dialog";
 import { useTranslation } from "react-i18next";
 import Loading from "./loading";
+import AuthLayout from "../layout";
 
 
 
@@ -111,6 +112,7 @@ export default function ProfileUrlPage() {
 
   return (
     <Suspense fallback={<Loading />}>
+      <AuthLayout>  
         { !query.get('fromProfile') && <OnboardProgress arrProgress={[0, 0, 0]}></OnboardProgress> }
 
         <h5 className="mt-[102px] mb-[40px] text-center text-[40px] font-bold leading-[56px]">
@@ -133,6 +135,7 @@ export default function ProfileUrlPage() {
         </Form>
 
         <OnboardFooter></OnboardFooter>
+      </AuthLayout>
     </Suspense>
   );
 }

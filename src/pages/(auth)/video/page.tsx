@@ -28,6 +28,7 @@ import { setCanGoForward } from "@/store/slices/appSlice";
 import { PlayCircle, SaveIcon, VideoIcon, X } from "lucide-react";
 import Spinner from "@/components/common/spinner";
 import Loading from "./loading";
+import AuthLayout from "../layout";
 //import { Backdrop } from "@/components/common/backdrop";
 
 const formSchema = z.object({
@@ -166,11 +167,19 @@ export default function VideoPage() {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
    
+    console.log(values);
     if (query.get('fromProfile'))
       router.push('/profile');
     else
       router.push('/civil-id');
   } 
+
+  function next() {
+    if (query.get('fromProfile'))
+      router.push('/profile');
+    else
+      router.push('/civil-id');
+  }
 
   function onVideoError(){
     form.setValue('video', "");
@@ -719,6 +728,7 @@ export default function VideoPage() {
 
   return (
     <Suspense fallback={<Loading />}>
+      <AuthLayout>
         { !query.get('fromProfile') && <OnboardProgress arrProgress={[100, 100, 60]}></OnboardProgress> }
 
         <h5 className="text-[color:var(--Neutral-100,#0F0F2C)] text-center 
@@ -991,16 +1001,17 @@ export default function VideoPage() {
           }}
       />
 
-        <Form {...form}>
+        {/*<Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-[16px] max-w-[650px] m-auto mb-[100px]">
-          {/**!form.formState.isValid ||  */}
-            <SubmitButton disabled={loading || uploadingVideo || uploadingResume} 
+          *!form.formState.isValid ||  */}
+            <SubmitButton onClick={() => next() } disabled={loading || uploadingVideo || uploadingResume} 
               loading={loading || uploadingVideo || uploadingResume }></SubmitButton>
             
-          </form>
-        </Form>
+          {/*</form>
+        </Form>*/}
 
         <OnboardFooter></OnboardFooter>
+      </AuthLayout>
     </Suspense>
   );
 }

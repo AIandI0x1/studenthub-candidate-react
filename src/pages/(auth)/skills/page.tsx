@@ -22,6 +22,7 @@ import { page, track } from "@/providers/analytics.service";
 import { alertDialog } from "@/hooks/use-alert-dialog";
 import { useTranslation } from "react-i18next";
 import Loading from "./loading";
+import AuthLayout from "../layout";
 
 
 export default function SkillsPage() {
@@ -31,7 +32,8 @@ export default function SkillsPage() {
   const dispatch = useAppDispatch();
   const router = useIonRouter();
   const query = useQuery();
-  const [skills, setSkills] = useState<string[]>([]);
+  const [skills, setSkills] = useState<string[]>(user?.candidateSkills?.map(
+    (skill: CandidateSkill) => skill?.skill || '') || []);
    
   const { t } = useTranslation();
 
@@ -42,11 +44,11 @@ export default function SkillsPage() {
       message: t("Please add at least one skill")
     })
   })
-
+ 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      skills: [],
+      skills: skills || [],
     },
   })
 
@@ -138,10 +140,10 @@ export default function SkillsPage() {
       form.setValue('skills', newSkills)
     }
   }
- 
 
   return (
     <Suspense fallback={<Loading />}>
+      <AuthLayout>  
         { !query.get('fromProfile') && <OnboardProgress arrProgress={[100, 50, 0]}></OnboardProgress> }
 
         <h5 className="mt-[102px] mb-[40px] text-center text-[40px] font-bold leading-[56px]">
@@ -217,6 +219,7 @@ export default function SkillsPage() {
         </Form>
 
         <OnboardFooter></OnboardFooter>
+      </AuthLayout>
     </Suspense>
   );
 }

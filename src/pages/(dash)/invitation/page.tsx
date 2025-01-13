@@ -11,6 +11,7 @@ import { listInvitations } from '@/providers/logged-in/invitation.service';
 import { t } from 'i18next';
 import React, { Suspense, useEffect, useState } from 'react';
 import Loading from './loading';
+import DashLayout from '../layout';
 
 
 const InvitationListPage = () => {
@@ -62,6 +63,7 @@ const InvitationListPage = () => {
 
     return (
         <Suspense fallback={<Loading />}>  
+            <DashLayout>
             <div className=' bg-white'>
             <div className="max-w-4xl mx-auto px-6 shadow-[0px_10px_20px_0px_rgba(0,0,0,0.05) xs:pt-0 sm:pt-6 pb-6">
 
@@ -89,6 +91,7 @@ const InvitationListPage = () => {
                 <Pager pagination={pagination} loadPage={loadPage} />
 
             </div>
+            </DashLayout>
         </Suspense>
     );
 };

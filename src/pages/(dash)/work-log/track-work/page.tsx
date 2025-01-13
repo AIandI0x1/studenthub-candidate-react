@@ -21,6 +21,7 @@ import { RootState, useAppDispatch, useAppSelector } from '@/store/store';
 import { workingDateStats } from '@/providers/logged-in/candidate-working-hour.service';
 import i18n from '@/18n';
 import Loading from './loading';
+import DashLayout from '../../layout';
 
 const TrackWorkPage = () => {
   const { t } = useTranslation();
@@ -178,6 +179,7 @@ const TrackWorkPage = () => {
 
   return (
     <Suspense fallback={<Loading />}> 
+    <DashLayout>  
       <div className=' bg-white'>
             <div className="max-w-4xl mx-auto px-6 shadow-[0px_10px_20px_0px_rgba(0,0,0,0.05) xs:pt-0 sm:pt-6 pb-6">
 
@@ -292,6 +294,7 @@ const TrackWorkPage = () => {
             <EndSessionPage onClose={handleModalStopWorkClose} />
           </Modal> */}
     </div>
+      </DashLayout>
       </Suspense>
     
   );

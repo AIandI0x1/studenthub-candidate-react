@@ -16,8 +16,8 @@ import { Button } from "@/components/ui/button";
 
 import { Suspense, useEffect, useState } from "react";
 import { profile, removeCivilPhotoBack, removeCivilPhotoFront, updateCivilIdAndExpiryDate, updateCivilPhotoBack, updateCivilPhotoFront, updatePhoneDetail } from "@/providers/logged-in/account.service";
-import { errorMessage, useQuery } from "@/utils/common";
-import { useIonRouter } from "@ionic/react";
+import { errorMessage, toDate, useQuery } from "@/utils/common";
+import { IonDatetime, useIonRouter } from "@ionic/react";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { setUser } from "@/store/slices/userSlice";
 import { uploadFileToTempS3 } from "@/providers/logged-in/aws.service";
@@ -26,6 +26,8 @@ import { alertDialog } from "@/hooks/use-alert-dialog";
 import { useTranslation } from "react-i18next";
 import { FormDateInput } from "@/components/ui/form-date";
 import Loading from "./loading";
+import AuthLayout from "../layout";
+import { FormDateTimeInput } from "@/components/ui/form-datetime";
 
  
 export default function CivilIdPage() {
@@ -60,7 +62,7 @@ export default function CivilIdPage() {
   }, []);
 
   useEffect(() => {
-    if (!user) {
+   // if (!user) {
    //  form.setValue('phone', user?.candidate_phone || "");
     //} else {
 
@@ -69,21 +71,35 @@ export default function CivilIdPage() {
       profile().then(res => {
         dispatch(setUser({ user: res }));
         form.setValue('candidate_civil_id', res.candidate_civil_id || "");
-        form.setValue('candidate_civil_expiry_date', res.candidate_civil_expiry_date || "");
+        form.trigger('candidate_civil_id');
+
+        if (res.candidate_civil_expiry_date) {
+          form.setValue('candidate_civil_expiry_date', new Date(res.candidate_civil_expiry_date));
+          form.trigger('candidate_civil_expiry_date');
+        }
+
         form.setValue('candidate_civil_photo_back', res.candidate_civil_photo_back);
+        form.trigger('candidate_civil_photo_back');
+
         form.setValue('candidate_civil_photo_front', res.candidate_civil_photo_front);
+        form.trigger('candidate_civil_photo_front');
 
-        if (res.candidate_civil_photo_back_url)
+        if (res.candidate_civil_photo_back) {
           form.setValue('candidate_civil_photo_back_url', import.meta.env.VITE_PERMANENT_BUCKET_URL  + 'photos/' + res.candidate_civil_photo_back);
+          form.trigger('candidate_civil_photo_back_url');
+        }
 
-        if (res.candidate_civil_photo_front_url)
+        if (res.candidate_civil_photo_front) {
           form.setValue('candidate_civil_photo_front_url', import.meta.env.VITE_PERMANENT_BUCKET_URL  + 'photos/' + res.candidate_civil_photo_front);
+          form.trigger('candidate_civil_photo_front_url');
+        }
 
+        
       }).finally(() => {
         setLoading(false);
       });
-    }
-  }, [user]);
+   // }
+  }, []);//user
 
   const formSchema = z.object({
     candidate_civil_photo_back_url: z.string(),
@@ -94,8 +110,11 @@ export default function CivilIdPage() {
     candidate_civil_photo_front: z.string({
       //    required_error: 'Please upload front side of your national id.'
       }).nullable(),
-    candidate_civil_expiry_date: z.string({
-      }).min(1, t('Please add expiry date.')),
+    candidate_civil_expiry_date: z.date({
+      }).min(new Date(), {
+        message: t("Expired ID not allowed."),
+      }),
+      //.min(1, t('Please add expiry date.')),
     candidate_civil_id: z.string({
         //required_error: 'Please add id number.'
     }).min(1, t('Please add id number.'))
@@ -105,11 +124,14 @@ export default function CivilIdPage() {
     resolver: zodResolver(formSchema),
     defaultValues: {
         candidate_civil_id: user?.candidate_civil_id || "",
-        candidate_civil_expiry_date: user?.candidate_civil_expiry_date || "",
+        candidate_civil_expiry_date: user?.candidate_civil_expiry_date? 
+          new Date(user?.candidate_civil_expiry_date) : undefined,
         candidate_civil_photo_back: user?.candidate_civil_photo_back,
         candidate_civil_photo_front: user?.candidate_civil_photo_front,
-        candidate_civil_photo_back_url: import.meta.env.VITE_PERMANENT_BUCKET_URL  + 'photos/' + user?.candidate_civil_photo_back,
-        candidate_civil_photo_front_url: import.meta.env.VITE_PERMANENT_BUCKET_URL  + 'photos/' + user?.candidate_civil_photo_front,
+        candidate_civil_photo_back_url: user?.candidate_civil_photo_back?
+           import.meta.env.VITE_PERMANENT_BUCKET_URL  + 'photos/' + user?.candidate_civil_photo_back: undefined,
+        candidate_civil_photo_front_url: user?.candidate_civil_photo_front?
+          import.meta.env.VITE_PERMANENT_BUCKET_URL  + 'photos/' + user?.candidate_civil_photo_front: undefined,
     },
   })
 
@@ -118,7 +140,7 @@ export default function CivilIdPage() {
     
     setLoading(true);
 
-    updateCivilIdAndExpiryDate(values.candidate_civil_id, values.candidate_civil_expiry_date).then((res: any) => {
+    updateCivilIdAndExpiryDate(values.candidate_civil_id, values.candidate_civil_expiry_date.toISOString()).then((res: any) => {
       if (res.operation == 'success') {
 
         if (user) {
@@ -126,7 +148,7 @@ export default function CivilIdPage() {
           dispatch(setUser({ user: {
             ...user,
             candidate_civil_id: values.candidate_civil_id,
-            candidate_civil_expiry_date: values.candidate_civil_expiry_date
+            candidate_civil_expiry_date: values.candidate_civil_expiry_date.toISOString()
           } }));
         }
 
@@ -210,16 +232,18 @@ export default function CivilIdPage() {
       form.setValue('candidate_civil_id', res.candidate_civil_id);
       form.trigger('candidate_civil_id');
 
-      form.setValue('candidate_civil_expiry_date', res.candidate_civil_expiry_date);
+      form.setValue('candidate_civil_expiry_date', new Date(res.candidate_civil_expiry_date));
       form.trigger('candidate_civil_expiry_date');
 
-      user!.candidate_civil_id = res.candidate_civil_id;
-      user!.candidate_civil_expiry_date = res.candidate_civil_expiry_date;
-      user!.candidate_civil_photo_back = res.candidate_civil_photo_back;
-      user!.candidate_civil_photo_front = res.candidate_civil_photo_front;
-
-      dispatch(setUser({ user: user! }));
-
+      
+      dispatch(setUser({ user: {
+        ...user,
+        candidate_civil_id: res.candidate_civil_id,
+        candidate_civil_expiry_date: res.candidate_civil_expiry_date,
+        candidate_civil_photo_back: res.candidate_civil_photo_back,
+        candidate_civil_photo_front: res.candidate_civil_photo_front
+      } }));
+  
     //if got both values 
     /*
     if (match && match.params.fromProfile)
@@ -231,6 +255,7 @@ export default function CivilIdPage() {
 
   return (
     <Suspense fallback={<Loading />}>
+      <AuthLayout>
         { !query.get('fromProfile') && <OnboardProgress arrProgress={[100, 100, 72]}></OnboardProgress> }
 
         <h5 className="text-[color:var(--Neutral-100,#0F0F2C)] text-center 
@@ -397,9 +422,28 @@ export default function CivilIdPage() {
               form={form as any}
               type="text"
             />
-{ /* todo: have date field*/ }
+{ /* todo: have date field
 
-           <FormDateInput
+            {  
+              form.formState.errors.candidate_civil_expiry_date && 
+                <p className="text-red-500 text-center mt-0">
+                  {form.formState.errors.candidate_civil_expiry_date.message}
+                </p> 
+            }
+
+            <IonDatetime name='candidate_civil_expiry_date'
+                presentation="date"
+                value={form.getValues('candidate_civil_expiry_date')?.toISOString()}
+                onIonChange={(e) => {
+                  const date = new Date(e.detail.value as string || "");
+                  if (date)
+                    form.setValue('candidate_civil_expiry_date', date);
+                    form.trigger('candidate_civil_expiry_date');
+                }}
+                className="m-auto block"
+            ></IonDatetime>*/ }
+             
+           <FormDateTimeInput
               name="candidate_civil_expiry_date"
               label="Expiry Date"
               form={form as any}
@@ -412,6 +456,7 @@ export default function CivilIdPage() {
         </Form>
 
         <OnboardFooter ></OnboardFooter>
+        </AuthLayout>
     </Suspense>
   );
 }

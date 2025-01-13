@@ -22,7 +22,7 @@ import { setPendingInvitations } from "@/store/slices/appSlice";
 import { alertDialog } from "@/hooks/use-alert-dialog";
 import { useTranslation } from "react-i18next";
 
-export default function RootLayout({
+export default function DashLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;

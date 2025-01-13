@@ -27,6 +27,7 @@ import { page, track } from "@/providers/analytics.service";
 import { alertDialog } from "@/hooks/use-alert-dialog";
 import { useTranslation } from "react-i18next";
 import Loading from "./loading";
+import AuthLayout from "../layout";
  
 
 export default function NationalityPage() {
@@ -38,8 +39,9 @@ export default function NationalityPage() {
   const dispatch = useAppDispatch();
   const router = useIonRouter();
   const query = useQuery();
+
   let [country, setCountry] = React.useState({
-    country_id: 2,
+    country_id: 84,
     country_nationality_name_en: "Kuwaiti"
   });
 
@@ -131,6 +133,7 @@ export default function NationalityPage() {
 
   return (
     <Suspense fallback={<Loading />}>
+      <AuthLayout>  
       { !query.get('fromProfile') && <OnboardProgress arrProgress={[77, 0, 0]}></OnboardProgress> }
 
       <h5 className="mt-[102px] mb-[40px] text-center text-[40px] font-bold leading-[56px]">
@@ -180,6 +183,7 @@ export default function NationalityPage() {
       </Form>
 
       <OnboardFooter></OnboardFooter>
+      </AuthLayout>
     </Suspense>
   );
 }

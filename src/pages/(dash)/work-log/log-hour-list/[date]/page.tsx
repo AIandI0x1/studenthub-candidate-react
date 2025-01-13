@@ -12,6 +12,7 @@ import { dateTimeFormat } from '@/utils/common';
 import Pager from '@/components/common/pager';
 import Loading from './loading';
 import { WorkLogDayStats } from '@/components/app/work-log-day-stats';
+import DashLayout from '@/pages/(dash)/layout';
 
 const LogHourListPage = () => {
   const { date } = useParams() as { date: string }; // Get date from URL parameters
@@ -94,6 +95,7 @@ const LogHourListPage = () => {
 
   return (
     <Suspense fallback={<Loading />}> 
+      <DashLayout>  
       <div className=' bg-white'>
           <div className="max-w-4xl mx-auto px-6 shadow-[0px_10px_20px_0px_rgba(0,0,0,0.05) xs:pt-0 sm:pt-6 pb-6">
 
@@ -127,7 +129,8 @@ const LogHourListPage = () => {
 
           {loading && <div className="progress-bar">{t("Loading...")}</div>}
 
-      </div>       
+      </div>  
+      </DashLayout>
     </Suspense>
   );
 };

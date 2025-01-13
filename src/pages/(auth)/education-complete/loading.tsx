@@ -1,6 +1,6 @@
 import { Skeleton } from "@/components/ui/skeleton"
 
-export default function LoadingEducationComplete() {
+export default function LoadingEducationCompleted() {
     return (
         <>
             <Skeleton className="mx-auto mt-[102px] h-[40px] w-[30%] mb-[0px] text-center text-[40px] font-bold leading-[56px]" />

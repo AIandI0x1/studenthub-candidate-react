@@ -24,6 +24,7 @@ import { page, track } from "@/providers/analytics.service";
 import { alertDialog } from "@/hooks/use-alert-dialog";
 import { useTranslation } from "react-i18next";
 import Loading from "./loading";
+import AuthLayout from "../layout";
 
 declare let grecaptcha: any;
 
@@ -43,7 +44,10 @@ export default function EmailPage() {
   // 1. Define your form.
 
   const formSchema = z.object({
-    email: z.string().email(t('Please enter valid email address.'))
+    email: z.string().email(t('Please enter valid email address.')),
+    password: z.string({
+      required_error: query.get("fromProfile") ? undefined : "Please enter password"
+    })
   })
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -149,6 +153,7 @@ export default function EmailPage() {
 
   return (
     <Suspense fallback={<Loading />}>
+      <AuthLayout>  
         { !query.get('fromProfile') && <OnboardProgress arrProgress={[22, 0, 0]}></OnboardProgress> }
 
         <h5 className="mt-[102px] mb-[40px] text-center text-[40px] font-bold leading-[56px]">
@@ -164,6 +169,13 @@ export default function EmailPage() {
               form={form as any}
               type="email"
             />
+
+            { !query.get('fromProfile') && <FormInput
+              name="password"
+              label="Password"
+              form={form as any}
+              type="password"
+            /> }
  
             <SubmitButton disabled={!form.formState.isValid || loading } loading={loading}></SubmitButton>
             
@@ -171,6 +183,7 @@ export default function EmailPage() {
         </Form>
 
         <OnboardFooter></OnboardFooter>
+      </AuthLayout>
     </Suspense>
   );
 }

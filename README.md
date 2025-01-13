@@ -104,8 +104,13 @@ npx next export`
 This generates a out folder containing your static files.
 
 # todo 
-- apply layouts to all pages 
+- hide store related feature if not assigned to store
+- Test oneSignal
+- html getting messed in arabic
+- name validation for full name 
 - api call to check video upload status if uploaded but not processed
+- need to test whole app in arabic 
+
 
 # to test in mobile app 
 - OneSignal 

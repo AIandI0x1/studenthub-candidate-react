@@ -25,6 +25,7 @@ import { useIonRouter } from '@ionic/react';
 import React, { Suspense, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Loading from './loading';
+import DashLayout from '../layout';
 
 
 const ProfilePage = () => { 
@@ -109,6 +110,7 @@ const ProfilePage = () => {
 
     return (
         <Suspense fallback={<Loading />}> 
+        <DashLayout>    
         <div className='bg-[#f7f8fa]'>
             {loading && !user && <div className='max-w-4xl mx-auto p-6'>{t("Loading...")}</div>}
             {user && (
@@ -228,6 +230,7 @@ const ProfilePage = () => {
                 </>
             )}
         </div>
+        </DashLayout>   
         </Suspense>
     );
 };

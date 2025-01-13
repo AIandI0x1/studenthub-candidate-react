@@ -21,6 +21,7 @@ import { page, track } from "@/providers/analytics.service";
 import { useTranslation } from "react-i18next";
 import Loading from "./loading";
 import { useQuery } from "@/utils/common";
+import AuthLayout from "../layout";
 
 export default function NamePage() {
 
@@ -104,6 +105,7 @@ export default function NamePage() {
 
   return (
     <Suspense fallback={<Loading />}> 
+    <AuthLayout>  
       { !query.get('fromProfile') && <OnboardProgress arrProgress={[11, 0, 0]}></OnboardProgress> }
 
       <h5 className="mt-[102px] mb-[40px] text-center text-[40px] font-bold leading-[56px]">
@@ -134,6 +136,7 @@ export default function NamePage() {
       </Form>
 
       <OnboardFooter></OnboardFooter>
+    </AuthLayout>  
     </Suspense>
   );
 }

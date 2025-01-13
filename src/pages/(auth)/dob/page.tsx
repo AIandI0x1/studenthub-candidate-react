@@ -18,12 +18,14 @@ import { errorMessage, useQuery } from "@/utils/common";
 import { profile, updateBirthDate } from "@/providers/logged-in/account.service";
 import { useAppSelector } from "@/store/store";
 import { useAppDispatch } from "@/store/store";
-import { useIonRouter } from "@ionic/react";
+import { IonDatetime, useIonRouter } from "@ionic/react";
 import { page, track } from "@/providers/analytics.service";
 import { FormDateInput } from "@/components/ui/form-date";
 import { alertDialog } from "@/hooks/use-alert-dialog";
 import { useTranslation } from "react-i18next";
 import Loading from "./loading";
+import AuthLayout from "../layout";
+import { FormDateTimeInput } from "@/components/ui/form-datetime";
 
 
 export default function DobPage() {
@@ -48,7 +50,8 @@ export default function DobPage() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      candidate_birth_date: new Date(user?.candidate_birth_date || ""),
+      candidate_birth_date: user?.candidate_birth_date? 
+        new Date(user?.candidate_birth_date || "") : undefined,
     },
   })
 
@@ -115,6 +118,7 @@ export default function DobPage() {
 
   return (
     <Suspense fallback={<Loading />}>
+      <AuthLayout>  
         { !query.get('fromProfile') && <OnboardProgress arrProgress={[55, 0, 0]}></OnboardProgress> }
 
         <h5 className="mt-[102px] mb-[40px] text-center text-[40px] font-bold leading-[56px]">
@@ -123,22 +127,33 @@ export default function DobPage() {
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 max-w-[560px] m-auto mb-[100px]">
-  
-            <FormDateInput
-                name='candidate_birth_date'
-                label='Select date'
-                form={form as any}
-                onChange={(date: any) => {
-                  console.log(date)
+            { 
+              form.formState.errors.candidate_birth_date && 
+                <p className="text-red-500 text-center mt-0">
+                  {form.formState.errors.candidate_birth_date.message}
+                </p> 
+            }
+
+            <IonDatetime name='candidate_birth_date'
+                presentation="date"
+                value={form.getValues('candidate_birth_date')?.toISOString()}
+                onIonChange={(e) => {
+                  const date = new Date(e.detail.value as string || "");
+                  if (date)
+                    form.setValue('candidate_birth_date', date);
+                    form.trigger('candidate_birth_date');
                 }}
-                />
- 
+                className="m-auto block"
+            ></IonDatetime>
+            
+
             <SubmitButton disabled={!form.formState.isValid || loading } loading={loading}></SubmitButton>
             
           </form>
         </Form>
 
         <OnboardFooter></OnboardFooter>
+      </AuthLayout>  
     </Suspense>
   );
 }

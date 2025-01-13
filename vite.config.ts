@@ -10,7 +10,11 @@ export default defineConfig({
     hmr: {
       overlay: false,
     },
+    //port: 810,
   },
+  /*preview: {
+    port: 8100,
+  },*/
   resolve: {
     alias: {
       '@': "/src",

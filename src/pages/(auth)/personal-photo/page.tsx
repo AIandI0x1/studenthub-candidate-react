@@ -22,6 +22,7 @@ import { page, track } from "@/providers/analytics.service";
 import { alertDialog } from "@/hooks/use-alert-dialog";
 import { useTranslation } from "react-i18next";
 import Loading from "./loading";
+import AuthLayout from "../layout";
 
 
 // Define the User type
@@ -132,6 +133,7 @@ export default function PersonalPhotoPage() {
   
   return (
     <Suspense fallback={<Loading />}>
+      <AuthLayout>  
         { !query.get('fromProfile') && <OnboardProgress arrProgress={[100, 100, 24]}></OnboardProgress> }
 
         <h5 className="mt-[102px] mb-[8px] text-center text-[40px] font-bold leading-[56px]">
@@ -204,6 +206,7 @@ export default function PersonalPhotoPage() {
         </Form>
 
         <OnboardFooter></OnboardFooter>
+      </AuthLayout>
     </Suspense>
   );
 }

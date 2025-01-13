@@ -14,6 +14,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { langContent } from '@/utils/common';
 import NoItems from '@/components/common/no-items';
 import Loading from './loading';
+import DashLayout from '../layout';
 
 const DiscountsPage = () => {
     const [discounts, setDiscounts] = useState<Discount[]>([]);
@@ -116,19 +117,20 @@ const DiscountsPage = () => {
 
     return (
         <Suspense fallback={<Loading />}>
-        <div className=' bg-white'>
-          <div className="max-w-4xl mx-auto px-6 shadow-[0px_10px_20px_0px_rgba(0,0,0,0.05) xs:pt-0 sm:pt-6 pb-6">
+            <DashLayout>
+            <div className=' bg-white'>
+            <div className="max-w-4xl mx-auto px-6 shadow-[0px_10px_20px_0px_rgba(0,0,0,0.05) xs:pt-0 sm:pt-6 pb-6">
 
-              <h5 className='text-[color:var(--Neutral-95,#23233D)] text-2xl font-bold leading-8 capitalize'>
-              { t('Discounts')}
-              </h5>
+                <h5 className='text-[color:var(--Neutral-95,#23233D)] text-2xl font-bold leading-8 capitalize'>
+                { t('Discounts')}
+                </h5>
 
-          </div>    
-        </div>
-      
-        <div className="max-w-4xl mx-auto p-6 w-full">
+            </div>    
+            </div>
+        
+            <div className="max-w-4xl mx-auto p-6 w-full">
 
-        <div className="mb-4">
+            <div className="mb-4">
                 <Button variant="outline" onClick={resetCategorySelected} className={`me-1 rounded-2xl ${!filters.category_id ? 'bg-primary text-white' : 'bg-white'}`}>
                     {t("All")}
                 </Button>
@@ -168,7 +170,8 @@ const DiscountsPage = () => {
 
             <Pager pagination={pagination} loadPage={loadData} />
       
-        </div>
+            </div>
+            </DashLayout>
         </Suspense>
     );
 };

@@ -23,10 +23,13 @@ export function dateTimeFormat(value: string, dateFormat: string): string {
  * Make date readable by Safari
  * @param date
  */
-export function toDate(date: string | null | undefined) {
-  if (date) {
+export function toDate(date: string | null | undefined | Date) {
+  
+  if (date && typeof date == 'string') {
     return new Date(date.replace(/-/g, '/'));
   }
+
+  return date;
 }
 
 // Helper function to convert seconds to time format

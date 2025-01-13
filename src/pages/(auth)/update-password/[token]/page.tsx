@@ -24,6 +24,7 @@ import { alertDialog } from "@/hooks/use-alert-dialog";
 import { useTranslation } from "react-i18next";
 import Loading from "./loading"
 import { useParams } from "react-router"
+import AuthLayout from "../../layout"
 
 declare let grecaptcha: any;
 
@@ -108,7 +109,7 @@ const formSchema = z.object({
 
   return (
     <Suspense fallback={<Loading />}>
-        
+      <AuthLayout>
         <h5 className="mt-[102px] mb-[40px] text-center text-[40px] font-bold leading-[56px]">
           {t("Type your new password")}
         </h5>
@@ -129,6 +130,7 @@ const formSchema = z.object({
         </Form>
 
         <OnboardFooter></OnboardFooter>
+      </AuthLayout>    
     </Suspense>
   );
 }

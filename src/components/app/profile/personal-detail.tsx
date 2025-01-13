@@ -16,97 +16,97 @@ export function PersonalDdetail()   {
     const router = useHistory();
 
     useEffect(() => {
-        //router.prefetch("/about-yourself?from-profile=1");
-        //router.prefetch("/objective?from-profile=1");
-        //router.prefetch("/phone-number?from-profile=1");
-        //router.prefetch("/email?from-profile=1");
-        //router.prefetch("/preferred-time?from-profile=1");
-        //router.prefetch("/civil-id?from-profile=1");
-        //router.prefetch("/profile-url?from-profile=1");
-        //router.prefetch("/dob?from-profile=1");
-        //router.prefetch("/driver-licence?from-profile=1");
-        //router.prefetch("/gender?from-profile=1");
-        //router.prefetch("/nationality?from-profile=1");
-        //router.prefetch("/area?from-profile=1");
+        //router.prefetch("/about-yourself?fromProfile=1");
+        //router.prefetch("/objective?fromProfile=1");
+        //router.prefetch("/phone-number?fromProfile=1");
+        //router.prefetch("/email?fromProfile=1");
+        //router.prefetch("/preferred-time?fromProfile=1");
+        //router.prefetch("/civil-id?fromProfile=1");
+        //router.prefetch("/profile-url?fromProfile=1");
+        //router.prefetch("/dob?fromProfile=1");
+        //router.prefetch("/driver-licence?fromProfile=1");
+        //router.prefetch("/gender?fromProfile=1");
+        //router.prefetch("/nationality?fromProfile=1");
+        //router.prefetch("/area?fromProfile=1");
     }, []);
     
     const updateBioClicked = async () => { 
-        router.push('/about-yourself?from-profile=1', {
+        router.push('/about-yourself?fromProfile=1', {
             scroll: true
         });
     };
 
     const updateObjectiveClicked = async () => { 
-        router.push('/objective?from-profile=1', {
+        router.push('/objective?fromProfile=1', {
             scroll: true
         });
     };
 
     const updatePhoneClicked = async () => { 
-        router.push('/phone-number?from-profile=1', {
+        router.push('/phone-number?fromProfile=1', {
             scroll: true
         });
     };
 
     const updateEmailClicked = async () => {
-        router.push('/email?from-profile=1', {
+        router.push('/email?fromProfile=1', {
             scroll: true
         });
     };
 
     const updatePreferredTimeClicked = async () => {
-        router.push('/preferred-time?from-profile=1', {
+        router.push('/preferred-time?fromProfile=1', {
             scroll: true
         });
     };
 
     const updateCivilIdBackClicked = async () => {
-        router.push('/civil-id?from-profile=1', {
+        router.push('/civil-id?fromProfile=1', {
             scroll: true
         });
     };
     const updateCivilIdFrontClicked = async () => {
-        router.push('/civil-id?from-profile=1', {
+        router.push('/civil-id?fromProfile=1', {
             scroll: true
         });
     };
     const profilePageClicked = async () => {
-        router.push('/profile-url?from-profile=1', {
+        router.push('/profile-url?fromProfile=1', {
             scroll: true
         });
     };
     const updateDateOfBirthClicked = async () => {
-        router.push('/dob?from-profile=1', {
+        router.push('/dob?fromProfile=1', {
             scroll: true
         });
     };
     const updateDrivingLicenseClicked = async () => {
-        router.push('/driver-licence?from-profile=1', {
+        router.push('/driver-licence?fromProfile=1', {
             scroll: true
         });
     };
     const updateCandidateIdClicked = async () => {
-        router.push('/civil-id?from-profile=1', {
+        router.push('/civil-id?fromProfile=1', {
             scroll: true
         });
     };
     const updateGenderClicked = async () => {
-        router.push('/gender?from-profile=1', {
+        router.push('/gender?fromProfile=1', {
             scroll: true
         });
     };
     const updateKuwaitiNationalStatusClicked = async () => {
-        router.push('/nationality?from-profile=1', {
+        router.push('/nationality?fromProfile=1', {
             scroll: true
         });
     };
     const updateNationalityClicked = async () => {
-        router.push('/nationality?from-profile=1', {
+        router.push('/nationality?fromProfile=1', {
             scroll: true
         });
     };
     const updateAreaClicked = async () => {
-        router.push('/area?from-profile=1', {
+        router.push('/area?fromProfile=1', {
             scroll: true
         });
     };

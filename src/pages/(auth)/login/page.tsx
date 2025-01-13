@@ -20,6 +20,7 @@ import { Link } from "react-router-dom";
 import { page, track } from "@/providers/analytics.service";
 import { useTranslation } from "react-i18next";
 import Loading from "./loading";
+import AuthLayout from "../layout"
 //import { useQuery } from "@/utils/common"
 
 
@@ -88,40 +89,42 @@ export default function LoginPage() {
 
   return (
     <Suspense fallback={<Loading />}>
-    <div className="bg-[#fff]">
+      <AuthLayout>  
+      <div className="bg-[#fff]">
 
-        <h5 className="mt-[102px] mb-[40px] text-center text-[40px] font-bold leading-[56px]">
-          {t("What is your email address?")}
-        </h5>
+          <h5 className="mt-[102px] mb-[40px] text-center text-[40px] font-bold leading-[56px]">
+            {t("What is your email address?")}
+          </h5>
 
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 max-w-[560px] m-auto mb-[100px]">
-  
-          <FormInput
-              name="email"
-              label="Email Address"
-              form={form as any}
-              type="email"
-            />
-
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 max-w-[560px] m-auto mb-[100px]">
+    
             <FormInput
-              name="password"
-              label="Password"
-              form={form as any}
-              type="password"
-            />
-            <Link to="/forgot-password">
-              {t("Forgot Password?")}
-            </Link>
+                name="email"
+                label="Email Address"
+                form={form as any}
+                type="email"
+              />
 
-            <SubmitButton disabled={!form.formState.isValid || loading } loading={loading}></SubmitButton>
-            
-          </form>
-        </Form>
+              <FormInput
+                name="password"
+                label="Password"
+                form={form as any}
+                type="password"
+              />
+              <Link to="/forgot-password">
+                {t("Forgot Password?")}
+              </Link>
 
-        <OnboardFooter></OnboardFooter>
+              <SubmitButton disabled={!form.formState.isValid || loading } loading={loading}></SubmitButton>
+              
+            </form>
+          </Form>
 
-    </div>
+          <OnboardFooter></OnboardFooter>
+
+      </div>
+      </AuthLayout>
     </Suspense>
   );
 }

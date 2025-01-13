@@ -1,4 +1,11 @@
 
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+
+ion-router-outlet {
+  overflow: scroll;
+  position: relative;
+}
+
 .clearfix {
     display: table;
     clear: both;
@@ -8,9 +15,19 @@
 .grecaptcha-badge {
     visibility: hidden;
 }
-
+/*
 body {
-    font-family: 'Inter';/* Arial, Helvetica, sans-serif;*/
+    font-family: 'Inter';/* Arial, Helvetica, sans-serif;*
+}*/
+
+[dir="ltr"], .font-inter {
+  font-family: 'Inter', sans-serif !important;
+  --ion-font-family: 'Inter', sans-serif !important;
+}
+
+[dir="rtl"], .font-droid {
+  font-family: 'Droid Arabic Kufi', 'effra', sans-serif !important;
+  --ion-font-family: 'Droid Arabic Kufi', 'effra', sans-serif !important;
 }
 
 FormItem {

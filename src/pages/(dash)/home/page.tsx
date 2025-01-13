@@ -19,6 +19,7 @@ import { Link } from 'react-router-dom';
 import Loading from './loading';
 import { dateTimeFormat } from '@/utils/common';
 import LoadingHomePage from './loading';
+import DashLayout from '../layout';
 
 
 const HomePage = () => {
@@ -88,7 +89,7 @@ const HomePage = () => {
         {/* <Suspense fallback={<Loading />}> */}
         {/* </Suspense> */}
     return (
-       
+        <DashLayout>
         <div className="max-w-4xl mx-auto p-6">
              
             {loadingProfile && <LoadingHomePage />}
@@ -273,6 +274,7 @@ const HomePage = () => {
                 </div>
             )}
         </div>
+        </DashLayout>
     );
 };
 

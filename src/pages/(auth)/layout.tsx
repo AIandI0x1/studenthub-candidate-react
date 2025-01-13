@@ -10,7 +10,7 @@ import { useEffect } from "react";
   description: 'Join StudentHub to start your educational journey with the best resources and support.',
 };*/
 
-export default function RootLayout({
+export default function AuthLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;

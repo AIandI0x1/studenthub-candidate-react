@@ -23,6 +23,7 @@ import { page, track } from "@/providers/analytics.service";
 import { alertDialog } from "@/hooks/use-alert-dialog";
 import { useTranslation } from "react-i18next";
 import Loading from "./loading";
+import AuthLayout from "../layout";
 
 export default function ObjectivePage() {
 
@@ -110,6 +111,7 @@ export default function ObjectivePage() {
 
   return (
     <Suspense fallback={<Loading />}>
+      <AuthLayout>  
       { !query.get('fromProfile') && <OnboardProgress arrProgress={[100, 100, 48]}></OnboardProgress> }
 
       <h5 className="mt-[102px] mb-[0px] text-center text-[40px] font-bold leading-[56px]">
@@ -136,6 +138,7 @@ export default function ObjectivePage() {
       </Form>
 
       <OnboardFooter></OnboardFooter>
+      </AuthLayout>
     </Suspense>
   );
 }

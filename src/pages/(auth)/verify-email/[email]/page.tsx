@@ -27,6 +27,7 @@ import { alertDialog } from "@/hooks/use-alert-dialog";
 import { useTranslation } from "react-i18next";
 import Loading from "./loading";
 import { useIonRouter } from "@ionic/react";
+import AuthLayout from "../../layout";
  
 declare global {
   interface Window {
@@ -48,10 +49,8 @@ export default function VerifyEmailPage() {
   const params = useParams() as { email: string, code: string | null };
  
   const email: string = decodeURIComponent(params.email as string); // Access the dynamic parameter
-  const code: string = decodeURIComponent(params.code as string);
+  const code: string =params.code? decodeURIComponent(params.code as string): "";
 
-  console.log("code", code);
-  
   // 1. Define your form.
 
   const formSchema = z.object({
@@ -97,6 +96,7 @@ export default function VerifyEmailPage() {
     window.grecaptcha.ready(() => {
       window.grecaptcha.execute('6Lei9R4pAAAAAEJYoXxoIvP2Uu0oq8iXkCVfmy6V', {action: 'submit'}).then((token: any ) => {
          
+        //todo: handle error on clicking multiple times
         resendVerificationEmail(email, token).then(res => {
 
           // reset timer
@@ -219,6 +219,7 @@ export default function VerifyEmailPage() {
   
   return (
     <Suspense fallback={<Loading />}>
+      <AuthLayout>  
       { !query.get('fromProfile') && <OnboardProgress arrProgress={[22, 0, 0]}></OnboardProgress> }
 
       <h5 className="mt-[102px] mb-[8px] text-center text-[40px] font-bold leading-[56px]">
@@ -314,6 +315,7 @@ export default function VerifyEmailPage() {
       </Form>
 
       <OnboardFooter></OnboardFooter>
+      </AuthLayout>
     </Suspense>
   );
 }

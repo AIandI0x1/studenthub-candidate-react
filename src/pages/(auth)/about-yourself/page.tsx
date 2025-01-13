@@ -24,6 +24,7 @@ import { alertDialog } from "@/hooks/use-alert-dialog";
 import { useTranslation } from "react-i18next";
 import Loading from "./loading";
 import { useIonRouter } from "@ionic/react";
+import AuthLayout from "../layout";
  
 
 export default function AboutYourselfPage() {
@@ -112,8 +113,9 @@ export default function AboutYourselfPage() {
   } 
 
   return (
-    <Suspense fallback={<Loading />}>
-      
+    
+      <Suspense fallback={<Loading />}>
+        <AuthLayout>
         { !query.get('fromProfile') && <OnboardProgress arrProgress={[100, 100, 36]}></OnboardProgress> }
          
         <h5 className="mt-[102px] mb-[0px] text-center text-[40px] font-bold leading-[56px]">
@@ -141,6 +143,7 @@ export default function AboutYourselfPage() {
         </Form>
 
         <OnboardFooter></OnboardFooter>
-    </Suspense>
+        </AuthLayout>
+      </Suspense>
   );
 }

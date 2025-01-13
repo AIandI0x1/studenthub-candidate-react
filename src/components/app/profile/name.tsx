@@ -17,18 +17,18 @@ export function Name() {
     const router = useHistory();
 
     useEffect(() => {
-        //router.prefetch("/name?from-profile=1");
-        //router.prefetch("/personal-photo?from-profile=1");
+        //router.prefetch("/name?fromProfile=1");
+        //router.prefetch("/personal-photo?fromProfile=1");
     }, []);
     
     const updateNameClicked = async () => {
-        router.push('/name?from-profile=1', {
+        router.push('/name?fromProfile=1', {
             scroll: true
         });
     };
 
     const updatePhotoClicked = async () => {
-        router.push('/personal-photo?from-profile=1', {
+        router.push('/personal-photo?fromProfile=1', {
             scroll: true
         });
     };

@@ -1,5 +1,8 @@
+import AuthLayout from "@/pages/(auth)/layout";
 import VerifyEmailPage from "../page";
 
 export default function VerifyEmailCodePage() {
-    return <VerifyEmailPage />
+    return <AuthLayout>  
+        <VerifyEmailPage /> 
+    </AuthLayout>
 }

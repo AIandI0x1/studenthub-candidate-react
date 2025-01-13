@@ -30,6 +30,7 @@ import { alertDialog } from "@/hooks/use-alert-dialog";
 import Loading from "./loading";
 import { useIonRouter } from "@ionic/react";
 import { Script } from "@/utils/script";
+import AuthLayout from "../layout";
 
 
 export default function AreaPage() {
@@ -354,7 +355,9 @@ export default function AreaPage() {
   }
 
   return (
+    
     <Suspense fallback={<Loading />}> 
+    <AuthLayout>
         { !query.get('fromProfile') && <OnboardProgress arrProgress={[88, 0, 0]}></OnboardProgress> }
 
         <h5 className="mt-[102px] mb-0 text-center text-[40px] font-bold leading-[56px]">
@@ -411,6 +414,7 @@ export default function AreaPage() {
             console.log('google places loaded');
          }}
         />
+    </AuthLayout>
     </Suspense>
   );
 
