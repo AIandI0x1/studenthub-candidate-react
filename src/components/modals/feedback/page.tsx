@@ -1,4 +1,4 @@
-"use client"
+
 // app/(dash)/invitation/FeedbackPage.jsx
 
 import { page, track } from '@/providers/analytics.service';

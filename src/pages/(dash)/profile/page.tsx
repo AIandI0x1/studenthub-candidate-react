@@ -1,4 +1,4 @@
-"use client"
+
 import { Assignment } from '@/components/app/profile/assignment';
 import { CertificateComponent } from '@/components/app/profile/certificate';
 import { Education } from '@/components/app/profile/education';

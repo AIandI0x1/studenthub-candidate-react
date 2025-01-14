@@ -1,4 +1,4 @@
-"use client"
+
 // app/(dash)/invitations/InvitationsPage.jsx
 
 import Invitation from '@/components/app/invitation';

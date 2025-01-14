@@ -1,4 +1,4 @@
-"use client"
+
 // app/(dash)/payments/PaymentsPage.jsx
 
 import { Salary } from '@/models/salary';

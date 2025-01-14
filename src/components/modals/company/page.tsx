@@ -1,4 +1,4 @@
-"use client"
+
 // app/(dash)/company/page.tsx
 
 import { useEffect, useState } from 'react';

@@ -1,4 +1,4 @@
-"use client"
+
 // app/(dash)/interview/InterviewListPage.jsx
 
 import Request from '@/components/app/request';

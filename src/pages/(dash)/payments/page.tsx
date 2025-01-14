@@ -1,4 +1,4 @@
-"use client"
+
 import Pager from '@/components/common/pager';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';

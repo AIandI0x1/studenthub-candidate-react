@@ -1,4 +1,4 @@
-"use client"
+
 // app/(dash)/assignment/page.tsx
 
 import React, { Suspense, useEffect, useState } from 'react';

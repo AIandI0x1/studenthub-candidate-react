@@ -1,4 +1,4 @@
-"use client"
+
 import { ChatComponent } from '@/components/app/chat';
 // app/(dash)/chat/ChatListPage.tsx
 

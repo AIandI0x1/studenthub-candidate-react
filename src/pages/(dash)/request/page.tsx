@@ -1,4 +1,4 @@
-"use client"
+
 // app/(dash)/request/RequestListPage.tsx
 
 import { page, track } from '@/providers/analytics.service';

@@ -1,4 +1,4 @@
-"use client"
+
 
 import JobComponent from "@/components/app/jobs/job";
 import { Suspense, useEffect, useState } from "react";

@@ -1,4 +1,4 @@
-"use client"
+
 
 //import type { Metadata } from "next";
 import OnboardHeader from "@/components/on-board/layout/header";

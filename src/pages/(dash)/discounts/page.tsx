@@ -1,4 +1,4 @@
-"use client"
+
 // app/(dash)/discounts/DiscountsPage.jsx
 
 import React, { Suspense, useEffect, useState } from 'react';

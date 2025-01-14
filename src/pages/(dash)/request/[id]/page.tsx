@@ -1,4 +1,4 @@
-"use client"
+
 import { alertDialog } from '@/hooks/use-alert-dialog';
 // app/(dash)/request/RequestViewPage.tsx
 

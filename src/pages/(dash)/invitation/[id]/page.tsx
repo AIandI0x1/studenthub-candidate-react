@@ -1,4 +1,4 @@
-"use client"
+
 import { Button } from '@/components/ui/button';
 import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover';
 // app/(dash)/invitation/InvitationDetailPage.jsx

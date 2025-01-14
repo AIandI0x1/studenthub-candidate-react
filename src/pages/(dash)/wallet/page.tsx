@@ -1,4 +1,4 @@
-"use client"
+
 
 import Pager from '@/components/common/pager';
 // app/(dash)/wallet/WalletBalanceListPage.tsx

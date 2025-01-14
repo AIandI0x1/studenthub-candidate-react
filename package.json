@@ -14,7 +14,8 @@
     "preview": "vite preview",
     "test.e2e": "cypress run",
     "test.unit": "vitest",
-    "lint": "eslint"
+    "lint": "eslint",
+    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org pogi --project sh-student-app ./dist && sentry-cli sourcemaps upload --org pogi --project sh-student-app ./dist"
   },
   "dependencies": {
     "@capacitor/app": "6.0.2",
@@ -78,6 +79,7 @@
     "@testing-library/user-event": "^14.4.3",
     "@types/file-saver": "^2.0.7",
     "@types/mixpanel-browser": "^2.50.2",
+    "@types/node": "^22.10.6",
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
     "@vitejs/plugin-legacy": "^5.0.0",

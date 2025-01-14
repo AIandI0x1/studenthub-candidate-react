@@ -1,4 +1,4 @@
-"use client"
+
 
 import { page, track } from "@/providers/analytics.service";
 import { Suspense, useEffect } from "react";

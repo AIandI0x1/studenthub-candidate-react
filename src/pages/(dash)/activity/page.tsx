@@ -1,4 +1,4 @@
-"use client"
+
 
 // src/components/ActivityPage.tsx
 import React, { Suspense, useEffect, useState } from 'react';

@@ -1,4 +1,4 @@
-"use client"
+
 
 import { Suspense, useState, useEffect } from "react";
 import Loading from "./loading";

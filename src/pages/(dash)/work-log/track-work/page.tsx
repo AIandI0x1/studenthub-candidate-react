@@ -1,4 +1,4 @@
-"use client"
+
 // app/(dash)/track-work/page.tsx
 
 import { Suspense, useEffect, useState } from 'react';

@@ -6,7 +6,7 @@ Sentry.init(
     dsn: "https://1c996b75b785482aae7c345ce717b5dd@o70039.ingest.sentry.io/5339282",
    // "https://1c996b75b785482aae7c345ce717b5dd@o70039.ingest.us.sentry.io/5339282",
     // Set your release version, such as "getsentry@1.0.0"
-    release: "studenthub-candidate-react@latest",
+    release: "sh-student-app@latest",
     // Set your dist version, such as "1"
     dist: "1.0.0",
     integrations: [

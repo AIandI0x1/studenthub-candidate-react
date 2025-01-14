@@ -1,4 +1,4 @@
-"use client"
+
 // app/(dash)/chat/ChatViewPage.tsx
 
 import React, { Suspense, useEffect, useRef, useState } from 'react';

@@ -1,4 +1,4 @@
-"use client"
+
 
 import { Hero } from "@/components/on-board/hero";
 import AuthLayout from "../layout";

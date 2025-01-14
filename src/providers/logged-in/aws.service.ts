@@ -1,4 +1,5 @@
-"use client"
+
+/// <reference types="aws-sdk" />
 
 import * as AWS from 'aws-sdk';
 import axios from "../AxiosService";

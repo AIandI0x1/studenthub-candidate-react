@@ -1,4 +1,4 @@
-"use client"
+
 // app/(dash)/dashboard/DashboardPage.jsx
 
 import React, { Suspense, useEffect, useState } from 'react';

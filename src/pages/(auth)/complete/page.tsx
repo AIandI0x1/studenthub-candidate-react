@@ -1,4 +1,4 @@
-"use client"
+
 
 import OnboardFooter from "@/components/on-board/layout/footer";
 import { Button } from "@/components/ui/button";
