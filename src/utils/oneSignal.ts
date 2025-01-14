@@ -177,6 +177,9 @@ export async function includeOneSignalJs() {
 
       // initialize only on first time script load
 
+      console.log("ONE_SIGNAL_APP_ID", import.meta.env.VUE_ONE_SIGNAL_APP_ID);
+      console.log("ONE_SIGNAL_SAFARI_APP_ID", import.meta.env.VUE_ONE_SIGNAL_SAFARI_APP_ID);
+
       wOneSignal.init({
         appId: import.meta.env.VUE_ONE_SIGNAL_APP_ID,
         safari_web_id: import.meta.env.VUE_ONE_SIGNAL_SAFARI_APP_ID,
