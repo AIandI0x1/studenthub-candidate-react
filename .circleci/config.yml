@@ -132,15 +132,15 @@ jobs:
             - run:
                 name: Deploy to S3
                 command: aws s3 sync ~/completed-build/dist/ s3://studenthub-candidate-dev/
-            - run:
-                name: Set Cache-Control headers for specific files
-                command: |
-                  aws s3 cp s3://studenthub-candidate-dev/sw.js s3://studenthub-candidate-dev/sw.js \
-                    --metadata-directive REPLACE --cache-control "no-store, no-cache, must-revalidate, max-age=0"
-                  aws s3 cp s3://studenthub-candidate-dev/index.html s3://studenthub-candidate-dev/index.html \
-                    --metadata-directive REPLACE --cache-control "no-store, no-cache, must-revalidate, max-age=0"
-                  aws s3 cp s3://studenthub-candidate-dev/manifest.webmanifest s3://studenthub-candidate-dev/manifest.webmanifest \
-                    --metadata-directive REPLACE --cache-control "no-store, no-cache, must-revalidate, max-age=0"
+            #- run:
+            #    name: Set Cache-Control headers for specific files
+            #        command: |
+            #      aws s3 cp s3://studenthub-candidate-dev/sw.js s3://studenthub-candidate-dev/sw.js \
+            #        --metadata-directive REPLACE --cache-control "no-store, no-cache, must-revalidate, max-age=0"
+            #      aws s3 cp s3://studenthub-candidate-dev/index.html s3://studenthub-candidate-dev/index.html \
+            #        --metadata-directive REPLACE --cache-control "no-store, no-cache, must-revalidate, max-age=0"
+            #      aws s3 cp s3://studenthub-candidate-dev/manifest.webmanifest s3://studenthub-candidate-dev/manifest.webmanifest \
+            #        --metadata-directive REPLACE --cache-control "no-store, no-cache, must-revalidate, max-age=0"
             - run:
                 name: Invalidate Cloudfront Cache
                 command: aws cloudfront create-invalidation --distribution-id E28DDYWGPS1Q1K --paths '/*'
@@ -163,15 +163,15 @@ jobs:
             - run:
                 name: Deploy to S3
                 command: aws s3 sync ~/completed-build/dist/ s3://studenthub-candidate-staging/
-            - run:
-                name: Set Cache-Control headers for specific files
-                command: |
-                  aws s3 cp s3://studenthub-candidate-staging/sw.js s3://studenthub-candidate-staging/sw.js \
-                    --metadata-directive REPLACE --cache-control "no-store, no-cache, must-revalidate, max-age=0"
-                  aws s3 cp s3://studenthub-candidate-staging/index.html s3://studenthub-candidate-staging/index.html \
-                    --metadata-directive REPLACE --cache-control "no-store, no-cache, must-revalidate, max-age=0"
-                  aws s3 cp s3://studenthub-candidate-staging/manifest.webmanifest s3://studenthub-candidate-staging/manifest.webmanifest \
-                    --metadata-directive REPLACE --cache-control "no-store, no-cache, must-revalidate, max-age=0"
+            #- run:
+            #    name: Set Cache-Control headers for specific files
+            #    command: |
+            #      aws s3 cp s3://studenthub-candidate-staging/sw.js s3://studenthub-candidate-staging/sw.js \
+            #        --metadata-directive REPLACE --cache-control "no-store, no-cache, must-revalidate, max-age=0"
+            #      aws s3 cp s3://studenthub-candidate-staging/index.html s3://studenthub-candidate-staging/index.html \
+            #        --metadata-directive REPLACE --cache-control "no-store, no-cache, must-revalidate, max-age=0"
+            #      aws s3 cp s3://studenthub-candidate-staging/manifest.webmanifest s3://studenthub-candidate-staging/manifest.webmanifest \
+            #        --metadata-directive REPLACE --cache-control "no-store, no-cache, must-revalidate, max-age=0"
 
 # Define Workflows
 workflows:
