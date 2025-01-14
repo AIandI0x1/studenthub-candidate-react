@@ -4,7 +4,7 @@ jobs:
     build_for_dev_server:
         docker:
           # specify the version you desire here
-          - image: cimg/node:19.0.1
+          - image: cimg/node:23.6.0
             environment:
               CHROME_BIN: /usr/bin/google-chrome
               NODE_OPTIONS: --max_old_space_size=16000
@@ -25,7 +25,7 @@ jobs:
               #- dependencies-v3-
 
           # Install NPM dependencies
-          - run: npm install --force
+          - run: npm install
 
           # Cache Node Modules until dependencies have changed
           - save_cache:
@@ -44,18 +44,18 @@ jobs:
           - run: npm run build:dev
 
           # Store NPM Logs
-          - store_artifacts:
-              path: /home/circleci/.npm/_logs
+          #- store_artifacts:
+          #    path: /home/circleci/.npm/_logs
 
           # Store TMP Path
-          - store_artifacts:
-              path: /tmp
+          #- store_artifacts:
+          #    path: /tmp
 
           # Persist the output build for further jobs in workflow
-          - persist_to_workspace:
-              root: ~/repo
-              paths:
-                  - dist
+          #- persist_to_workspace:
+          #    root: ~/repo
+          #    paths:
+          #        - dist
 
     # Job: Build app for Prod server environment
     build_for_prod_server:
