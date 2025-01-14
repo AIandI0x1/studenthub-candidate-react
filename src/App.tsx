@@ -102,10 +102,8 @@ const App: React.FC = () => {
     setMixpanel();
   }, []);
 
-  {/*<ErrorBoundary>
-  </ErrorBoundary>*/}
   return (
-  
+    <ErrorBoundary>
     <Provider store={store}>
       
       <IonApp className={ (i18n.language == 'ar') ? 'font-droid' : 'font-inter'}>
@@ -141,7 +139,7 @@ const App: React.FC = () => {
         );
       })}
     </Provider>
-    
+    </ErrorBoundary>
   );
 };
 

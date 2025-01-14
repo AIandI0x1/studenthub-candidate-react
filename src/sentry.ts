@@ -24,7 +24,11 @@ Sentry.init(
     // https://docs.sentry.io/platforms/javascript/configuration/options/#traces-sample-rate
     tracesSampleRate: 1.0,
     // Set `tracePropagationTargets` to control for which URLs distributed tracing should be enabled
-    tracePropagationTargets: ["localhost", /^https:\/\/yourserver\.io\/api/],
+    tracePropagationTargets: [
+      //"localhost", 
+      /^https:\/\/student\.dev\.studenthub\.co/,
+      /^https:\/\/student\.studenthub\.co/
+    ],
     // Capture Replay for 10% of all sessions,
     // plus for 100% of sessions with an error
     // Learn more at
