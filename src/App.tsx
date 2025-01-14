@@ -129,7 +129,7 @@ const App: React.FC = () => {
               <AlertDialogHeader>
                 <AlertDialogTitle>{alertDialog.title}</AlertDialogTitle>
                 { alertDialog.description && <AlertDialogDescription 
-                  dangerouslySetInnerHTML={{__html: alertDialog.description}}>
+                  dangerouslySetInnerHTML={{__html: ""+ alertDialog.description}}>
                 </AlertDialogDescription> }
               </AlertDialogHeader>
               <AlertDialogFooter>
