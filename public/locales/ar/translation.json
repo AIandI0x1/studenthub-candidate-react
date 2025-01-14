@@ -1,5 +1,10 @@
 
 {
+    "txt_session_rejected": "تم رفض جلستك ({{ start_time }} - {{ end_time }}) في تاريخ {{ date }}.",
+    "txt_session_approved": "تمت الموافقة على جلستك ({{ start_time }} - {{ end_time }}) بتاريخ {{ date }}.",
+    "txt_invitated_for": "لقد تمت دعوتك للعمل مع {{ company }} لشغل منصب {{ position }}.",
+    "Welcome": "مرحباً",
+    "Enter your appeal reason here...": "أدخل سبب استئنافك هنا...",
     "There are no assignments yet!": "لا يوجد تعيينات بعد!",
     "Our team is working hard to find you the suitable assigment for you. Stay tight!": "فريقنا يعمل بجد للعثور على تعيين مناسب لك. قم بالإنتظار!",
     "Add experience": "إضافة الخبرة",
@@ -204,8 +209,7 @@
     "Assignment Details": "تفاصيل التعيين",
     "Working": "عمل",
     "On-Going": "مستمر",
-    "txt_session_rejected": "تم رفض جلستك ({{ start_time }} - {{ end_time }}) في تاريخ {{ date }}.",
-    "Work Session Approved": "تمت الموافقة على جلستك ({{ start_time }} - {{ end_time }}) في تاريخ {{ date }}.",
+    "Work Session Approved": "تمت الموافقة على جلسة العمل",
     "Work Session Rejected": "تم رفض الجلسة العملية.",
     "txt_work_session_approved": "تمت الموافقة على الجلسة العملية.",
     "txt_invited_for": "لقد تمت دعوتك للعمل مع {{ company }} لوظيفة {{ position }}.",

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Button } from './button';
+import { useTranslation } from 'react-i18next';
 
 //todo: on open show current time as selected and on close return current time 
 
@@ -9,6 +10,8 @@ const CircularTimePicker: React.FC<{ onChange: (time: string) => void, onClose: 
   const [minute, setMinute] = useState<number>(0);
   const [isAM, setIsAM] = useState<boolean>(true);
   const [mode, setMode] = useState<string>("hour")
+
+  const { t } = useTranslation();
 
   const handleHourChange = (newHour: number) => {
     setHour(newHour);
@@ -111,13 +114,13 @@ const CircularTimePicker: React.FC<{ onChange: (time: string) => void, onClose: 
             onClick={onClose}
             className="px-4 py-2"
         >
-            Cancel
+            {t("Cancel")}
         </Button>
         <Button type='button'
             onClick={onClose}
             className="px-4 py-2"
         >
-            Ok
+            {t("Okay")}
         </Button>
         </div>
     </div>

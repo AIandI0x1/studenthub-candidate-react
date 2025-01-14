@@ -47,9 +47,9 @@ export function FormSelect({
       render={({ field, fieldState }) => (
         <FormItem className="relative ">
           <div className="relative ">
-          <FormControl>
+          <FormControl dir={inputDir}>
               
-            <Select {...field} onValueChange={(e) => onChange && onChange(e)}>
+            <Select {...field} onValueChange={(e) => onChange && onChange(e)} >
                 <SelectTrigger className={`bg-white peer h-[72px] py-[16px] px-[24px] border-gray-300 w-full 
                     border-[color:var(--Neutral-30,#EEEEF0)] rounded-2xl text-[#23233D]
                     placeholder-transparent focus:ring-1
@@ -73,7 +73,8 @@ export function FormSelect({
               top-1/2 -translate-y-1/2 scale-100
               text-[color:var(--Neutral-70,#7D7D8D)] text-base font-normal leading-6
               
-              ${inputDir == "ltr"? 'start-[1px] peer-focus:start-[6px] peer-[&:not(:placeholder-shown)]:start-[6px] origin-[0]': 'end-[1px] peer-focus:end-[6px] peer-[&:not(:placeholder-shown)]:end-[6px] origin-[100%]'}
+              ${inputDir == "ltr" ? 'start-[1px] peer-focus:start-[6px] peer-[&:not(:placeholder-shown)]:start-[6px] origin-[0]': 
+                'start-[1px] peer-focus:start-[6px] peer-[&:not(:placeholder-shown)]:start-[6px] origin-[100%]'}
 
               peer-focus:top-3.5 
               
@@ -90,6 +91,7 @@ export function FormSelect({
               peer-[&:not(:placeholder-shown)]:leading-4
 
               ${fieldState.error ? 'text-destructive' : 'text-gray-500 peer-focus:text-primary'}`}
+              
           >
             {t(label)}
           </FormLabel>

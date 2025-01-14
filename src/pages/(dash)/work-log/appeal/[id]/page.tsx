@@ -95,7 +95,7 @@ const AppealDetailPage = () => {
 
     const loadPage = (page: number) => {
 
-        if (page > pagination.total_pages || page < 1) {
+        if ((page > 1 && page > pagination.total_pages) || page < 1) {
             return;
         }
 
@@ -119,7 +119,7 @@ const AppealDetailPage = () => {
 
     const loadActivityPage = (page: number) => {
 
-        if (page > activityPagination.total_pages || page < 1) {
+        if ((page > 1 && page > activityPagination.total_pages) || page < 1) {
             return;
         }
 

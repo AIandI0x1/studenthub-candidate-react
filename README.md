@@ -104,12 +104,11 @@ npx next export`
 This generates a out folder containing your static files.
 
 # todo 
-- Test oneSignal
 - api call to check video upload status if uploaded but not processed
-- need to test whole app in arabic (chat, track, log pages remaine to be tested)
-- area page in arabic not working 
-- civil id page not loading because of date format in arabic on fresh new profile 
+
+- Test oneSignal
 - remove/ delete profile not asking for confirmation
+- tabs flashing on route change 
 
 # improvements 
 - search icon in education page inputs

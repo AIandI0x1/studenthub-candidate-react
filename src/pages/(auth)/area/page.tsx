@@ -63,7 +63,7 @@ export default function AreaPage() {
     { key: 'Saudi Arabia', value: langContent('Saudi Arabia', 'المملكة العربية السعودية') },
     { key: 'United Arab Emirates', value: langContent('United Arab Emirates', 'الإمارات العربية المتحدة') },
     { key: 'Qatar', value: langContent('Qatar', 'دولة قطر') },
-    ];
+  ];
 
    // const searchInput = useRef<HTMLInputElement>(null);
    const formSchema = z.object({
@@ -86,10 +86,10 @@ export default function AreaPage() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      country_name: langContent(user?.country?.country_name_en, 
-        user?.country?.country_name_ar),
+      country_name: user?.country?.country_name_en || 'Kuwait',//, 'الكويت'), langContent(user?.country?.country_name_en, 
+      //user?.country?.country_name_ar)
       query: langContent(user?.area?.area_name_en, 
-            user?.area?.area_name_ar),  
+            user?.area?.area_name_ar) || "",  
       area_uuid: user?.candidate_area_uuid || "",
       latitude: user?.candidate_latitude || "",
       longitude: user?.candidate_longitude || "",    
@@ -117,8 +117,9 @@ export default function AreaPage() {
 
       profile().then(res => {
         dispatch(setUser({ user: res }));
-        form.setValue('country_name', langContent(res?.country?.country_name_en, 
-            res?.country?.country_name_ar));
+        form.setValue('country_name', res?.country?.country_name_en);
+        //langContent(res?.country?.country_name_en, 
+         //   res?.country?.country_name_ar));
         form.trigger('country_name');    
         form.setValue('area_uuid', res.candidate_area_uuid || "");
         form.trigger('area_uuid');
@@ -237,7 +238,7 @@ export default function AreaPage() {
 
     placeDetail(place).then((result: any) => {
 
-        setLoading(false);  
+      setLoading(false);  
 
       if (result.operation == 'success') {
         setArea(result.country, result.area, result.area.area_latitude, result.area.area_longitude);
@@ -296,6 +297,7 @@ export default function AreaPage() {
   function setArea(country: Country, area: Area, latitude: number, longitude: number) {
 
     if(!country || !area) {
+      console.log('setArea no arguments', country, area);
       return null;
     }
 
@@ -316,8 +318,11 @@ export default function AreaPage() {
       setSelected(true);
     }*/
 
-    form.setValue('country_name', langContent(country.country_name_en, country.country_name_ar));
-    form.trigger('country_name');
+    //if ([country.country_name_en, country.country_name_ar].includes(form.getValues()['country_name'])) {
+     // form.setValue('country_name', langContent(country.country_name_en, country.country_name_ar));
+      //form.trigger('country_name');
+    //}
+
     form.setValue('area_uuid', area.area_uuid || ''); 
     form.trigger('area_uuid');
     form.setValue('latitude', latitude + '');
@@ -325,13 +330,16 @@ export default function AreaPage() {
     form.setValue('longitude', longitude + '');
     form.trigger('longitude');
 
+    console.log('setArea', form.getValues());
+
     //save changes
 
-   // this.submit();
+    //onSubmit();
   }
 
   function onCountryChange(e: any) {
    
+    console.log('onCountryChange', e);
     setPlaces([]);
 
     form.setValue('area_uuid', "");
@@ -371,13 +379,14 @@ export default function AreaPage() {
           <form suppressHydrationWarning={true} onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 max-w-[560px] m-auto mb-[100px]">
         
             { /*form.getValues().area_uuid.length == 0 && <> */}
-                <FormSelect
+                
+                {/*<FormSelect
                     name="country_name"
                     label="Select country"
                     form={form as any}
                     options={countryOptions}
                     onChange={(e: any) => onCountryChange(e)}
-                />
+                />*/}
                     
                 <FormInput
                     name="query"
@@ -385,6 +394,7 @@ export default function AreaPage() {
                     form={form as any}
                     type="text"
                     label={getPlaceholderText()}
+                    autoComplete="off"
                     onChange={() => setTimeout(() => getItems(), 500)}
                     />
              

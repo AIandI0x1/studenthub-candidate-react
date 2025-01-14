@@ -57,7 +57,7 @@ export default function PagedUniversityInput({ selectedUniversity, onSelect, nam
 
     const loadPage = (page: number) => {
           
-        if (page > pagination.total_pages || page < 1) {
+        if ((page > 1 && page > pagination.total_pages) || page < 1) {
             return;
         }
 

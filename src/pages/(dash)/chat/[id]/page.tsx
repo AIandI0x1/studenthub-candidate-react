@@ -362,7 +362,7 @@ const ChatViewPage = () => {
                 </div>    
             </div>
             
-            <div className="max-w-4xl mx-auto p-6 h-[calc(100vh-240px)] overflow-y-auto" ref={contentRef} onScroll={onScroll}>
+            <div className="max-w-4xl mx-auto p-6 xs:h-[calc(100vh-180px)] sm:h-[calc(100vh-290px)] overflow-y-auto " ref={contentRef} onScroll={onScroll}>
  
                 {loading && (
                     <div className="text-center"><span className="skeleton-text">{t("Loading messages...")}</span></div>
@@ -387,7 +387,7 @@ const ChatViewPage = () => {
             </div>
 
             <footer className="bg-white p-4 fixed bottom-0 w-full">
-                <div className="flex max-w-4xl mx-auto">
+                <div className="flex max-w-4xl mx-auto xs:px-4 sm:px-6">
                     <input
                         type="text"
                         value={txtMessage}
@@ -398,7 +398,7 @@ const ChatViewPage = () => {
                         }}
                         onChange={(e) => setTxtMessage(e.target.value)}
                         placeholder={t('Type message here')}
-                        className="txt-message px-4 me-4 focus:outline-none focus:ring-0 bg-slate-100 radius-r-8"
+                        className="w-[calc(100%-65px)] txt-message px-4 me-4 focus:outline-none focus:ring-0 bg-slate-100 radius-r-8"
                     />
                     <Button className="btn-send" onClick={sendMessage} disabled={sendingMessage}>
                         {sendingMessage ? <span>{t("Sending...")}</span> : <span>{t("Send")}</span>}

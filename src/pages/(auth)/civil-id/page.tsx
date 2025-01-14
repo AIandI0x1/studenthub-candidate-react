@@ -124,7 +124,7 @@ export default function CivilIdPage() {
     resolver: zodResolver(formSchema),
     defaultValues: {
         candidate_civil_id: user?.candidate_civil_id || "",
-        candidate_civil_expiry_date: user?.candidate_civil_expiry_date? 
+        candidate_civil_expiry_date: user?.candidate_civil_expiry_date && user?.candidate_civil_expiry_date?.length > 0? 
           new Date(user?.candidate_civil_expiry_date) : undefined,
         candidate_civil_photo_back: user?.candidate_civil_photo_back,
         candidate_civil_photo_front: user?.candidate_civil_photo_front,
@@ -140,7 +140,9 @@ export default function CivilIdPage() {
     
     setLoading(true);
 
-    updateCivilIdAndExpiryDate(values.candidate_civil_id, values.candidate_civil_expiry_date.toISOString()).then((res: any) => {
+    const date = values.candidate_civil_expiry_date.toISOString();
+
+    updateCivilIdAndExpiryDate(values.candidate_civil_id, date).then((res: any) => {
       if (res.operation == 'success') {
 
         if (user) {
@@ -148,7 +150,7 @@ export default function CivilIdPage() {
           dispatch(setUser({ user: {
             ...user,
             candidate_civil_id: values.candidate_civil_id,
-            candidate_civil_expiry_date: values.candidate_civil_expiry_date.toISOString()
+            candidate_civil_expiry_date: date
           } }));
         }
 
@@ -229,12 +231,15 @@ export default function CivilIdPage() {
         form.trigger('candidate_civil_photo_front_url');
       }
 
+      if (res.candidate_civil_id) {
       form.setValue('candidate_civil_id', res.candidate_civil_id);
       form.trigger('candidate_civil_id');
+      }
 
+      if (res.candidate_civil_expiry_date) {
       form.setValue('candidate_civil_expiry_date', new Date(res.candidate_civil_expiry_date));
       form.trigger('candidate_civil_expiry_date');
-
+      }
       
       dispatch(setUser({ user: {
         ...user,

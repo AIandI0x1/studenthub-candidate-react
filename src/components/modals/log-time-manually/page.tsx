@@ -21,6 +21,7 @@ import { FormDateInput } from '@/components/ui/form-date';
 import { t } from 'i18next';
 import { toast } from '@/hooks/use-toast';
 import { alertDialog } from '@/hooks/use-alert-dialog';
+import { FormDateTimeInput } from '@/components/ui/form-datetime';
 
 
 const timeComparisonValidator = (data: any) => {
@@ -155,6 +156,12 @@ const LogTimeManuallyPage = ({ onClose }: {onClose: any}) => {
                 form={form as any}
               />
  
+              <FormDateTimeInput
+                name="date"
+                label="Select date"
+                form={form as any}
+            />
+            {/*}
               <FormDateInput
               name='date'
               label='Select date'
@@ -162,7 +169,7 @@ const LogTimeManuallyPage = ({ onClose }: {onClose: any}) => {
               onChange={(date: any) => {
                 console.log(date)
               }}
-              />
+              />*/}
                
 {/** todo: || !form.formState.isValid || !form.formState.isDirty */}
               <button

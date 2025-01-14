@@ -75,7 +75,7 @@ const ChatListPage = () => {
 
   const loadPage = (page: number) => {
 
-    if (page > pagination.total_pages || page < 1) {
+    if ((page > 1 && page > pagination.total_pages) || page < 1) {
       return;
     }
 
@@ -115,7 +115,7 @@ const ChatListPage = () => {
                 </div>    
             </div>
             
-            <div className="max-w-4xl mx-auto p-6">
+            <div className="max-w-4xl mx-auto p-6 ">
 
                 {chats.length === 0 && !loading && <NoItems image="assets/icons/no-invitation.svg" 
                         title={ 'You have no active chats' }

@@ -24,6 +24,7 @@ import { Calendar } from '@/components/ui/calendar';
 import { DateRange } from 'react-day-picker';
 import Loading from './loading';
 import DashLayout from '../../layout';
+import { FormDateTimeInput } from '@/components/ui/form-datetime';
 
 
 const LogDateListPage = () => {
@@ -125,7 +126,7 @@ const LogDateListPage = () => {
 
   const loadPage = (page: number) => {
 
-    if (page > pagination.total_pages || page < 1) {
+    if ((page > 1 && page > pagination.total_pages) || page < 1) {
       return;
     }
 
@@ -200,20 +201,35 @@ const LogDateListPage = () => {
           <form suppressHydrationWarning={true} onSubmit={form.handleSubmit(onSubmit)}>
               { (form.getValues().start_date && form.getValues().end_date) && <div className="w-full gap-2.5 inline-flex mb-4">
                   <div className="grow shrink basis-0 flex-col gap-[7px] inline-flex">
-                  <FormDateInput
+                    
+                  <FormDateTimeInput
+                                        name="start_date"
+                                        label="Select date"
+                                        form={form as any}
+                                        onChange={() => handleManualSubmit() }
+                                        />
+                                        {/*<FormDateInput
                               name='start_date'
                               label='Select date'
                               form={form as any}
                               onChange={() => handleManualSubmit() }
-                              />
+                              />*/}
                   </div>
                   <div className="grow shrink basis-0 flex-col gap-[7px] inline-flex">
-                  <FormDateInput
+
+                        <FormDateTimeInput
+                                        name="end_date"
+                                        label="Select date"
+                                        form={form as any}
+                                        onChange={() => handleManualSubmit() }
+                                        />
+                                        
+                        {/*<FormDateInput
                               name='end_date'
                               label='Select date'
                               form={form as any}
                               onChange={() => handleManualSubmit()}
-                              />
+                              />*/}
                   </div>
               </div> }
                     
