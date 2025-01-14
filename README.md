@@ -105,6 +105,7 @@ This generates a out folder containing your static files.
 
 # todo 
 - api call to check video upload status if uploaded but not processed
+- errors not getting caught on sentry + slack 
 
 - Test oneSignal
 - remove/ delete profile not asking for confirmation
