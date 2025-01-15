@@ -9,10 +9,12 @@ import { VitePWA } from 'vite-plugin-pwa';
 
 // https://vitejs.dev/config/
 export default defineConfig({
+
   build: {
     commonjsOptions: {
       strictRequires: ['node_modules/aws-sdk/clients/s3.js'],
     },
+    chunkSizeWarningLimit: 1000, // Increase limit to 1000 kB
   },
   server: {
     https: {

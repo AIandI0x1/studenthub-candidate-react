@@ -9,6 +9,7 @@ Sentry.init(
     release: "sh-student-app@latest",
     // Set your dist version, such as "1"
     dist: "1.0.0",
+    environment: import.meta.env.VITE_ENV_NAME,
     integrations: [
       // Registers and configures the Tracing integration,
       // which automatically instruments your application to monitor its
@@ -26,7 +27,8 @@ Sentry.init(
     tracesSampleRate: 1.0,
     // Set `tracePropagationTargets` to control for which URLs distributed tracing should be enabled
     tracePropagationTargets: [
-      //"localhost", 
+   //   /^https:\/\/localhost/, 
+   //   /^http:\/\/localhost/, 
       /^https:\/\/student\.dev\.studenthub\.co/,
       /^https:\/\/student\.studenthub\.co/
     ],
