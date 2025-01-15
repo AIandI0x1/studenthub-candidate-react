@@ -124,3 +124,6 @@ This generates a out folder containing your static files.
 
 # oneSignal 
 - https://documentation.onesignal.com/docs/ionic-capacitor-cordova-sdk-setup
+
+## web sdk 
+- https://documentation.onesignal.com/docs/web-sdk-reference#removetags

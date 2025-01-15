@@ -17,7 +17,7 @@ import { errorMessage, useQuery } from "@/utils/common";
 import { useIonRouter } from "@ionic/react";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { setUser } from "@/store/slices/userSlice";
-import { uploadFileToTempS3 } from "@/providers/logged-in/aws.service";
+import { setAWSConfig, uploadFileToTempS3 } from "@/providers/logged-in/aws.service";
 import { page, track } from "@/providers/analytics.service";
 import { alertDialog } from "@/hooks/use-alert-dialog";
 import { useTranslation } from "react-i18next";
@@ -63,6 +63,8 @@ export default function PersonalPhotoPage() {
 
     page('Personal Photo Page');
 
+    setAWSConfig();
+    
     /*if (query.get('fromProfile'))
       //router.prefetch('/profile');
     else

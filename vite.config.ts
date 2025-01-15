@@ -11,7 +11,7 @@ import { VitePWA } from 'vite-plugin-pwa';
 export default defineConfig({
   build: {
     commonjsOptions: {
-        strictRequires: ['node_modules/aws-sdk/**/*.js'],
+      strictRequires: ['node_modules/aws-sdk/clients/s3.js'],
     },
   },
   server: {

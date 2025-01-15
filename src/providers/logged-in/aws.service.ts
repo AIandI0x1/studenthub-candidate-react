@@ -1,11 +1,14 @@
 
 /// <reference types="aws-sdk" />
 
-import * as AWS from 'aws-sdk';
+//import * as AWS from 'aws-sdk';
+import S3 from 'aws-sdk/clients/s3';
 import axios from "../AxiosService";
 import { store } from '@/store/store';
 //import { setTempBucket } from '@/store/slices/appSlice';
 //import { ManagedUpload } from 'aws-sdk/clients/s3';
+
+let s3: S3;
 
     /**
      * get temp aws access/ todo: can also get authorised link  
@@ -23,6 +26,12 @@ import { store } from '@/store/store';
     export async function setAWSConfig() {
         //const dispatch = useAppDispatch();
 
+        if (s3) {
+            return new Promise((resolve, reject) => {
+                resolve(s3);
+            });
+        }
+
         return await getConfig().then(config => {
              
             /*dispatch(setTempBucket({
@@ -30,16 +39,18 @@ import { store } from '@/store/store';
             }));*/
 
             // Create credentials object
-            const credentials = new AWS.Credentials({
+            s3 = new S3({
                 accessKeyId: config.key,
                 secretAccessKey: config.secret
             });
 
             // Set AWS config with credentials object
-            AWS.config.update({
+            /*S3.update({
                 region: config.region,
                 credentials: credentials
-            });
+            });*/
+
+            return s3;
         });
     }
 
@@ -66,9 +77,9 @@ import { store } from '@/store/store';
         temp_bucket = "studenthub-public-anyone-can-upload-24hr-expiry";
     }
 
-        let s3 = new AWS.S3({
+        /*let s3 = new S3({
             apiVersion: '2006-03-01'
-        });
+        });*/
 
         let extension = getFileExtension(file.name);
 
