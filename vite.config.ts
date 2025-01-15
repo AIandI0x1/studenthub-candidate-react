@@ -17,10 +17,10 @@ export default defineConfig({
     chunkSizeWarningLimit: 1000, // Increase limit to 1000 kB
   },
   server: {
-    https: {
+    /*https: {
       key: 'ssl/private-key.pem',
       cert: 'ssl/certificate.pem',
-    },
+    },*/
     hmr: {
       overlay: false,
     },
