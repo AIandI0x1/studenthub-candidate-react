@@ -9,7 +9,7 @@ import { error404$, error500$, internetOffline$, userLogout$ } from './event.ser
 /*if(store.state['store'] && store.state['store'].is_sandbox) {
     axios.defaults.baseURL = "https://api.dev.plugn.io/v2";
 } else {
-    axios.defaults.baseURL = import.meta.env.VUE_APP_ENDPOINT;
+    axios.defaults.baseURL = import.meta.env.VITE_APP_ENDPOINT;
 }*/
 
 axios.defaults.baseURL = import.meta.env.VITE_API_ENDPOINT;

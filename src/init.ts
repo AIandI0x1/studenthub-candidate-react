@@ -21,6 +21,7 @@ import { logout } from "./store/slices/authSlice";
 declare global {
     interface Window {
       OneSignal: any;
+      OneSignalDeferred: any;
     }
 }
 window.global ||= window;

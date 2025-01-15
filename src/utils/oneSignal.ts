@@ -6,7 +6,7 @@ const state = store.getState(); // Get the state directly from the store
 const { oneSignalStatus } = state.app;
 const { user } = state.user;
 
-let notificationScriptLoaded = false;
+//let notificationScriptLoaded = false;
 
 /**
  * set oneSignal subscription for browser
@@ -152,6 +152,59 @@ export async function includeOneSignalJs() {
     }));
   }
 
+  if (window.OneSignalDeferred && window.OneSignalDeferred.length > 0) {
+    return;
+  }
+
+  console.log("c62352ca-2f6c-44a2-896c-84c2f17db9ac", import.meta.env.VITE_ONE_SIGNAL_APP_ID);
+
+  {/**
+    <div class='onesignal-customlink-container'></div> */}
+  window.OneSignalDeferred = window.OneSignalDeferred || [];
+  window.OneSignalDeferred.push(async (OneSignal: any) => {
+    await OneSignal.init({
+      appId: import.meta.env.VITE_ONE_SIGNAL_APP_ID,
+      safari_web_id: import.meta.env.VITE_ONE_SIGNAL_SAFARI_APP_ID,
+      autoRegister: false,
+      httpPermissionRequest: {
+        enable: false
+      },
+      promptOptions: {
+        customlink: {
+          enabled: true
+        }
+      }
+    });
+
+    oneSignalActionBasedOnStatus();
+  });
+
+  const wOneSignal = window.OneSignal || [];
+
+  wOneSignal.push(async (OneSignal: any) => {
+
+    // initialize only on first time script load
+
+    console.log("ONE_SIGNAL_APP_ID", import.meta.env.VITE_ONE_SIGNAL_APP_ID);
+    console.log("ONE_SIGNAL_SAFARI_APP_ID", import.meta.env.VITE_ONE_SIGNAL_SAFARI_APP_ID);
+
+    await OneSignal.init({
+      appId: import.meta.env.VITE_ONE_SIGNAL_APP_ID,
+      safari_web_id: import.meta.env.VITE_ONE_SIGNAL_SAFARI_APP_ID,
+      autoRegister: false,
+      httpPermissionRequest: {
+        enable: false
+      },
+      promptOptions: {
+        customlink: {
+          enabled: true
+        }
+      }
+    });
+
+    
+  });
+/*
   // if already loaded, just update tags
 
   if (window.OneSignal) {
@@ -169,36 +222,11 @@ export async function includeOneSignalJs() {
 
   // load script and call callback to initialize
 
-  const callback = () => {
+  //const callback = () => {
 
-    const wOneSignal = window.OneSignal || [];
+  //};
 
-    wOneSignal.push(() => {
-
-      // initialize only on first time script load
-
-      console.log("ONE_SIGNAL_APP_ID", import.meta.env.VUE_ONE_SIGNAL_APP_ID);
-      console.log("ONE_SIGNAL_SAFARI_APP_ID", import.meta.env.VUE_ONE_SIGNAL_SAFARI_APP_ID);
-
-      wOneSignal.init({
-        appId: import.meta.env.VUE_ONE_SIGNAL_APP_ID,
-        safari_web_id: import.meta.env.VUE_ONE_SIGNAL_SAFARI_APP_ID,
-        autoRegister: false,
-        httpPermissionRequest: {
-          enable: false
-        },
-        promptOptions: {
-          customlink: {
-            enabled: true
-          }
-        }
-      });
-
-      oneSignalActionBasedOnStatus();
-    });
-  };
-
-  loadScript('https://cdn.onesignal.com/sdks/OneSignalSDK.js', callback);
+  //loadScript('https://cdn.onesignal.com/sdks/OneSignalSDK.js', callback);*/
 }
 
 /**
