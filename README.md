@@ -121,3 +121,6 @@ This generates a out folder containing your static files.
 - CV upload 
 - App notification for chat message if not in app?
 - location tracking with background service 
+
+# oneSignal 
+- https://documentation.onesignal.com/docs/ionic-capacitor-cordova-sdk-setup

@@ -15,10 +15,11 @@ export async function setOneSignalSubscription() {
 
   if(window && window.Notification && window.OneSignal)
   {
-    const OneSignal = window.OneSignal || [];
+    const wOneSignal = window.OneSignal || [];
 
-    OneSignal.setSubscription(true);
-    OneSignal.registerForPushNotifications();
+    wOneSignal.User.PushSubscription.optIn();
+    //OneSignal.setSubscription(true);
+    //OneSignal.registerForPushNotifications();
 
     // send user tag, to target based on tags
 
@@ -28,7 +29,7 @@ export async function setOneSignalSubscription() {
       'email': user?.candidate_email
     };
 
-    OneSignal.sendTags(tags);
+    wOneSignal.User.addTags(tags);
   }
 
   store.dispatch(setShowOneSignalPrompt({
@@ -59,58 +60,54 @@ async function checkOneSignalStatus() {
 
   if (window && window.OneSignal && window.Notification) {
 
-    const OneSignalw = window.OneSignal || [];
+    const wOneSignal = window.OneSignal || [];
 
-    OneSignalw.isPushNotificationsEnabled((isEnabled: any) => {
+    if (wOneSignal.User.PushSubscription.optedIn) {
 
-      if (isEnabled) {
+      // Automatically subscribe user if deleted cookies and browser shows "Allow"
 
-        // Automatically subscribe user if deleted cookies and browser shows "Allow"
+      /*if (wOneSignal.User.PushSubscription.id)
 
-        OneSignalw.getUserId().then((userId: any) => {
+        // remove old user tag if any
+ 
+          const oldTags = [
+            'candidate_uuid',
+            'name',
+            'email'
+          ];
 
-          // remove old user tag if any
+          wOneSignal.User.removeTags(oldTags);
+        }*/
 
-          if (userId) {
+        // if (!userId) {
+ 
+       // wOneSignal.User.PushSubscription.optIn();
+        //OneSignal.setSubscription(true);
+        //OneSignal.registerForPushNotifications();
 
-            const tags = [
-              'candidate_uuid',
-              'name',
-              'email'
-            ];
+        // send user tag, to target based on tags
 
-            OneSignalw.deleteTags(tags);
-          }
+        const tags = {
+          'candidate_id': user?.candidate_id + '',
+          'name': user?.candidate_name,
+          'email': user?.candidate_email
+        };
 
-          // if (!userId) {
-
-          OneSignalw.setSubscription(true);
-          OneSignalw.registerForPushNotifications();
-
-          // send user tag, to target based on tags
-
-          const tags = {
-            'candidate_id': user?.candidate_id + '',
-            'name': user?.candidate_name,
-            'email': user?.candidate_email
-          };
-
-          OneSignalw.sendTags(tags);
-
-          // }
-        });
-      } else {
-        store.dispatch(setShowOneSignalPrompt({
-          showOneSignalPrompt: true
-        }));
-      }
-    });
+        wOneSignal.User.addTags(tags);
+        // }
+      
+    } else {
+      store.dispatch(setShowOneSignalPrompt({
+        showOneSignalPrompt: true
+      }));
+    } 
 
     // Occurs when the user's subscription changes to a new value.
 
-    OneSignalw.on('subscriptionChange', (isSubscribed: any) => {
+    wOneSignal.User.PushSubscription.addEventListener('change', (event: any) => {
+      console.log("change", event);
       store.dispatch(setShowOneSignalPrompt({
-        showOneSignalPrompt: !isSubscribed
+        showOneSignalPrompt: !event.current.optedIn
       }));
     });
   }
@@ -156,7 +153,7 @@ export async function includeOneSignalJs() {
     return;
   }
 
-  console.log("c62352ca-2f6c-44a2-896c-84c2f17db9ac", import.meta.env.VITE_ONE_SIGNAL_APP_ID);
+//  console.log("c62352ca-2f6c-44a2-896c-84c2f17db9ac", import.meta.env.VITE_ONE_SIGNAL_APP_ID);
 
   {/**
     <div class='onesignal-customlink-container'></div> */}
@@ -178,7 +175,7 @@ export async function includeOneSignalJs() {
 
     oneSignalActionBasedOnStatus();
   });
-
+/*
   const wOneSignal = window.OneSignal || [];
 
   wOneSignal.push(async (OneSignal: any) => {
@@ -204,7 +201,7 @@ export async function includeOneSignalJs() {
 
     
   });
-/*
+
   // if already loaded, just update tags
 
   if (window.OneSignal) {
