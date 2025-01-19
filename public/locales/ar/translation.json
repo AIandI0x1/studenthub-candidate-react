@@ -1,5 +1,16 @@
 
 {
+    "Delete": "حذف",
+    "Are you sure you want to delete your profile?": "هل أنت متأكد أنك تريد حذف حسابك؟",
+    "This action will permanently delete your profile and all associated data. Are you sure you want to proceed?": "هذا الإجراء سيقوم بحذف حسابك بشكل دائم وجميع البيانات المتعلقة به. هل أنت متأكد أنك تريد المتابعة؟",    
+    "No matching jobs found!": "لم يتم العثور على وظائف مطابقة!",
+    "No matching applications found!": "لم يتم العثور على طلبات تطبيق مطابقة!",
+    "We will list matching jobs here!": "سيتم عرض الوظائف المطابقة هنا!",
+    "Our team is working hard to find you the suitable jobs for you. Stay tight!": "فريقنا يعمل بجد للعثور على وظائف مناسبة لك. قم بالإنتظار!",
+    "Your job applications will be listed here!": "سيتم عرض طلبات التطبيقات الخاصة بك هنا!",
+    "You can see the status of your applications here.": "يمكنك عرض حالة طلبات التطبيقات الخاصة بك هنا.",
+    "We couldn't find any jobs matching your search. Try a different search term.": "لم نتمكن من العثور على وظائف مطابقة لبحثك. حاول بحثًا آخر.",
+    "We couldn't find any applications matching your search. Try a different search term.": "لم نتمكن من العثور على طلبات تطبيق مطابقة لبحثك. حاول بحثًا آخر.",
     "Please check your internet connection": "يرجى التحقق من إتصالك بالإنترنت",
     "Search Degree": "البحث عن درجة",
     "Search Field of Study": "البحث عن تخصص",

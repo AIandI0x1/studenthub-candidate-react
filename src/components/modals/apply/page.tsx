@@ -73,7 +73,8 @@ export default function Apply({ job, seen_at, onClose }: IApply) {
 
     return (
         <div className='inset-0 flex items-center justify-center'>
-            <Backdrop onClick={() => onClose({})}></Backdrop>
+
+            <Backdrop onClick={() => { onClose({});  }}></Backdrop>
 
             <div className="fixed 
                 top-[calc(50%-222px)] xs:start-6 w-[calc(100%-48px)] sm:start-[calc(50%-244px)] max-w-[488px] rounded-lg

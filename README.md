@@ -104,22 +104,14 @@ npx next export`
 This generates a out folder containing your static files.
 
 # todo 
-- api call to check video upload status if uploaded but not processed
-- errors not getting caught on sentry + slack 
+- getStore error on login page 
 
-- Test oneSignal
-- remove/ delete profile not asking for confirmation
-- tabs flashing on route change 
-
-- getStore 
-- no option to close interest message in job apply 
-- application tab show message for no applications
-- home page > wallet blank page 
-- Error: Push notification prompting can only be done from a user gesture.
-- mixpanel error in dev console 
 
 # improvements 
+- tabs flashing on route change 
 - search icon in education page inputs
+- Error: Push notification prompting can only be done from a user gesture.
+- mixpanel error in dev console 
 
 # to test in mobile app 
 - OneSignal 

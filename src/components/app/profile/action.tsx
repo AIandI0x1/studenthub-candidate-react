@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import { setUser } from "@/store/slices/userSlice";
 import { alertDialog } from "@/hooks/use-alert-dialog";
 import { userLogout$ } from "@/providers/event.service";
+import { IonAlert } from "@ionic/react";
 
 export function CandidateAction({ onClose }: { onClose: () => void }) {
     const router = useHistory();
@@ -20,6 +21,8 @@ export function CandidateAction({ onClose }: { onClose: () => void }) {
     const { user } = useAppSelector((state) => state.user);
 
     const [updating, setUpdating] = useState(false);
+
+    const [isDeleteAlertOpen, setIsDeleteAlertOpen] = useState(false);
 
     useEffect(() => {
         //router.prefetch("/change-password");
@@ -77,6 +80,8 @@ export function CandidateAction({ onClose }: { onClose: () => void }) {
     }
 
     const deleteProfileClicked = () => {
+        setIsDeleteAlertOpen(false);
+        
         removeProfile().then(() => {
             dispatch(logout());
             router.push("/");    
@@ -122,7 +127,7 @@ export function CandidateAction({ onClose }: { onClose: () => void }) {
                 </div>
             </div>
  
-            <div onClick={() => deleteProfileClicked()} className="cursor-pointer border-slate-200 border-b self-stretch h-12 p-3 flex-col justify-start items-start gap-2 flex">
+            <div onClick={() => setIsDeleteAlertOpen(true)} className="cursor-pointer border-slate-200 border-b self-stretch h-12 p-3 flex-col justify-start items-start gap-2 flex">
                 <div className="self-stretch justify-start items-center gap-2 inline-flex">
                     <div className="w-6 h-6 relative">
                         <Trash />
@@ -143,6 +148,30 @@ export function CandidateAction({ onClose }: { onClose: () => void }) {
                     </div>
                 </div>
             </div>
+
+            <IonAlert
+                trigger="present-alert"
+                header={t('Delete Profile')}
+                subHeader={t('Are you sure you want to delete your profile?')}
+                message={t('This action will permanently delete your profile and all associated data. Are you sure you want to proceed?')}
+                isOpen={isDeleteAlertOpen}
+                buttons={[
+                    {
+                      text: t('Cancel'),
+                      role: 'cancel',
+                      handler: () => {
+                        setIsDeleteAlertOpen(false);
+                      },
+                    },
+                    {
+                      text: t('Delete'),
+                      role: 'confirm',
+                      handler: () => {
+                        deleteProfileClicked();
+                      },
+                    },
+                ]}
+            ></IonAlert>
         </div>
     );
 }

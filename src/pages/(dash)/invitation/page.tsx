@@ -81,6 +81,7 @@ const InvitationListPage = () => {
                     {invitations.map((invitation: any) => (
                         <Invitation key={invitation.id} model={invitation} />
                     ))}
+                    
                     {!loading && invitations.length === 0 && (
                         <NoItems image="assets/icons/no-invitation.svg" 
                             title={ t('There are no assignments yet!') }
