@@ -71,10 +71,10 @@ export function Hero() {
  
       if (err = 'popup_closed_by_user') {
          
-        alertDialog({
+        /*alertDialog({
           title: t('Error'),
           description: t(err)
-        });
+        });*/
         return false;
       }
 

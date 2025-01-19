@@ -69,7 +69,7 @@ export default function ForgotPasswordPage() {
             resetPasswordRequest(values.email, token).then(res => {
                 if (res.operation == 'success') {
                   alertDialog({
-                    title: t("Error"),
+                    title: t("Success"),
                     description: res.message,
                   });//'Password recovery email sent, please check your email.'
                   router.push('/login');

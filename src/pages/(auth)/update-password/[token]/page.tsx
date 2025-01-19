@@ -80,7 +80,7 @@ const formSchema = z.object({
                 if (res.operation == 'success') {
  
                   alertDialog({
-                    title: t("Error"),
+                    title: t("Success"),
                     description: res.message,
                   });
                   //'Password recovery email sent, please check your email.'

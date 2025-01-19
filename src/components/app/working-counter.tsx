@@ -69,7 +69,7 @@ const WorkingCounter = () => {
           }
 
           alertDialog({
-            title: t('Error'),
+            title: data.operation === "success"? t('Success') : t('Error'),
             description: errorMessage(data.message),
           });
       }
