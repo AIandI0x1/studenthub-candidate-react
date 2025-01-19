@@ -1,9 +1,9 @@
 
 {
-    "Please check your internet connection": "",
-    "Search Degree": "",
-    "Search Field of Study": "",
-    "Search University": "",
+    "Please check your internet connection": "يرجى التحقق من إتصالك بالإنترنت",
+    "Search Degree": "البحث عن درجة",
+    "Search Field of Study": "البحث عن تخصص",
+    "Search University": "البحث عن جامعة",
     "txt_session_rejected": "تم رفض جلستك ({{ start_time }} - {{ end_time }}) في تاريخ {{ date }}.",
     "txt_session_approved": "تمت الموافقة على جلستك ({{ start_time }} - {{ end_time }}) بتاريخ {{ date }}.",
     "txt_invitated_for": "لقد تمت دعوتك للعمل مع {{ company }} لشغل منصب {{ position }}.",

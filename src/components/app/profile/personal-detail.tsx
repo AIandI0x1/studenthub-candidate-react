@@ -281,7 +281,7 @@ export function PersonalDdetail()   {
                     <div className="text-[#22223d] text-sm font-medium leading-tight">
                         { user.candidate_driving_license == 1 && t('Has Driving License') }
                         { user.candidate_driving_license == 2 && t('Has No Driving License') }
-                        { !user.candidate_driving_license && t('Driving License (not set)') }
+                        { (!user.candidate_driving_license || user.candidate_driving_license == 0) && t('Driving License (not set)') }
                     </div>
                 </div>
             

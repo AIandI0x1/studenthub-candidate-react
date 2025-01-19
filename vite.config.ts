@@ -12,7 +12,7 @@ export default defineConfig({
 
   build: {
     commonjsOptions: {
-      strictRequires: ['node_modules/aws-sdk/clients/s3.js'],
+    //  strictRequires: ['node_modules/aws-sdk/clients/s3.js'],
     },
     chunkSizeWarningLimit: 1000, // Increase limit to 1000 kB
   },

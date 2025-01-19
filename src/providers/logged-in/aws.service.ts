@@ -1,14 +1,11 @@
-
-/// <reference types="aws-sdk" />
-
-//import * as AWS from 'aws-sdk';
-import S3 from 'aws-sdk/clients/s3';
 import axios from "../AxiosService";
 import { store } from '@/store/store';
 //import { setTempBucket } from '@/store/slices/appSlice';
 //import { ManagedUpload } from 'aws-sdk/clients/s3';
+import { S3Client, PutObjectCommand, ObjectCannedACL } from "@aws-sdk/client-s3";
+import { Upload } from "@aws-sdk/lib-storage";
 
-let s3: S3;
+let s3: S3Client;
 
     /**
      * get temp aws access/ todo: can also get authorised link  
@@ -39,9 +36,12 @@ let s3: S3;
             }));*/
 
             // Create credentials object
-            s3 = new S3({
-                accessKeyId: config.key,
-                secretAccessKey: config.secret
+            s3 = new S3Client({
+                region: config.region,
+                credentials: {
+                    accessKeyId: config.key,
+                    secretAccessKey: config.secret
+                }
             });
 
             // Set AWS config with credentials object
@@ -91,17 +91,15 @@ let s3: S3;
 
         let key = prefix + "-" + Date.now() + "." + extension;
 
-        console.log(file, key, temp_bucket);
-
         let params = {
             Body: file, // the actual file file
-            ACL: "public-read", // to allow public access to the file
+            ACL: 'public-read' as ObjectCannedACL, // to allow public access to the file
             Bucket: temp_bucket, //bucket name
             Key: key, //file name
             ContentType: file.type, //(String) A standard MIME type describing the format of the object file
             Metadata: metadata
         }
-
+       
         //return Observable.create((observer: Observer<any>) => {
 
             /*
@@ -113,9 +111,14 @@ let s3: S3;
                 return observer.error(this.translateService.transform('Maximum 5mb Upload is allowed'));
             }*/
 
-            const currUpload = s3.upload(params);
+            const upload = new Upload({
+                client: s3,
+                params: params
+            });
+
+           // const currUpload = s3.send(new PutObjectCommand(params)); 
         
-            return currUpload.promise();
+            return upload.done();
 
             /*observer.next(currUpload);
 

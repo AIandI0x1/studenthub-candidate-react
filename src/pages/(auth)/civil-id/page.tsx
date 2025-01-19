@@ -298,7 +298,7 @@ export default function CivilIdPage() {
 
                             uploadFileToTempS3(file).then((response: any) => {
                              
-                                updateCivilPhotoFront(response.key).then((res: any) => {
+                                updateCivilPhotoFront(response.Key).then((res: any) => {
                                    
                                   if (res.operation == 'success') {   
 

@@ -186,7 +186,8 @@ export default function PersonalPhotoPage() {
 
                             uploadFileToTempS3(file).then((response: any) => {
                               
-                              form.setValue('candidate_personal_photo', response.key);
+                              console.log(response);
+                              form.setValue('candidate_personal_photo', response.Key);
                               form.trigger('candidate_personal_photo');
                               form.setValue('candidate_personal_photo_url', response.Location);
                               form.trigger('candidate_personal_photo_url');

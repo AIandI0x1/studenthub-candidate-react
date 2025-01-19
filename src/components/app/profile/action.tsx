@@ -12,7 +12,7 @@ import { setUser } from "@/store/slices/userSlice";
 import { alertDialog } from "@/hooks/use-alert-dialog";
 import { userLogout$ } from "@/providers/event.service";
 
-export function CandidateAction() {
+export function CandidateAction({ onClose }: { onClose: () => void }) {
     const router = useHistory();
     const {  t } = useTranslation();
     const dispatch = useDispatch();
@@ -29,6 +29,7 @@ export function CandidateAction() {
        /* dispatch(logout());
         router.push("/");    */
         userLogout$.next({});
+        onClose();
     }
 
     const changeLanguageClicked = () => {
@@ -40,6 +41,7 @@ export function CandidateAction() {
         dispatch(setLanguage({
             language: language
         }));    
+        onClose();
     }
 
     const updateJobSearchStatusClicked = () => {
@@ -67,7 +69,9 @@ export function CandidateAction() {
                     }
                 }));
                 
-                router.push("/");    
+                router.push("/");   
+                
+                onClose();
             }
         });
     }
@@ -76,13 +80,14 @@ export function CandidateAction() {
         removeProfile().then(() => {
             dispatch(logout());
             router.push("/");    
-        })
+            onClose();
+        });
     }
 
     return (
         <div className="w-full py-2 bg-white rounded-2xl flex-col justify-start items-start inline-flex">
              
-            <div onClick={() => router.push("/change-password")} className="cursor-pointer border-slate-200 border-b  self-stretch h-12 p-3 flex-col justify-start items-start gap-2 flex">
+            <div onClick={() => { onClose();router.push("/change-password")} } className="cursor-pointer border-slate-200 border-b  self-stretch h-12 p-3 flex-col justify-start items-start gap-2 flex">
                 <div className="self-stretch justify-start items-center gap-2 inline-flex">
                     <div className="w-6 h-6 relative">
                         <KeyRound />
@@ -93,7 +98,7 @@ export function CandidateAction() {
                 </div>
             </div>
 
-            { user && !user.store && user.candidate_job_search_status && (
+            { user && !user.store && user.candidate_job_search_status != 0 && (
                 <div onClick={() => !updating && updateJobSearchStatusClicked()} className="cursor-pointer border-slate-200 border-b self-stretch h-12 p-3 flex-col justify-start items-start gap-2 flex">
                     <div className="self-stretch justify-start items-center gap-2 inline-flex">
                         <div className="w-6 h-6 relative">
@@ -106,7 +111,7 @@ export function CandidateAction() {
                 </div>
             )}
 
-            <div onClick={changeLanguageClicked} className="cursor-pointer border-slate-200 border-b self-stretch h-12 p-3 flex-col justify-start items-start gap-2 flex">
+            <div onClick={() => changeLanguageClicked()} className="cursor-pointer border-slate-200 border-b self-stretch h-12 p-3 flex-col justify-start items-start gap-2 flex">
                 <div className="self-stretch justify-start items-center gap-2 inline-flex">
                     <div className="w-6 h-6 relative">
                         <Globe />
@@ -117,7 +122,7 @@ export function CandidateAction() {
                 </div>
             </div>
  
-            <div onClick={deleteProfileClicked} className="cursor-pointer border-slate-200 border-b self-stretch h-12 p-3 flex-col justify-start items-start gap-2 flex">
+            <div onClick={() => deleteProfileClicked()} className="cursor-pointer border-slate-200 border-b self-stretch h-12 p-3 flex-col justify-start items-start gap-2 flex">
                 <div className="self-stretch justify-start items-center gap-2 inline-flex">
                     <div className="w-6 h-6 relative">
                         <Trash />
@@ -128,7 +133,7 @@ export function CandidateAction() {
                 </div>
             </div>
 
-            <div onClick={logoutClicked} className="cursor-pointer  self-stretch h-12 p-3 flex-col justify-start items-start gap-2 flex">
+            <div onClick={() => logoutClicked()} className="cursor-pointer  self-stretch h-12 p-3 flex-col justify-start items-start gap-2 flex">
                 <div className="self-stretch justify-start items-center gap-2 inline-flex">
                     <div className="w-6 h-6 relative">
                         <LogOut />

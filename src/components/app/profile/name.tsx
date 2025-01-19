@@ -9,13 +9,15 @@ import {
   } from "@/components/ui/popover"
 import { CandidateAction } from "./action";
 import { useHistory } from 'react-router-dom';
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export function Name() {
 
     const { user } = useAppSelector(state => state.user) as { user: Candidate };
     const router = useHistory();
 
+    const [isActionOpen, setIsActionOpen] = useState(false);
+    
     useEffect(() => {
         //router.prefetch("/name?fromProfile=1");
         //router.prefetch("/personal-photo?fromProfile=1");
@@ -45,14 +47,14 @@ export function Name() {
                     <div className="grow shrink basis-0 text-[#22223d] text-2xl font-bold leading-loose">
                         <span className="cursor-pointer" onClick={updateNameClicked}>{user.candidate_name}</span>
 
-                        <Popover>
+                        <Popover open={isActionOpen} onOpenChange={setIsActionOpen}>
                             <PopoverTrigger asChild>
                                 <Button variant="ghost" className="float-end">
                                     <MoreVertical size={24} />
                                 </Button>
                             </PopoverTrigger>
                             <PopoverContent className="w-50 p-0">
-                                <CandidateAction />
+                                <CandidateAction onClose={() => { setIsActionOpen(false)}} />
                             </PopoverContent>
                         </Popover>
 

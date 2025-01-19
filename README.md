@@ -111,6 +111,13 @@ This generates a out folder containing your static files.
 - remove/ delete profile not asking for confirmation
 - tabs flashing on route change 
 
+- getStore 
+- no option to close interest message in job apply 
+- application tab show message for no applications
+- home page > wallet blank page 
+- Error: Push notification prompting can only be done from a user gesture.
+- mixpanel error in dev console 
+
 # improvements 
 - search icon in education page inputs
 
