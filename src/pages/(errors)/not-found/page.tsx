@@ -1,11 +1,9 @@
-'use client'
-
 import { Button } from '@/components/ui/button'
 import { Link } from 'react-router-dom'
 import { useHistory } from 'react-router-dom'
 import { useTranslation } from 'react-i18next';
 
-export default function NotFoundPage() {
+const NotFoundPage = () => {
   const router = useHistory();
   const { t} = useTranslation();
 
@@ -30,3 +28,5 @@ export default function NotFoundPage() {
     </div>
   )
 }
+
+export default NotFoundPage;

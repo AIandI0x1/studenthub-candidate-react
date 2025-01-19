@@ -54,6 +54,7 @@ import LoadingAppeal from './pages/(dash)/work-log/appeal/[id]/loading';
 import LoadingLogDateList from './pages/(dash)/work-log/log-date-list/loading';
 import LoadingLogHourList from './pages/(dash)/work-log/log-hour-list/[date]/loading';
 import LoadingTrackWork from './pages/(dash)/work-log/track-work/loading';
+import LoadingEducationCompleted from './pages/(auth)/education-complete/loading';
 
 //pages
 
@@ -107,19 +108,18 @@ const AppealDetailPage = React.lazy(() => import('./pages/(dash)/work-log/appeal
 const LogDateListPage = React.lazy(() => import('./pages/(dash)/work-log/log-date-list/page'));
 const LogHourListPage = React.lazy(() => import('./pages/(dash)/work-log/log-hour-list/[date]/page'));
 const TrackWorkPage = React.lazy(() => import('./pages/(dash)/work-log/track-work/page'));
-const NotFoundPage = React.lazy(() => import('./pages/(errors)/not-found'));
 const LoginPage = React.lazy(() => import('./pages/(auth)/login/page'));
+//const ServerErrorPage = React.lazy(() => import('./pages/(errors)/server-error/page'));
 
+import NoInternetErrorPage from './pages/(errors)/no-internet/page';
+import ServerErrorPage from './pages/(errors)/server-error/page';
+import NotFoundPage from './pages/(errors)/not-found/page';
 import HomePage from './pages/(dash)/home/page';
 import LandingPage from './pages/(auth)/landing/page';
-//import NotFoundPage from './pages/(errors)/not-found';
-
 
 import { error404$, error500$, internetOffline$, userLogout$ } from "@/providers/event.service";
 import { useIonRouter } from '@ionic/react';
-import LoadingEducationCompleted from './pages/(auth)/education-complete/loading';
-import ServerErrorPage from './pages/(errors)/server-error/page';
- 
+
 export default function RouterComponent() {
 
   const router = useIonRouter();
@@ -490,7 +490,7 @@ export default function RouterComponent() {
             </Route>
 
             <Route exact={true} path="/no-internet">
-              <ServerErrorPage />
+              <NoInternetErrorPage />
             </Route>
 
             <Route exact={true} path="/not-found">
