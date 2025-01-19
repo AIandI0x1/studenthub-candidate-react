@@ -81,7 +81,7 @@ export default function PagedMajorInput({ selectedMajor, onSelect, name, form }:
                 <FormInput
                     onFocus={() => onFocus()}
                     name={name}
-                    label="Field of Study"
+                    label={ form.getValues(name) == "" ? "Search Field of Study" : "Field of Study"}
                     form={form as any}    
                     autoComplete="off"
                     ></FormInput>

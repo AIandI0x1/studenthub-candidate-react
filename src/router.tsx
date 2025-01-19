@@ -1,5 +1,5 @@
 import React, { Suspense, useEffect } from 'react';
-import { Redirect, Route } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 import { store } from './store/store';
 
 //page loaders
@@ -118,6 +118,7 @@ import LandingPage from './pages/(auth)/landing/page';
 import { error404$, error500$, internetOffline$, userLogout$ } from "@/providers/event.service";
 import { useIonRouter } from '@ionic/react';
 import LoadingEducationCompleted from './pages/(auth)/education-complete/loading';
+import ServerErrorPage from './pages/(errors)/server-error/page';
  
 export default function RouterComponent() {
 
@@ -160,7 +161,7 @@ export default function RouterComponent() {
     }, []);
 
     return (
-        <>
+        <Switch>
             <Route exact={true} path="/">
               <Redirect to="/home" />
             </Route>
@@ -484,11 +485,20 @@ export default function RouterComponent() {
               </Suspense>
             </PrivateRoute>
 
+            <Route exact={true} path="/server-error">
+              <ServerErrorPage />
+            </Route>
+
+            <Route exact={true} path="/no-internet">
+              <ServerErrorPage />
+            </Route>
+
             <Route exact={true} path="/not-found">
               <NotFoundPage />
             </Route>
 
-        </>
+            <Redirect to="/" />
+          </Switch>
     )
 }
 

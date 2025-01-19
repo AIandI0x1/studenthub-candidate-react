@@ -4,12 +4,18 @@ import { Button } from '@/components/ui/button'
 import { Link } from 'react-router-dom'
 import { useHistory } from 'react-router-dom'
 import { useTranslation } from 'react-i18next';
+import { useEffect } from 'react';
 
-export default function ServerErrorPage() {
-  
+export default function NoInternetErrorPage() {
   const router = useHistory();
 
   const { t } = useTranslation();
+
+    useEffect(() => {
+        if (navigator.onLine) {
+            router.goBack();
+        }
+    }, [navigator.onLine]);
 
   return (
     <div className="h-svh">
@@ -17,7 +23,7 @@ export default function ServerErrorPage() {
         <h1 className="text-[7rem] font-bold leading-tight">500</h1>
         <span className="font-medium">{t("Oops! Server error!")}</span>
         <p className="text-center text-muted-foreground">
-          {t("Sorry we had some technical problems during your last operation.")}
+          {t("Please check your internet connection.")}
         </p>
         <div className="mt-6 flex gap-4">
           <Button variant="outline" onClick={() => router.goBack()}>

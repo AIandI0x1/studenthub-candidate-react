@@ -82,7 +82,7 @@ export default function PagedUniversityInput({ selectedUniversity, onSelect, nam
                 <FormInput
                     onFocus={() => onFocus()}
                     name={name}
-                    label="University"
+                    label={ form.getValues(name) == "" ? "Search University" : "University"}
                     form={form as any}    
                     autoComplete="off"
                     ></FormInput>
