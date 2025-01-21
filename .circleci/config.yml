@@ -200,7 +200,7 @@ workflows:
                 filters:
                     branches:
                         only: main
-           # - deploy_on_staging_server:
-           #     context: org-global
-           #     requires:
-           #         - build_for_prod_server
+            - deploy_on_staging_server:
+                context: org-global
+                requires:
+                    - build_for_prod_server
