@@ -159,6 +159,7 @@ const LogTimeManuallyPage = ({ onClose }: {onClose: any}) => {
                 name="date"
                 label="Select date"
                 form={form as any}
+                onChange={() => { form.trigger('date'); }}
             />
             {/*}
               <FormDateInput

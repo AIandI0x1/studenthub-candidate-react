@@ -61,8 +61,42 @@ export default function CivilIdPage() {
     }
   }, []);
 
+  const formSchema = z.object({
+    candidate_civil_photo_back_url: z.string().nullable(),
+    candidate_civil_photo_front_url: z.string().nullable(),
+    candidate_civil_photo_back: z.string({
+       //   required_error: 'Please upload back side of your national id.'
+      }).nullable(),
+    candidate_civil_photo_front: z.string({
+      //    required_error: 'Please upload front side of your national id.'
+      }).nullable(),
+    candidate_civil_expiry_date: z.date({
+      }).min(new Date(), {
+        message: t("Expired ID not allowed."),
+      }),
+      //.min(1, t('Please add expiry date.')),
+    candidate_civil_id: z.string({
+        //required_error: 'Please add id number.'
+    }).min(1, t('Please add id number.'))
+  })
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+        candidate_civil_id: user?.candidate_civil_id || "",
+        candidate_civil_expiry_date: user?.candidate_civil_expiry_date && user?.candidate_civil_expiry_date?.length > 0? 
+          new Date(user?.candidate_civil_expiry_date) : undefined,
+        candidate_civil_photo_back: user?.candidate_civil_photo_back,
+        candidate_civil_photo_front: user?.candidate_civil_photo_front,
+        candidate_civil_photo_back_url: user?.candidate_civil_photo_back?
+           import.meta.env.VITE_PERMANENT_BUCKET_URL  + 'photos/' + user?.candidate_civil_photo_back: undefined,
+        candidate_civil_photo_front_url: user?.candidate_civil_photo_front?
+          import.meta.env.VITE_PERMANENT_BUCKET_URL  + 'photos/' + user?.candidate_civil_photo_front: undefined,
+    },
+  });
+
   useEffect(() => {
-   // if (!user) {
+    if (!user) {
    //  form.setValue('phone', user?.candidate_phone || "");
     //} else {
 
@@ -101,42 +135,8 @@ export default function CivilIdPage() {
       }).finally(() => {
         setLoading(false);
       });
-   // }
-  }, []);//user
-
-  const formSchema = z.object({
-    candidate_civil_photo_back_url: z.string(),
-    candidate_civil_photo_front_url: z.string(),
-    candidate_civil_photo_back: z.string({
-       //   required_error: 'Please upload back side of your national id.'
-      }).nullable(),
-    candidate_civil_photo_front: z.string({
-      //    required_error: 'Please upload front side of your national id.'
-      }).nullable(),
-    candidate_civil_expiry_date: z.date({
-      }).min(new Date(), {
-        message: t("Expired ID not allowed."),
-      }),
-      //.min(1, t('Please add expiry date.')),
-    candidate_civil_id: z.string({
-        //required_error: 'Please add id number.'
-    }).min(1, t('Please add id number.'))
-  })
-
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-        candidate_civil_id: user?.candidate_civil_id || "",
-        candidate_civil_expiry_date: user?.candidate_civil_expiry_date && user?.candidate_civil_expiry_date?.length > 0? 
-          new Date(user?.candidate_civil_expiry_date) : undefined,
-        candidate_civil_photo_back: user?.candidate_civil_photo_back,
-        candidate_civil_photo_front: user?.candidate_civil_photo_front,
-        candidate_civil_photo_back_url: user?.candidate_civil_photo_back?
-           import.meta.env.VITE_PERMANENT_BUCKET_URL  + 'photos/' + user?.candidate_civil_photo_back: undefined,
-        candidate_civil_photo_front_url: user?.candidate_civil_photo_front?
-          import.meta.env.VITE_PERMANENT_BUCKET_URL  + 'photos/' + user?.candidate_civil_photo_front: undefined,
-    },
-  })
+    }
+  }, [user]);
 
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
@@ -337,7 +337,7 @@ export default function CivilIdPage() {
             { form.getValues().candidate_civil_photo_front && <div className="xs:max-w-full w-full sm:max-w-[313px]  flex-none 
                   rounded-2xl mb-[24px] sm:mb-0 sm:me-[24px]">
 
-                <img onError={() => resetFrontId()} src={form.getValues().candidate_civil_photo_front_url} className="w-full"></img>   
+                <img onError={() => resetFrontId()} src={form.getValues().candidate_civil_photo_front_url || ""} className="w-full"></img>   
 
                 <Button variant={"ghost"} disabled={removingFrontId} onClick={resetFrontId} className="text-[color:var(--Neutral-70,#7D7D8D)] text-sm font-medium leading-5 text-center m-auto mt-[12px]">
                     <img src="/assets/icons/trash.svg" className="w-[16px]"></img>  
@@ -407,7 +407,7 @@ export default function CivilIdPage() {
             { form.getValues().candidate_civil_photo_back && <div className="xs:max-w-full sm:max-w-[313px] w-full flex-none 
                   rounded-2xl mb-[24px] sm:mb-0">
 
-                <img onError={() => resetBackId()} src={form.getValues().candidate_civil_photo_back_url} className="w-full"></img>   
+                <img onError={() => resetBackId()} src={form.getValues().candidate_civil_photo_back_url || ""} className="w-full"></img>   
 
                 <Button variant={ "ghost"} disabled={removingBackId} onClick={resetBackId} className="text-[color:var(--Neutral-70,#7D7D8D)] text-sm font-medium leading-5 text-center m-auto mt-[12px]">
                     <img src="/assets/icons/trash.svg" className="w-[16px]"></img>    
