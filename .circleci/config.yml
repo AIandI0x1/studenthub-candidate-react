@@ -163,16 +163,23 @@ jobs:
             - run:
                 name: Deploy to S3
                 command: aws s3 sync ~/completed-build/dist/ s3://studenthub-candidate-staging/
-            #- run:
-            #    name: Set Cache-Control headers for specific files
-            #    command: |
-            #      aws s3 cp s3://studenthub-candidate-staging/sw.js s3://studenthub-candidate-staging/sw.js \
-            #        --metadata-directive REPLACE --cache-control "no-store, no-cache, must-revalidate, max-age=0"
-            #      aws s3 cp s3://studenthub-candidate-staging/index.html s3://studenthub-candidate-staging/index.html \
-            #        --metadata-directive REPLACE --cache-control "no-store, no-cache, must-revalidate, max-age=0"
-            #      aws s3 cp s3://studenthub-candidate-staging/manifest.webmanifest s3://studenthub-candidate-staging/manifest.webmanifest \
-            #        --metadata-directive REPLACE --cache-control "no-store, no-cache, must-revalidate, max-age=0"
+            - run:
+                name: Set Cache-Control headers for specific files
+                command: |
+                  aws s3 cp s3://studenthub-candidate-staging/sw.js s3://studenthub-candidate-staging/sw.js \
+                    --metadata-directive REPLACE --cache-control "no-store, no-cache, must-revalidate, max-age=0" \
+                    --content-type "application/javascript"
+                  
+                  aws s3 cp s3://studenthub-candidate-staging/index.html s3://studenthub-candidate-staging/index.html \
+                    --metadata-directive REPLACE \
+                    --cache-control "no-store, no-cache, must-revalidate, max-age=0" \
+                    --content-type "text/html"
 
+                  aws s3 cp s3://studenthub-candidate-staging/manifest.webmanifest s3://studenthub-candidate-staging/manifest.webmanifest \
+                    --metadata-directive REPLACE \
+                    --cache-control "no-store, no-cache, must-revalidate, max-age=0" \
+                    --content-type "application/manifest+json"
+            
 # Define Workflows
 workflows:
     version: 2
