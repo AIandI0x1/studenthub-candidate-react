@@ -1,4 +1,4 @@
-"use client"
+
 
 import { setLanguage } from "@/store/slices/appSlice";
 import { Link } from "react-router-dom";

@@ -1,6 +1,5 @@
 import { CandidateWorkingDate } from "@/models/candidate-working-date";
 import { dateTimeFormat, secondsToTime } from "@/utils/common";
-import { format } from "date-fns";
 import { useTranslation } from "react-i18next";
 
 export function WorkLogDayStats({ candidateWorkingDate}: { candidateWorkingDate: CandidateWorkingDate}) {

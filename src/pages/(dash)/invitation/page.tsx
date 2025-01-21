@@ -1,4 +1,4 @@
-"use client"
+
 // app/(dash)/invitations/InvitationsPage.jsx
 
 import Invitation from '@/components/app/invitation';
@@ -9,7 +9,7 @@ import { page, track } from '@/providers/analytics.service';
 import { requestUpdated$ } from '@/providers/event.service';
 import { listInvitations } from '@/providers/logged-in/invitation.service';
 import { t } from 'i18next';
-import React, { Suspense, useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import Loading from './loading';
 import DashLayout from '../layout';
 
@@ -81,6 +81,7 @@ const InvitationListPage = () => {
                     {invitations.map((invitation: any) => (
                         <Invitation key={invitation.id} model={invitation} />
                     ))}
+                    
                     {!loading && invitations.length === 0 && (
                         <NoItems image="assets/icons/no-invitation.svg" 
                             title={ t('There are no assignments yet!') }

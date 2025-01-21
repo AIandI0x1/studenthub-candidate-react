@@ -1,4 +1,4 @@
-import { Pagination, PaginationLink, PaginationEllipsis, PaginationNext, PaginationContent, PaginationItem, PaginationPrevious } from "../ui/pagination";
+import { Pagination, PaginationLink, PaginationNext, PaginationContent, PaginationItem, PaginationPrevious } from "../ui/pagination";
 
 interface IPagerProps {
     pagination: {

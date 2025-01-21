@@ -1,7 +1,6 @@
 import { Certificate } from "@/models/certificate";
 import { downloadCertificate } from "@/providers/logged-in/candidate.service";
 import { dateTimeFormat, langContent } from "@/utils/common";
-import { format } from "date-fns";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";

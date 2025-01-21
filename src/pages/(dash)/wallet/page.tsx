@@ -1,4 +1,4 @@
-"use client"
+
 
 import Pager from '@/components/common/pager';
 // app/(dash)/wallet/WalletBalanceListPage.tsx
@@ -6,7 +6,7 @@ import Pager from '@/components/common/pager';
 import { page, track } from '@/providers/analytics.service';
 import { requestUpdated$ } from '@/providers/event.service';
 import { payableList } from '@/providers/logged-in/balance.service';
-import React, { useEffect, useState, Suspense } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { useTranslation } from 'react-i18next';
 import Loading from './loading';
 import { dateTimeFormat } from '@/utils/common';

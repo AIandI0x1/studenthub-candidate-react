@@ -14,9 +14,12 @@
     "preview": "vite preview",
     "test.e2e": "cypress run",
     "test.unit": "vitest",
-    "lint": "eslint"
+    "lint": "eslint",
+    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org pogi --project sh-student-app ./dist && sentry-cli sourcemaps upload --org pogi --project sh-student-app ./dist"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.731.1",
+    "@aws-sdk/lib-storage": "^3.731.1",
     "@capacitor/app": "6.0.2",
     "@capacitor/core": "6.2.0",
     "@capacitor/geolocation": "^6.1.0",
@@ -39,11 +42,10 @@
     "@radix-ui/react-toast": "^1.2.2",
     "@reduxjs/toolkit": "^2.3.0",
     "@sentry/capacitor": "^1.1.0",
-    "@sentry/react": "^8.42.0",
+    "@sentry/react": "8.42.0",
     "@types/react-router": "^5.1.20",
     "@types/react-router-dom": "^5.3.3",
     "autoprefixer": "^10.4.20",
-    "aws-sdk": "^2.1692.0",
     "axios": "^1.7.7",
     "class-variance-authority": "^0.7.1",
     "cmdk": "^1.0.4",
@@ -78,6 +80,7 @@
     "@testing-library/user-event": "^14.4.3",
     "@types/file-saver": "^2.0.7",
     "@types/mixpanel-browser": "^2.50.2",
+    "@types/node": "^22.10.6",
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
     "@vitejs/plugin-legacy": "^5.0.0",
@@ -91,6 +94,7 @@
     "terser": "^5.4.0",
     "typescript": "^5.1.6",
     "vite": "~5.2.0",
+    "vite-plugin-pwa": "^0.21.1",
     "vitest": "^0.34.6"
   },
   "description": "Studenthub Candidate React App"

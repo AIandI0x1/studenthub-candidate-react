@@ -1,8 +1,8 @@
-"use client"
+
 // app/(dash)/invitation/FeedbackPage.jsx
 
 import { page, track } from '@/providers/analytics.service';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Invitation } from '@/models/invitation';

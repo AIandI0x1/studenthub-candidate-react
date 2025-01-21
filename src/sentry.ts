@@ -3,11 +3,13 @@ import * as SentryReact from "@sentry/react";
 
 Sentry.init(
   {
-    dsn: "https://1c996b75b785482aae7c345ce717b5dd@o70039.ingest.us.sentry.io/5339282",
+    dsn: "https://1c996b75b785482aae7c345ce717b5dd@o70039.ingest.sentry.io/5339282",
+   // "https://1c996b75b785482aae7c345ce717b5dd@o70039.ingest.us.sentry.io/5339282",
     // Set your release version, such as "getsentry@1.0.0"
-    release: "studenthub-candidate-react@latest",
+    release: "sh-student-app@latest",
     // Set your dist version, such as "1"
     dist: "1.0.0",
+    environment: import.meta.env.VITE_ENV_NAME,
     integrations: [
       // Registers and configures the Tracing integration,
       // which automatically instruments your application to monitor its
@@ -24,7 +26,12 @@ Sentry.init(
     // https://docs.sentry.io/platforms/javascript/configuration/options/#traces-sample-rate
     tracesSampleRate: 1.0,
     // Set `tracePropagationTargets` to control for which URLs distributed tracing should be enabled
-    tracePropagationTargets: ["localhost", /^https:\/\/yourserver\.io\/api/],
+    tracePropagationTargets: [
+   //   /^https:\/\/localhost/, 
+   //   /^http:\/\/localhost/, 
+      /^https:\/\/student\.dev\.studenthub\.co/,
+      /^https:\/\/student\.studenthub\.co/
+    ],
     // Capture Replay for 10% of all sessions,
     // plus for 100% of sessions with an error
     // Learn more at

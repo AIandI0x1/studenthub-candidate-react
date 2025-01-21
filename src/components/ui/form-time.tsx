@@ -1,5 +1,3 @@
-'use client'
-
 import { useId, useState } from 'react'
 import { Input } from "@/components/ui/input"
 import {
@@ -12,7 +10,6 @@ import {
 } from "@/components/ui/form"
 import { UseFormReturn } from 'react-hook-form'
 import CircularTimePicker from '@/components/ui/circular-time-picker';
-import { Timer } from '../common/timer'
 import { useTranslation } from 'react-i18next'
 import i18n from '@/18n';
 

@@ -1,7 +1,7 @@
-"use client"
+
 // app/(dash)/discounts/DiscountsPage.jsx
 
-import React, { Suspense, useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { DiscountCategory } from '@/models/discount-category';
 import { Discount } from '@/models/discount';
 import { listDiscountCategories } from '@/providers/logged-in/discount-category.service';

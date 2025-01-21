@@ -1,4 +1,4 @@
-"use client"
+
 import { Button } from '@/components/ui/button';
 import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover';
 // app/(dash)/invitation/InvitationDetailPage.jsx
@@ -8,7 +8,7 @@ import { page, track } from '@/providers/analytics.service';
 import { requestUpdated$ } from '@/providers/event.service';
 import { detailInvitation } from '@/providers/logged-in/invitation.service';
 import { useParams } from 'react-router-dom'; 
-import React, { Suspense, useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import CompanyPage from '../../../../components/modals/company/page';
 import { useTranslation } from 'react-i18next';
 import FeedbackPage from '../../../../components/modals/feedback/page';

@@ -1,10 +1,11 @@
-"use client"
-
-import * as AWS from 'aws-sdk';
 import axios from "../AxiosService";
 import { store } from '@/store/store';
 //import { setTempBucket } from '@/store/slices/appSlice';
 //import { ManagedUpload } from 'aws-sdk/clients/s3';
+import { S3Client, ObjectCannedACL } from "@aws-sdk/client-s3";
+import { Upload } from "@aws-sdk/lib-storage";
+
+let s3: S3Client;
 
     /**
      * get temp aws access/ todo: can also get authorised link  
@@ -22,6 +23,12 @@ import { store } from '@/store/store';
     export async function setAWSConfig() {
         //const dispatch = useAppDispatch();
 
+        if (s3) {
+            return new Promise((resolve, reject) => {
+                resolve(s3);
+            });
+        }
+
         return await getConfig().then(config => {
              
             /*dispatch(setTempBucket({
@@ -29,16 +36,21 @@ import { store } from '@/store/store';
             }));*/
 
             // Create credentials object
-            const credentials = new AWS.Credentials({
-                accessKeyId: config.key,
-                secretAccessKey: config.secret
+            s3 = new S3Client({
+                region: config.region,
+                credentials: {
+                    accessKeyId: config.key,
+                    secretAccessKey: config.secret
+                }
             });
 
             // Set AWS config with credentials object
-            AWS.config.update({
+            /*S3.update({
                 region: config.region,
                 credentials: credentials
-            });
+            });*/
+
+            return s3;
         });
     }
 
@@ -65,9 +77,9 @@ import { store } from '@/store/store';
         temp_bucket = "studenthub-public-anyone-can-upload-24hr-expiry";
     }
 
-        let s3 = new AWS.S3({
+        /*let s3 = new S3({
             apiVersion: '2006-03-01'
-        });
+        });*/
 
         let extension = getFileExtension(file.name);
 
@@ -79,17 +91,15 @@ import { store } from '@/store/store';
 
         let key = prefix + "-" + Date.now() + "." + extension;
 
-        console.log(file, key, temp_bucket);
-
         let params = {
             Body: file, // the actual file file
-            ACL: "public-read", // to allow public access to the file
+            ACL: 'public-read' as ObjectCannedACL, // to allow public access to the file
             Bucket: temp_bucket, //bucket name
             Key: key, //file name
             ContentType: file.type, //(String) A standard MIME type describing the format of the object file
             Metadata: metadata
         }
-
+       
         //return Observable.create((observer: Observer<any>) => {
 
             /*
@@ -101,9 +111,14 @@ import { store } from '@/store/store';
                 return observer.error(this.translateService.transform('Maximum 5mb Upload is allowed'));
             }*/
 
-            const currUpload = s3.upload(params);
+            const upload = new Upload({
+                client: s3,
+                params: params
+            });
+
+           // const currUpload = s3.send(new PutObjectCommand(params)); 
         
-            return currUpload.promise();
+            return upload.done();
 
             /*observer.next(currUpload);
 

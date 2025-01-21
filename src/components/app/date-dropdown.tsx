@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, isSameMonth, isSameYear } from 'date-fns';
+import { startOfMonth, endOfMonth, eachDayOfInterval, isSameDay } from 'date-fns';
 import { dateTimeFormat } from '@/utils/common';
 
 const DateDropdown = ({ min, max, placeholder, pickerFormat, position }: 

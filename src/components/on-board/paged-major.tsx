@@ -1,7 +1,6 @@
 import {
     Pagination,
     PaginationContent,
-    PaginationEllipsis,
     PaginationItem,
     PaginationLink,
     PaginationNext,
@@ -9,7 +8,7 @@ import {
   } from "@/components/ui/pagination"
   
 import { CheckIcon } from "lucide-react";
-import React, { useEffect, useId, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FormInput } from "../ui/form-input";
 import { Card, CardContent } from "../ui/card";
 import { listMajors } from "@/providers/logged-in/candidate-education.service";
@@ -81,7 +80,7 @@ export default function PagedMajorInput({ selectedMajor, onSelect, name, form }:
                 <FormInput
                     onFocus={() => onFocus()}
                     name={name}
-                    label="Field of Study"
+                    label={ form.getValues(name) == "" ? "Search Field of Study" : "Field of Study"}
                     form={form as any}    
                     autoComplete="off"
                     ></FormInput>

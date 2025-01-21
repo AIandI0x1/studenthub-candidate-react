@@ -1,4 +1,4 @@
-"use client"
+
 // app/(dash)/log-time-manually/page.tsx
 //import { IonDatetime } from '@ionic/react';
 
@@ -17,7 +17,6 @@ import { z } from "zod"
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FormTextarea } from '@/components/ui/form-textarea';
 import { FormTimeInput } from '@/components/ui/form-time';
-import { FormDateInput } from '@/components/ui/form-date';
 import { t } from 'i18next';
 import { toast } from '@/hooks/use-toast';
 import { alertDialog } from '@/hooks/use-alert-dialog';
@@ -160,6 +159,7 @@ const LogTimeManuallyPage = ({ onClose }: {onClose: any}) => {
                 name="date"
                 label="Select date"
                 form={form as any}
+                onChange={() => { form.trigger('date'); }}
             />
             {/*}
               <FormDateInput

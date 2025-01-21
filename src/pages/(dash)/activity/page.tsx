@@ -1,7 +1,7 @@
-"use client"
+
 
 // src/components/ActivityPage.tsx
-import React, { Suspense, useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
  
 import { useTranslation } from 'react-i18next'; // For translations
 import { CandidateNotification } from '@/models/candidate-notification';

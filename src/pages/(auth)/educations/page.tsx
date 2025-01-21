@@ -1,4 +1,4 @@
-"use client"
+
 
 import { OnboardProgress } from "@/components/on-board/progress";
 
@@ -208,6 +208,7 @@ export default function EducationsPage() {
                   <div className="flex-1 me-[16px]">
                     <PagedMajorInput
                       selectedMajor={form.getValues(`candidateEducations.${index}.major`)}
+                      
                       onSelect={(major: any) => {
                         if (major) {
                           form.setValue(`candidateEducations.${index}.major`, 

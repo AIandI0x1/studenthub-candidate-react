@@ -1,4 +1,4 @@
-"use client"
+
 
 import { OnboardProgress } from "@/components/on-board/progress";
 
@@ -8,8 +8,7 @@ import { z } from "zod"
  
 import {
   Form,
-} from "@/components/ui/form"
-import { FormInput } from "@/components/ui/form-input";
+} from "@/components/ui/form";
 import OnboardFooter from "@/components/on-board/layout/footer";
 import SubmitButton from "@/components/ui/submit-button";
 import { Suspense, useEffect, useState } from "react";
@@ -20,12 +19,10 @@ import { useAppSelector } from "@/store/store";
 import { useAppDispatch } from "@/store/store";
 import { IonDatetime, useIonRouter } from "@ionic/react";
 import { page, track } from "@/providers/analytics.service";
-import { FormDateInput } from "@/components/ui/form-date";
 import { alertDialog } from "@/hooks/use-alert-dialog";
 import { useTranslation } from "react-i18next";
 import Loading from "./loading";
 import AuthLayout from "../layout";
-import { FormDateTimeInput } from "@/components/ui/form-datetime";
 
 
 export default function DobPage() {

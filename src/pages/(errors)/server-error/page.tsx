@@ -1,14 +1,13 @@
-'use client'
-
 import { Button } from '@/components/ui/button'
 import { Link } from 'react-router-dom'
 import { useHistory } from 'react-router-dom'
 import { useTranslation } from 'react-i18next';
 
-export default function ServerError() {
+export default function ServerErrorPage() {
+  
   const router = useHistory();
 
-  const { t} = useTranslation();
+  const { t } = useTranslation();
 
   return (
     <div className="h-svh">

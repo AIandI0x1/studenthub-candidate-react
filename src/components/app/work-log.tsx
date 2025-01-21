@@ -1,10 +1,9 @@
 // components/App/WorkLog.jsx
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next'; // Assuming you're using react-i18next for translations
 import { dateTimeFormat, secondsToTime } from '@/utils/common';
-import { format } from 'date-fns';
 import i18n from '@/18n';
 import { Button } from '../ui/button';
 import WorkLogAppealPage from '../modals/work-log-appeal/page';

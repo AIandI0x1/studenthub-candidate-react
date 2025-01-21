@@ -1,4 +1,4 @@
-"use client"
+
 // app/(dash)/assignment/page.tsx
 
 import React, { Suspense, useEffect, useState } from 'react';
@@ -15,7 +15,6 @@ import { CandidateWorkHistory } from '@/models/candidate-work-history';
 import { useTranslation } from 'react-i18next';
 import WorkLogDay from '@/components/app/work-log-day';
 import { groupBy } from '@/utils/app';
-import { FormDateInput } from '@/components/ui/form-date';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 // Import necessary components and services

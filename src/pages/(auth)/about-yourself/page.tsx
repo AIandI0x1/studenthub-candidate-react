@@ -1,4 +1,4 @@
-"use client"
+
 
 import { OnboardProgress } from "@/components/on-board/progress";
 
@@ -9,12 +9,10 @@ import { z } from "zod"
 import {
   Form
 } from "@/components/ui/form"
-import { FormInput } from "@/components/ui/form-input";
 import OnboardFooter from "@/components/on-board/layout/footer";
 import SubmitButton from "@/components/ui/submit-button";
-import { Textarea } from "@/components/ui/textarea";
 import { Suspense, useEffect, useState } from "react";
-import { profile, updateIntro, updatePhoneDetail } from "@/providers/logged-in/account.service";
+import { profile, updateIntro } from "@/providers/logged-in/account.service";
 import { errorMessage, useQuery } from "@/utils/common";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { setUser } from "@/store/slices/userSlice";

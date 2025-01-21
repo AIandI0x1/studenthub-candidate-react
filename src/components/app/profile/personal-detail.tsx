@@ -4,7 +4,6 @@ import { Country } from "@/models/country";
 import { useAppSelector } from "@/store/store";
 import { calculateAge } from "@/utils/app";
 import { dateTimeFormat } from "@/utils/common";
-import { format } from "date-fns";
 import { useHistory } from "react-router-dom";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
@@ -281,7 +280,7 @@ export function PersonalDdetail()   {
                     <div className="text-[#22223d] text-sm font-medium leading-tight">
                         { user.candidate_driving_license == 1 && t('Has Driving License') }
                         { user.candidate_driving_license == 2 && t('Has No Driving License') }
-                        { !user.candidate_driving_license && t('Driving License (not set)') }
+                        { (!user.candidate_driving_license || user.candidate_driving_license == 0) && t('Driving License (not set)') }
                     </div>
                 </div>
             

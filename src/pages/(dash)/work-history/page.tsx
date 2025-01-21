@@ -1,4 +1,4 @@
-"use client"
+
 // app/(dash)/work-history/WorkHistoryPage.tsx
 
 import { page, track } from '@/providers/analytics.service';

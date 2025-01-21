@@ -1,5 +1,3 @@
-'use client'
-
 import { Input } from "@/components/ui/input"
 import { FormControl, FormItem, FormLabel, FormMessage } from './form'
 import { ControllerRenderProps, FieldValues } from "react-hook-form"

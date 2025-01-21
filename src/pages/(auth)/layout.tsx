@@ -1,9 +1,9 @@
-"use client"
+
 
 //import type { Metadata } from "next";
 import OnboardHeader from "@/components/on-board/layout/header";
-import { setAWSConfig } from "@/providers/logged-in/aws.service";
-import { useEffect } from "react";
+//import { setAWSConfig } from "@/providers/logged-in/aws.service";
+//import { useEffect } from "react";
  
 /*export const metadata: Metadata = {
   title: 'StudentHub - Your Learning Journey Starts Here',
@@ -16,9 +16,9 @@ export default function AuthLayout({
   children: React.ReactNode;
 }>) {
 
-  useEffect(() => {
+  /*useEffect(() => {
     setAWSConfig();
-  }, []);
+  }, []);*/
 
   return (
     <>

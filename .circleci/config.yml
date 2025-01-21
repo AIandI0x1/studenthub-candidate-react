@@ -4,7 +4,7 @@ jobs:
     build_for_dev_server:
         docker:
           # specify the version you desire here
-          - image: cimg/node:19.0.1
+          - image: cimg/node:23.6.0
             environment:
               CHROME_BIN: /usr/bin/google-chrome
               NODE_OPTIONS: --max_old_space_size=16000
@@ -25,7 +25,7 @@ jobs:
               #- dependencies-v3-
 
           # Install NPM dependencies
-          - run: npm install --force
+          - run: npm install
 
           # Cache Node Modules until dependencies have changed
           - save_cache:
@@ -61,7 +61,7 @@ jobs:
     build_for_prod_server:
         docker:
           # specify the version you desire here
-          - image: cimg/node:19.0.1
+          - image: cimg/node:23.6.0
             environment:
               CHROME_BIN: /usr/bin/google-chrome
               NODE_OPTIONS: --max_old_space_size=16000
@@ -132,6 +132,15 @@ jobs:
             - run:
                 name: Deploy to S3
                 command: aws s3 sync ~/completed-build/dist/ s3://studenthub-candidate-dev/
+            #- run:
+            #    name: Set Cache-Control headers for specific files
+            #        command: |
+            #      aws s3 cp s3://studenthub-candidate-dev/sw.js s3://studenthub-candidate-dev/sw.js \
+            #        --metadata-directive REPLACE --cache-control "no-store, no-cache, must-revalidate, max-age=0"
+            #      aws s3 cp s3://studenthub-candidate-dev/index.html s3://studenthub-candidate-dev/index.html \
+            #        --metadata-directive REPLACE --cache-control "no-store, no-cache, must-revalidate, max-age=0"
+            #      aws s3 cp s3://studenthub-candidate-dev/manifest.webmanifest s3://studenthub-candidate-dev/manifest.webmanifest \
+            #        --metadata-directive REPLACE --cache-control "no-store, no-cache, must-revalidate, max-age=0"
             - run:
                 name: Invalidate Cloudfront Cache
                 command: aws cloudfront create-invalidation --distribution-id E28DDYWGPS1Q1K --paths '/*'
@@ -154,7 +163,15 @@ jobs:
             - run:
                 name: Deploy to S3
                 command: aws s3 sync ~/completed-build/dist/ s3://studenthub-candidate-staging/
-
+            #- run:
+            #    name: Set Cache-Control headers for specific files
+            #    command: |
+            #      aws s3 cp s3://studenthub-candidate-staging/sw.js s3://studenthub-candidate-staging/sw.js \
+            #        --metadata-directive REPLACE --cache-control "no-store, no-cache, must-revalidate, max-age=0"
+            #      aws s3 cp s3://studenthub-candidate-staging/index.html s3://studenthub-candidate-staging/index.html \
+            #        --metadata-directive REPLACE --cache-control "no-store, no-cache, must-revalidate, max-age=0"
+            #      aws s3 cp s3://studenthub-candidate-staging/manifest.webmanifest s3://studenthub-candidate-staging/manifest.webmanifest \
+            #        --metadata-directive REPLACE --cache-control "no-store, no-cache, must-revalidate, max-age=0"
 
 # Define Workflows
 workflows:
@@ -183,7 +200,7 @@ workflows:
                 filters:
                     branches:
                         only: main
-           # - deploy_on_staging_server:
-           #     context: org-global
-           #     requires:
-           #         - build_for_prod_server
+            - deploy_on_staging_server:
+                context: org-global
+                requires:
+                    - build_for_prod_server

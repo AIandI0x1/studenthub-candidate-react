@@ -1,8 +1,6 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next'; // Assuming you're using react-i18next for translations
 import { dateTimeFormat, secondsToTime } from '@/utils/common';
-import { format } from 'date-fns';
 import { CandidateWorkingDate } from '@/models/candidate-working-date';
 
 const WorkLogDayDetail = ({ candidateWorkingDate }: { candidateWorkingDate: CandidateWorkingDate}) => {

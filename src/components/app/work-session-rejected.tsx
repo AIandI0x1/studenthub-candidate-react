@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next'; // Assuming you're using react-i18next for translations
-import { format } from 'date-fns';
 import { dateTimeFormat } from '@/utils/common';
 
 const WorkSessionRejected = ({ candidateNotification, onClick }: { candidateNotification: any, onClick: any }) => {

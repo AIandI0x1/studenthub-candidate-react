@@ -17,7 +17,6 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { CheckIcon } from "lucide-react";
 import React, { useEffect, useId, useState } from "react";
 import { FormControl, FormItem, FormLabel, FormMessage } from "../ui/form";
-import { filterUniversities } from "@/providers/university.service";
 import { langContent } from "@/utils/common";
 import { useTranslation } from "react-i18next";
 import { filterCountries } from "@/providers/country.service";

@@ -5,7 +5,7 @@ import { startWork } from '@/providers/logged-in/account.service';
 import { useAppSelector } from '@/store/store';
 import { useAppDispatch } from '@/store/store';
 import { errorMessage } from '@/utils/common';
-import React, { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next'; // Assuming you're using react-i18next for translations
 import { alertDialog } from '@/hooks/use-alert-dialog';
 
@@ -69,7 +69,7 @@ const WorkingCounter = () => {
           }
 
           alertDialog({
-            title: t('Error'),
+            title: data.operation === "success"? t('Success') : t('Error'),
             description: errorMessage(data.message),
           });
       }

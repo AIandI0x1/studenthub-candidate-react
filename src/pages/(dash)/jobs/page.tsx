@@ -1,4 +1,4 @@
-"use client"
+
 
 import JobComponent from "@/components/app/jobs/job";
 import { Suspense, useEffect, useState } from "react";
@@ -10,6 +10,7 @@ import { listJobs } from "@/providers/logged-in/job.service";
 import Pager from "@/components/common/pager";
 import { useTranslation } from "react-i18next";
 import DashLayout from "../layout";
+import NoItems from "@/components/common/no-items";
 
 export default function JobsPage() {
 
@@ -134,6 +135,29 @@ export default function JobsPage() {
                         className="focus:outline-0 focus:ring-0 w-full self-stretch h-10 gap-2.5 ps-10 pe-4 py-2.5 bg-white rounded-lg text-slate-400 text-sm font-normal leading-tight" />
 
                 </div>
+
+                {!loading && jobs.length === 0 && (
+                    <>
+                        { query.length == 0 && segment == 'jobs' && <NoItems image="assets/icons/no-invitation.svg" 
+                            title={ t('We will list matching jobs here!') }
+                            message={ t('Our team is working hard to find you the suitable jobs for you. Stay tight!') } />
+                        }
+                        { query.length == 0 && segment == 'applications' && <NoItems image="assets/icons/no-invitation.svg" 
+                            title={ t('Your job applications will be listed here!') }
+                            message={ t('You can see the status of your applications here.') } />
+                        }
+                        {
+                            query.length > 0 && segment == 'jobs' && <NoItems image="assets/icons/no-invitation.svg" 
+                                title={ t('No matching jobs found!') }
+                                message={ t("We couldn't find any jobs matching your search. Try a different search term.") } />       
+                        }
+                        {
+                            query.length > 0 && segment == 'applications' && <NoItems image="assets/icons/no-invitation.svg" 
+                                title={ t('No matching applications found!') }
+                                message={ t("We couldn't find any applications matching your search. Try a different search term.") } />       
+                        }
+                    </>
+                )}
 
                 {jobs.map((job: Job) => (
                     <JobComponent key={job.job_uuid} job={job} />

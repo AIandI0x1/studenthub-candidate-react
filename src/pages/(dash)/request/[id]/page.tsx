@@ -1,4 +1,4 @@
-"use client"
+
 import { alertDialog } from '@/hooks/use-alert-dialog';
 // app/(dash)/request/RequestViewPage.tsx
 
@@ -7,7 +7,7 @@ import { page, track } from '@/providers/analytics.service';
 import { viewRequest, applyRequest } from '@/providers/logged-in/request.service';
 import { dateTimeFormat, errorMessage, toDate } from '@/utils/common';
 import { useParams } from 'react-router-dom';    
-import React, { Suspense, useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Loading from '../loading';
 import DashLayout from '../../layout';

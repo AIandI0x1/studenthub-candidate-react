@@ -1,7 +1,6 @@
 import {
     Pagination,
     PaginationContent,
-    PaginationEllipsis,
     PaginationItem,
     PaginationLink,
     PaginationNext,
@@ -9,7 +8,7 @@ import {
   } from "@/components/ui/pagination"
   
 import { CheckIcon } from "lucide-react";
-import React, { useEffect, useId, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { filterUniversities } from "@/providers/university.service";
 import { FormInput } from "../ui/form-input";
 import { Card, CardContent } from "../ui/card";
@@ -82,7 +81,7 @@ export default function PagedUniversityInput({ selectedUniversity, onSelect, nam
                 <FormInput
                     onFocus={() => onFocus()}
                     name={name}
-                    label="University"
+                    label={ form.getValues(name) == "" ? "Search University" : "University"}
                     form={form as any}    
                     autoComplete="off"
                     ></FormInput>

@@ -2,7 +2,7 @@ import { Badge } from "@/components/ui/badge";
 import { setPath } from "@/store/slices/appSlice";
 import { StoreState, useAppDispatch, useAppSelector } from "@/store/store";
 import { useHistory } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
 export default function Navigation() {

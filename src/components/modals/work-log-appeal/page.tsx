@@ -1,4 +1,4 @@
-"use client"
+
 // app/(dash)/log-time-manually/page.tsx
 //import { IonDatetime } from '@ionic/react';
 

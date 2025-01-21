@@ -104,14 +104,14 @@ npx next export`
 This generates a out folder containing your static files.
 
 # todo 
-- api call to check video upload status if uploaded but not processed
+- getStore error on login page 
 
-- Test oneSignal
-- remove/ delete profile not asking for confirmation
-- tabs flashing on route change 
 
 # improvements 
+- tabs flashing on route change 
 - search icon in education page inputs
+- Error: Push notification prompting can only be done from a user gesture.
+- mixpanel error in dev console 
 
 # to test in mobile app 
 - OneSignal 
@@ -120,3 +120,9 @@ This generates a out folder containing your static files.
 - CV upload 
 - App notification for chat message if not in app?
 - location tracking with background service 
+
+# oneSignal 
+- https://documentation.onesignal.com/docs/ionic-capacitor-cordova-sdk-setup
+
+## web sdk 
+- https://documentation.onesignal.com/docs/web-sdk-reference#removetags

@@ -11,8 +11,9 @@ import { useEffect, useState } from "react";
 import { setUser } from "@/store/slices/userSlice";
 import { alertDialog } from "@/hooks/use-alert-dialog";
 import { userLogout$ } from "@/providers/event.service";
+import { IonAlert } from "@ionic/react";
 
-export function CandidateAction() {
+export function CandidateAction({ onClose }: { onClose: () => void }) {
     const router = useHistory();
     const {  t } = useTranslation();
     const dispatch = useDispatch();
@@ -20,6 +21,8 @@ export function CandidateAction() {
     const { user } = useAppSelector((state) => state.user);
 
     const [updating, setUpdating] = useState(false);
+
+    const [isDeleteAlertOpen, setIsDeleteAlertOpen] = useState(false);
 
     useEffect(() => {
         //router.prefetch("/change-password");
@@ -29,6 +32,7 @@ export function CandidateAction() {
        /* dispatch(logout());
         router.push("/");    */
         userLogout$.next({});
+        onClose();
     }
 
     const changeLanguageClicked = () => {
@@ -40,6 +44,7 @@ export function CandidateAction() {
         dispatch(setLanguage({
             language: language
         }));    
+        onClose();
     }
 
     const updateJobSearchStatusClicked = () => {
@@ -67,22 +72,27 @@ export function CandidateAction() {
                     }
                 }));
                 
-                router.push("/");    
+                router.push("/");   
+                
+                onClose();
             }
         });
     }
 
     const deleteProfileClicked = () => {
+        setIsDeleteAlertOpen(false);
+        
         removeProfile().then(() => {
             dispatch(logout());
             router.push("/");    
-        })
+            onClose();
+        });
     }
 
     return (
         <div className="w-full py-2 bg-white rounded-2xl flex-col justify-start items-start inline-flex">
              
-            <div onClick={() => router.push("/change-password")} className="cursor-pointer border-slate-200 border-b  self-stretch h-12 p-3 flex-col justify-start items-start gap-2 flex">
+            <div onClick={() => { onClose();router.push("/change-password")} } className="cursor-pointer border-slate-200 border-b  self-stretch h-12 p-3 flex-col justify-start items-start gap-2 flex">
                 <div className="self-stretch justify-start items-center gap-2 inline-flex">
                     <div className="w-6 h-6 relative">
                         <KeyRound />
@@ -93,7 +103,7 @@ export function CandidateAction() {
                 </div>
             </div>
 
-            { user && !user.store && user.candidate_job_search_status && (
+            { user && !user.store && user.candidate_job_search_status != 0 && (
                 <div onClick={() => !updating && updateJobSearchStatusClicked()} className="cursor-pointer border-slate-200 border-b self-stretch h-12 p-3 flex-col justify-start items-start gap-2 flex">
                     <div className="self-stretch justify-start items-center gap-2 inline-flex">
                         <div className="w-6 h-6 relative">
@@ -106,7 +116,7 @@ export function CandidateAction() {
                 </div>
             )}
 
-            <div onClick={changeLanguageClicked} className="cursor-pointer border-slate-200 border-b self-stretch h-12 p-3 flex-col justify-start items-start gap-2 flex">
+            <div onClick={() => changeLanguageClicked()} className="cursor-pointer border-slate-200 border-b self-stretch h-12 p-3 flex-col justify-start items-start gap-2 flex">
                 <div className="self-stretch justify-start items-center gap-2 inline-flex">
                     <div className="w-6 h-6 relative">
                         <Globe />
@@ -117,7 +127,7 @@ export function CandidateAction() {
                 </div>
             </div>
  
-            <div onClick={deleteProfileClicked} className="cursor-pointer border-slate-200 border-b self-stretch h-12 p-3 flex-col justify-start items-start gap-2 flex">
+            <div onClick={() => setIsDeleteAlertOpen(true)} className="cursor-pointer border-slate-200 border-b self-stretch h-12 p-3 flex-col justify-start items-start gap-2 flex">
                 <div className="self-stretch justify-start items-center gap-2 inline-flex">
                     <div className="w-6 h-6 relative">
                         <Trash />
@@ -128,7 +138,7 @@ export function CandidateAction() {
                 </div>
             </div>
 
-            <div onClick={logoutClicked} className="cursor-pointer  self-stretch h-12 p-3 flex-col justify-start items-start gap-2 flex">
+            <div onClick={() => logoutClicked()} className="cursor-pointer  self-stretch h-12 p-3 flex-col justify-start items-start gap-2 flex">
                 <div className="self-stretch justify-start items-center gap-2 inline-flex">
                     <div className="w-6 h-6 relative">
                         <LogOut />
@@ -138,6 +148,30 @@ export function CandidateAction() {
                     </div>
                 </div>
             </div>
+
+            <IonAlert
+                trigger="present-alert"
+                header={t('Delete Profile')}
+                subHeader={t('Are you sure you want to delete your profile?')}
+                message={t('This action will permanently delete your profile and all associated data. Are you sure you want to proceed?')}
+                isOpen={isDeleteAlertOpen}
+                buttons={[
+                    {
+                      text: t('Cancel'),
+                      role: 'cancel',
+                      handler: () => {
+                        setIsDeleteAlertOpen(false);
+                      },
+                    },
+                    {
+                      text: t('Delete'),
+                      role: 'confirm',
+                      handler: () => {
+                        deleteProfileClicked();
+                      },
+                    },
+                ]}
+            ></IonAlert>
         </div>
     );
 }

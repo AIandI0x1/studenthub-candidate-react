@@ -1,11 +1,11 @@
-"use client"
+
 // app/(dash)/payments/PaymentsPage.jsx
 
 import { Salary } from '@/models/salary';
 import { page, track } from '@/providers/analytics.service';
 import { viewSalary } from '@/providers/logged-in/account.service';
 import { useParams } from 'react-router-dom';
-import React, { Suspense, useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Loading from '../loading';
 import { dateTimeFormat } from '@/utils/common';

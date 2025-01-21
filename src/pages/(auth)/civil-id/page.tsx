@@ -1,4 +1,4 @@
-"use client"
+
 
 import { OnboardProgress } from "@/components/on-board/progress";
 
@@ -15,16 +15,15 @@ import SubmitButton from "@/components/ui/submit-button";
 import { Button } from "@/components/ui/button";
 
 import { Suspense, useEffect, useState } from "react";
-import { profile, removeCivilPhotoBack, removeCivilPhotoFront, updateCivilIdAndExpiryDate, updateCivilPhotoBack, updateCivilPhotoFront, updatePhoneDetail } from "@/providers/logged-in/account.service";
-import { errorMessage, toDate, useQuery } from "@/utils/common";
-import { IonDatetime, useIonRouter } from "@ionic/react";
+import { profile, removeCivilPhotoBack, removeCivilPhotoFront, updateCivilIdAndExpiryDate, updateCivilPhotoBack, updateCivilPhotoFront } from "@/providers/logged-in/account.service";
+import { errorMessage, useQuery } from "@/utils/common";
+import { useIonRouter } from "@ionic/react";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { setUser } from "@/store/slices/userSlice";
-import { uploadFileToTempS3 } from "@/providers/logged-in/aws.service";
+import { setAWSConfig, uploadFileToTempS3 } from "@/providers/logged-in/aws.service";
 import { page, track } from "@/providers/analytics.service";
 import { alertDialog } from "@/hooks/use-alert-dialog";
 import { useTranslation } from "react-i18next";
-import { FormDateInput } from "@/components/ui/form-date";
 import Loading from "./loading";
 import AuthLayout from "../layout";
 import { FormDateTimeInput } from "@/components/ui/form-datetime";
@@ -50,7 +49,8 @@ export default function CivilIdPage() {
 
     page('Civil ID Page');
 
-
+    setAWSConfig();
+    
     /*if (match && match.params.fromProfile)
       //router.prefetch('/profile');
     else
@@ -61,49 +61,9 @@ export default function CivilIdPage() {
     }
   }, []);
 
-  useEffect(() => {
-   // if (!user) {
-   //  form.setValue('phone', user?.candidate_phone || "");
-    //} else {
-
-      setLoading(true);
-
-      profile().then(res => {
-        dispatch(setUser({ user: res }));
-        form.setValue('candidate_civil_id', res.candidate_civil_id || "");
-        form.trigger('candidate_civil_id');
-
-        if (res.candidate_civil_expiry_date) {
-          form.setValue('candidate_civil_expiry_date', new Date(res.candidate_civil_expiry_date));
-          form.trigger('candidate_civil_expiry_date');
-        }
-
-        form.setValue('candidate_civil_photo_back', res.candidate_civil_photo_back);
-        form.trigger('candidate_civil_photo_back');
-
-        form.setValue('candidate_civil_photo_front', res.candidate_civil_photo_front);
-        form.trigger('candidate_civil_photo_front');
-
-        if (res.candidate_civil_photo_back) {
-          form.setValue('candidate_civil_photo_back_url', import.meta.env.VITE_PERMANENT_BUCKET_URL  + 'photos/' + res.candidate_civil_photo_back);
-          form.trigger('candidate_civil_photo_back_url');
-        }
-
-        if (res.candidate_civil_photo_front) {
-          form.setValue('candidate_civil_photo_front_url', import.meta.env.VITE_PERMANENT_BUCKET_URL  + 'photos/' + res.candidate_civil_photo_front);
-          form.trigger('candidate_civil_photo_front_url');
-        }
-
-        
-      }).finally(() => {
-        setLoading(false);
-      });
-   // }
-  }, []);//user
-
   const formSchema = z.object({
-    candidate_civil_photo_back_url: z.string(),
-    candidate_civil_photo_front_url: z.string(),
+    candidate_civil_photo_back_url: z.string().nullable(),
+    candidate_civil_photo_front_url: z.string().nullable(),
     candidate_civil_photo_back: z.string({
        //   required_error: 'Please upload back side of your national id.'
       }).nullable(),
@@ -133,7 +93,50 @@ export default function CivilIdPage() {
         candidate_civil_photo_front_url: user?.candidate_civil_photo_front?
           import.meta.env.VITE_PERMANENT_BUCKET_URL  + 'photos/' + user?.candidate_civil_photo_front: undefined,
     },
-  })
+  });
+
+  useEffect(() => {
+    if (!user) {
+   //  form.setValue('phone', user?.candidate_phone || "");
+    //} else {
+
+      setLoading(true);
+
+      profile().then(res => {
+        dispatch(setUser({ user: res }));
+
+        if (res.candidate_civil_id) {
+          form.setValue('candidate_civil_id', res.candidate_civil_id || "");
+          form.trigger('candidate_civil_id');
+        }
+
+        if (res.candidate_civil_expiry_date) {
+          form.setValue('candidate_civil_expiry_date', new Date(res.candidate_civil_expiry_date));
+          form.trigger('candidate_civil_expiry_date');
+        }
+
+        form.setValue('candidate_civil_photo_back', res.candidate_civil_photo_back);
+        form.trigger('candidate_civil_photo_back');
+
+        form.setValue('candidate_civil_photo_front', res.candidate_civil_photo_front);
+        form.trigger('candidate_civil_photo_front');
+
+        if (res.candidate_civil_photo_back) {
+          form.setValue('candidate_civil_photo_back_url', import.meta.env.VITE_PERMANENT_BUCKET_URL  + 'photos/' + res.candidate_civil_photo_back);
+          form.trigger('candidate_civil_photo_back_url');
+        }
+
+        if (res.candidate_civil_photo_front) {
+          form.setValue('candidate_civil_photo_front_url', import.meta.env.VITE_PERMANENT_BUCKET_URL  + 'photos/' + res.candidate_civil_photo_front);
+          form.trigger('candidate_civil_photo_front_url');
+        }
+
+        
+      }).finally(() => {
+        setLoading(false);
+      });
+    }
+  }, [user]);
 
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
@@ -232,13 +235,13 @@ export default function CivilIdPage() {
       }
 
       if (res.candidate_civil_id) {
-      form.setValue('candidate_civil_id', res.candidate_civil_id);
-      form.trigger('candidate_civil_id');
+        form.setValue('candidate_civil_id', res.candidate_civil_id);
+        form.trigger('candidate_civil_id');
       }
 
       if (res.candidate_civil_expiry_date) {
-      form.setValue('candidate_civil_expiry_date', new Date(res.candidate_civil_expiry_date));
-      form.trigger('candidate_civil_expiry_date');
+        form.setValue('candidate_civil_expiry_date', new Date(res.candidate_civil_expiry_date));
+        form.trigger('candidate_civil_expiry_date');
       }
       
       dispatch(setUser({ user: {
@@ -297,7 +300,7 @@ export default function CivilIdPage() {
 
                             uploadFileToTempS3(file).then((response: any) => {
                              
-                                updateCivilPhotoFront(response.key).then((res: any) => {
+                                updateCivilPhotoFront(response.Key).then((res: any) => {
                                    
                                   if (res.operation == 'success') {   
 
@@ -334,7 +337,7 @@ export default function CivilIdPage() {
             { form.getValues().candidate_civil_photo_front && <div className="xs:max-w-full w-full sm:max-w-[313px]  flex-none 
                   rounded-2xl mb-[24px] sm:mb-0 sm:me-[24px]">
 
-                <img onError={() => resetFrontId()} src={form.getValues().candidate_civil_photo_front_url} className="w-full"></img>   
+                <img onError={() => resetFrontId()} src={form.getValues().candidate_civil_photo_front_url || ""} className="w-full"></img>   
 
                 <Button variant={"ghost"} disabled={removingFrontId} onClick={resetFrontId} className="text-[color:var(--Neutral-70,#7D7D8D)] text-sm font-medium leading-5 text-center m-auto mt-[12px]">
                     <img src="/assets/icons/trash.svg" className="w-[16px]"></img>  
@@ -404,7 +407,7 @@ export default function CivilIdPage() {
             { form.getValues().candidate_civil_photo_back && <div className="xs:max-w-full sm:max-w-[313px] w-full flex-none 
                   rounded-2xl mb-[24px] sm:mb-0">
 
-                <img onError={() => resetBackId()} src={form.getValues().candidate_civil_photo_back_url} className="w-full"></img>   
+                <img onError={() => resetBackId()} src={form.getValues().candidate_civil_photo_back_url || ""} className="w-full"></img>   
 
                 <Button variant={ "ghost"} disabled={removingBackId} onClick={resetBackId} className="text-[color:var(--Neutral-70,#7D7D8D)] text-sm font-medium leading-5 text-center m-auto mt-[12px]">
                     <img src="/assets/icons/trash.svg" className="w-[16px]"></img>    

@@ -1,4 +1,4 @@
-"use client"
+
 // app/(dash)/log-hour-list/page.tsx
 
 import { useEffect, useState, Suspense } from 'react';

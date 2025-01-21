@@ -1,4 +1,4 @@
-"use client"
+
 // app/(dash)/interview/InterviewListPage.jsx
 
 import Request from '@/components/app/request';
@@ -6,7 +6,7 @@ import Pager from '@/components/common/pager';
 import { page, track } from '@/providers/analytics.service';
 import { requestUpdated$ } from '@/providers/event.service';
 import { listInterviewRequests } from '@/providers/logged-in/request.service';
-import React, { Suspense, useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Loading from './loading';
 import DashLayout from '../layout';

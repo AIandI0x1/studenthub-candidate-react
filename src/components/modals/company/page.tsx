@@ -1,7 +1,7 @@
-"use client"
+
 // app/(dash)/company/page.tsx
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next'; // Assuming you have a translation hook
 import { Company } from '@/models/company'; // Adjust the import path as necessary
 

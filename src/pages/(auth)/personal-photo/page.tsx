@@ -1,4 +1,4 @@
-"use client"
+
 
 import { OnboardProgress } from "@/components/on-board/progress";
 
@@ -17,7 +17,7 @@ import { errorMessage, useQuery } from "@/utils/common";
 import { useIonRouter } from "@ionic/react";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { setUser } from "@/store/slices/userSlice";
-import { uploadFileToTempS3 } from "@/providers/logged-in/aws.service";
+import { setAWSConfig, uploadFileToTempS3 } from "@/providers/logged-in/aws.service";
 import { page, track } from "@/providers/analytics.service";
 import { alertDialog } from "@/hooks/use-alert-dialog";
 import { useTranslation } from "react-i18next";
@@ -63,6 +63,8 @@ export default function PersonalPhotoPage() {
 
     page('Personal Photo Page');
 
+    setAWSConfig();
+    
     /*if (query.get('fromProfile'))
       //router.prefetch('/profile');
     else
@@ -184,7 +186,8 @@ export default function PersonalPhotoPage() {
 
                             uploadFileToTempS3(file).then((response: any) => {
                               
-                              form.setValue('candidate_personal_photo', response.key);
+                              console.log(response);
+                              form.setValue('candidate_personal_photo', response.Key);
                               form.trigger('candidate_personal_photo');
                               form.setValue('candidate_personal_photo_url', response.Location);
                               form.trigger('candidate_personal_photo_url');

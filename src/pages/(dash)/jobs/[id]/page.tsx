@@ -1,4 +1,4 @@
-"use client"
+
 
 import { Suspense, useState, useEffect } from "react";
 import Loading from "./loading";
@@ -56,9 +56,9 @@ export default function JobDetailPage() {
     }
 
     function onApplyClose(data: any) {
-         
+        setShowApply(false);
+            
         if (data.refresh) {
-            setShowApply(false);
             loadData();
         }
     }
@@ -240,7 +240,7 @@ export default function JobDetailPage() {
                     </div>}
 
                     {showApply && <Apply seen_at={seen_at} job={job}
-                        onClose={(data) => onApplyClose(data)}></Apply>}
+                        onClose={(data) => { onApplyClose(data); }}></Apply>}
                 </div>
             </>}
             </DashLayout>

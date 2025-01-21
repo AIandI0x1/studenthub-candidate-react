@@ -1,6 +1,5 @@
 // components/App/PhotoAction.jsx
 
-import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next'; // Assuming you're using react-i18next for translations
 import { Images, Trash2 } from 'lucide-react';

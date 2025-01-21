@@ -1,4 +1,4 @@
-"use client"
+
 
 // app/(dash)/update-bank/page.tsx
 

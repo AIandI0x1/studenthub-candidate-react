@@ -1,5 +1,5 @@
 
-import { IonApp, IonRouterOutlet, setupIonicReact, useIonRouter } from '@ionic/react';
+import { IonApp, IonRouterOutlet, setupIonicReact } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 //import { Inter } from 'next/font/google';
 
@@ -9,6 +9,7 @@ import { setCanGoForward } from "@/store/slices/appSlice";
 import { useEffect } from "react";
 import { setMixpanel } from "@/providers/analytics.service";
 import i18n from "./18n";
+//import './sentry';
 
 declare global {
   interface Window {
@@ -102,10 +103,8 @@ const App: React.FC = () => {
     setMixpanel();
   }, []);
 
-  {/*<ErrorBoundary>
-  </ErrorBoundary>*/}
   return (
-  
+    <ErrorBoundary>
     <Provider store={store}>
       
       <IonApp className={ (i18n.language == 'ar') ? 'font-droid' : 'font-inter'}>
@@ -129,7 +128,7 @@ const App: React.FC = () => {
               <AlertDialogHeader>
                 <AlertDialogTitle>{alertDialog.title}</AlertDialogTitle>
                 { alertDialog.description && <AlertDialogDescription 
-                  dangerouslySetInnerHTML={{__html: alertDialog.description}}>
+                  dangerouslySetInnerHTML={{__html: ""+ alertDialog.description}}>
                 </AlertDialogDescription> }
               </AlertDialogHeader>
               <AlertDialogFooter>
@@ -141,7 +140,7 @@ const App: React.FC = () => {
         );
       })}
     </Provider>
-    
+    </ErrorBoundary>
   );
 };
 

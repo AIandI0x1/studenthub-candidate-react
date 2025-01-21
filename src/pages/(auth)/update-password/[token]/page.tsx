@@ -1,4 +1,4 @@
-"use client"
+
 
 
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -13,7 +13,7 @@ import OnboardFooter from "@/components/on-board/layout/footer";
 import SubmitButton from "@/components/ui/submit-button";
 
 import { Suspense, useEffect, useState } from "react";
-import { errorMessage, useQuery } from "@/utils/common";
+import { errorMessage } from "@/utils/common";
 import { useIonRouter } from "@ionic/react"; 
 import { useAppDispatch } from "@/store/store";
 import { setIsProfileCompleted } from "@/store/slices/userSlice";
@@ -80,7 +80,7 @@ const formSchema = z.object({
                 if (res.operation == 'success') {
  
                   alertDialog({
-                    title: t("Error"),
+                    title: t("Success"),
                     description: res.message,
                   });
                   //'Password recovery email sent, please check your email.'

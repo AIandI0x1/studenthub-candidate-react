@@ -1,4 +1,4 @@
-"use client"
+
 
 import { OnboardProgress } from "@/components/on-board/progress";
 
@@ -14,8 +14,8 @@ import { FormInput } from "@/components/ui/form-input";
 import OnboardFooter from "@/components/on-board/layout/footer";
 import SubmitButton from "@/components/ui/submit-button";
 
-import { Suspense, useEffect, useRef, useState } from "react";
-import { getAreaByLocation, profile, updateLocation, updatePhoneDetail, updatePreferredTime, updateProfileUrl } from "@/providers/logged-in/account.service";
+import { Suspense, useEffect, useState } from "react";
+import { getAreaByLocation, profile, updateLocation } from "@/providers/logged-in/account.service";
 import { errorMessage, langContent, useQuery } from "@/utils/common";
  
 import { useAppDispatch, useAppSelector } from "@/store/store";
@@ -23,7 +23,6 @@ import { setUser } from "@/store/slices/userSlice";
 import { useTranslation } from "react-i18next";
 import { page, track } from "@/providers/analytics.service";
 import { getPlacePredictions, placeDetail } from "@/providers/logged-in/google-map.service";
-import { FormSelect } from "@/components/ui/form-select";
 import { Country } from "@/models/country";
 import { Area } from "@/models/area";
 import { alertDialog } from "@/hooks/use-alert-dialog";

@@ -1,5 +1,4 @@
 import { Chat } from "@/models/chat";
-import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useTimeAgo } from "@/utils/app";
 

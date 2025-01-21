@@ -1,4 +1,4 @@
-"use client"
+
 
 import { Button } from "@/components/ui/button";
 import { useAppDispatch, useAppSelector } from "@/store/store";
@@ -71,10 +71,10 @@ export function Hero() {
  
       if (err = 'popup_closed_by_user') {
          
-        alertDialog({
+        /*alertDialog({
           title: t('Error'),
           description: t(err)
-        });
+        });*/
         return false;
       }
 
@@ -135,7 +135,7 @@ export function Hero() {
           }
         </Button>
         
-      <div className="xs:flex sm:block xs:bottom-[76px] xs:fixed sm:bottom-auto sm:mt-8 sm:relative font-semibold text-base">
+      <div className={ `xs:flex sm:block xs:bottom-[76px] ${window.innerHeight >= 780 ? 'xs:fixed' : 'mt-4'} sm:bottom-auto sm:mt-8 sm:relative font-semibold text-base `}>
         
         <Link to="/name">
           <Button size="lg" className=" sm:w-[300px] h-[56px]">
@@ -146,7 +146,7 @@ export function Hero() {
         <p className="mt-[8px] xs:hidden sm:block">{t('Enter ↵')}</p> 
       </div>
 
-      <div className="xs:fixed xs:bottom-[16px] sm:mt-12 sm:relative  space-y-2 text-sm text-muted-foreground">
+      <div className={ `${window.innerHeight >= 780 ? 'xs:fixed' : 'mt-4'} xs:bottom-[16px] sm:mt-12 sm:relative  space-y-2 text-sm text-muted-foreground` }>
         <p>
           {t('Have an account?')}{" "}
           <Link to="/login" className="no-underline text-primary">

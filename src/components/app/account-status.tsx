@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next'; // Assuming you're using react-i18next for translations
 import { Button } from '../ui/button';
 import { Link } from 'react-router-dom';
-import { startWork, stopWork, updateJobSearchStatus } from '@/providers/logged-in/account.service';
+import { updateJobSearchStatus } from '@/providers/logged-in/account.service';
 import { setUser } from '@/store/slices/userSlice';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 import { useHistory } from 'react-router-dom';
-import { errorMessage } from '@/utils/common';
 import { Candidate } from '@/models/candidate';
 import { Card, CardContent } from '@/components/ui/card';
 
@@ -106,7 +105,7 @@ const AccountStatus = () => {
                         <p className="mt-[2px] mb-4 text-sm font-normal leading-tight">{
                         t("You told us you’re not looking for a job, so we’re not going to bother you about it")
                         }</p>
-                        <Button variant={"outline"} className="btn-toggle-job" disabled={updating} onClick={updateJobSearchStatusClicked}>{
+                        <Button variant={"outline"} className="btn-toggle-job" disabled={updating} onClick={() => updateJobSearchStatusClicked()}>{
                             t("I want a job. Sign me up again.")}
                         </Button>
                     </>

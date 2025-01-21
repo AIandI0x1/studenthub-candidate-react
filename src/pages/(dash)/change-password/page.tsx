@@ -1,4 +1,4 @@
-"use client"
+
 
 //import { OnboardProgress } from "@/components/on-board/progress";
 

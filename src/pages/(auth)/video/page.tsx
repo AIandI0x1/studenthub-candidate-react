@@ -1,4 +1,4 @@
-"use client"
+
 
 import { OnboardProgress } from "@/components/on-board/progress";
 
@@ -6,20 +6,17 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
  
-import {
-  Form
-} from "@/components/ui/form"
 import OnboardFooter from "@/components/on-board/layout/footer";
 import SubmitButton from "@/components/ui/submit-button";
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Suspense, useEffect, useRef, useState } from "react";
-import { deleteResume, deleteVideo, profile, updateResume, updateVideo } from "@/providers/logged-in/account.service";
+import { checkVideoStatus, deleteResume, deleteVideo, profile, updateResume, updateVideo } from "@/providers/logged-in/account.service";
 import { errorMessage, useQuery } from "@/utils/common";
 import { useIonRouter } from "@ionic/react"; 
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { setUser } from "@/store/slices/userSlice";
-import { uploadFileToTempS3 } from "@/providers/logged-in/aws.service";
+import { setAWSConfig, uploadFileToTempS3 } from "@/providers/logged-in/aws.service";
 import { page, track } from "@/providers/analytics.service";
 import { alertDialog } from "@/hooks/use-alert-dialog";
 import { useTranslation } from "react-i18next";
@@ -88,11 +85,12 @@ export default function VideoPage() {
       resume: user?.candidate_resume, 
     },
   })
-
+ 
   useEffect(() => {
 
     page('Video Page');
 
+    setAWSConfig();
     /*if (query.get('fromProfile'))
       //router.prefetch('/profile');
     else
@@ -146,6 +144,24 @@ export default function VideoPage() {
       }
     }
   }, []);
+
+  useEffect(() => {
+    if (!user?.candidate_video_processed) {
+      
+      const alertSubscription = setInterval(() => {
+        checkVideoStatus().then(res => {
+          if (res.candidate_video_processed) {
+            candidateVideoProcessed$.next(res);
+            clearInterval(alertSubscription);
+          }
+        });
+      }, 3 * 1000);
+
+      return () => {
+        clearInterval(alertSubscription);
+      }
+    }
+  }, [user]);
 
   useEffect(() => {
     if (!user) {
@@ -893,27 +909,42 @@ export default function VideoPage() {
                   onError={() => onVideoError()}
                   className="w-full"></img>   */}
 
-                <video
-                  controls={true}
-                  preload="none"
-                 muted
-                  id="saved-player"
-                  poster={ user?.candidate_video? 
-                    import.meta.env.VITE_PERMANENT_BUCKET_URL + 
-                      'candidate-video/' + user.candidate_video + '.jpg': '' }
-                  //volume="0"
-                  className="h-auto w-full"
-                >
-                  { user?.candidate_video && <source src={  import.meta.env.VITE_PERMANENT_BUCKET_URL 
-                    + 'candidate-video/' + user.candidate_video + '.mp4' }
-                        type="video/mp4" /> }
-                </video>
+                { !user?.candidate_video_processed && <>
+                  <img src="/assets/icons/video.svg" className="m-auto"></img>   
 
-                <Button variant={ "ghost"} onClick={() => removeVideo()} 
-                  className="text-[color:var(--Neutral-70,#7D7D8D)] text-sm font-medium leading-5 text-center m-auto mt-[12px]">
-                    <img src="/assets/icons/trash.svg" className="w-[16px]"></img>    
-                    { removingVideo ? t("Removing...") : t("Remove") } 
-                </Button>
+                  <h6 className="self-stretch text-[color:var(--Neutral-95,#23233D)] text-center 
+                    text-base font-semibold leading-6 mt-[8px] mb-[4px] block">
+                    {t("Making your video ready")}</h6>
+
+                    <p className={ `self-stretch ${havePermission ? 'text-[#4B4B61]': 'text-red-500'} text-center text-sm font-normal leading-5 mt-[4x] block` }>
+                      { t("Our server processing your video, It will be ready soon.") }
+                    </p>
+                  </>
+                }
+
+                { !!user?.candidate_video_processed && <>
+                  <video
+                    controls={true}
+                    preload="none"
+                    muted
+                    id="saved-player"
+                    poster={ user?.candidate_video? 
+                      import.meta.env.VITE_PERMANENT_BUCKET_URL + 
+                        'candidate-video/' + user.candidate_video + '.jpg': '' }
+                    //volume="0"
+                    className="h-auto w-full"
+                  >
+                    { user?.candidate_video && <source src={  import.meta.env.VITE_PERMANENT_BUCKET_URL 
+                      + 'candidate-video/' + user.candidate_video + '.mp4' }
+                          type="video/mp4" /> }
+                  </video>
+
+                  <Button variant={ "ghost"} onClick={() => removeVideo()} 
+                    className="text-[color:var(--Neutral-70,#7D7D8D)] text-sm font-medium leading-5 text-center m-auto mt-[12px]">
+                      <img src="/assets/icons/trash.svg" className="w-[16px]"></img>    
+                      { removingVideo ? t("Removing...") : t("Remove") } 
+                  </Button> 
+                </>}
             </div> }
             
             { !form.getValues().resume && <div className="xs:max-w-full sm:max-w-[313px] flex-none text-center py-[24px] px-[46px] shrink-0 border-[color:var(--Neutral-30,#EEEEF0)] 
