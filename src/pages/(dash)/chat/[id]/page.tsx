@@ -1,7 +1,7 @@
 
 // app/(dash)/chat/ChatViewPage.tsx
 
-import React, { Suspense, useEffect, useRef, useState } from 'react';
+import { Suspense, useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';    
 import { alertCount$ } from '@/providers/event.service';
 import { viewChat, getMessages, getNewMessages, postChatMessage, markRead } from '@/providers/logged-in/chat.service';

@@ -1,10 +1,9 @@
 // components/App/Assigned.jsx
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next'; // Assuming you're using react-i18next for translations
 import PropTypes from 'prop-types';
 import { CandidateNotification } from '@/models/candidate-notification';
-import { format } from 'date-fns';
 import { dateTimeFormat } from '@/utils/common';
 
 const Assigned = ({ candidateNotification, onClick }: { candidateNotification: CandidateNotification, onClick: any }) => {

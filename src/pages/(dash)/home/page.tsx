@@ -1,7 +1,7 @@
 
 // app/(dash)/dashboard/DashboardPage.jsx
 
-import React, { Suspense, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useIonRouter } from '@ionic/react';
 import { profile } from '@/providers/logged-in/account.service';
 //import { workHistory } from '@/providers/logged-in/candidate.service';
@@ -16,7 +16,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { setUser } from '@/store/slices/userSlice';
 import { setOneSignal$ } from '@/providers/event.service';
 import { Link } from 'react-router-dom';
-import Loading from './loading';
+//import Loading from './loading';
 import { dateTimeFormat } from '@/utils/common';
 import LoadingHomePage from './loading';
 import DashLayout from '../layout';

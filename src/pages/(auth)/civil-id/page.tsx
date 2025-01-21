@@ -15,16 +15,15 @@ import SubmitButton from "@/components/ui/submit-button";
 import { Button } from "@/components/ui/button";
 
 import { Suspense, useEffect, useState } from "react";
-import { profile, removeCivilPhotoBack, removeCivilPhotoFront, updateCivilIdAndExpiryDate, updateCivilPhotoBack, updateCivilPhotoFront, updatePhoneDetail } from "@/providers/logged-in/account.service";
-import { errorMessage, toDate, useQuery } from "@/utils/common";
-import { IonDatetime, useIonRouter } from "@ionic/react";
+import { profile, removeCivilPhotoBack, removeCivilPhotoFront, updateCivilIdAndExpiryDate, updateCivilPhotoBack, updateCivilPhotoFront } from "@/providers/logged-in/account.service";
+import { errorMessage, useQuery } from "@/utils/common";
+import { useIonRouter } from "@ionic/react";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { setUser } from "@/store/slices/userSlice";
 import { setAWSConfig, uploadFileToTempS3 } from "@/providers/logged-in/aws.service";
 import { page, track } from "@/providers/analytics.service";
 import { alertDialog } from "@/hooks/use-alert-dialog";
 import { useTranslation } from "react-i18next";
-import { FormDateInput } from "@/components/ui/form-date";
 import Loading from "./loading";
 import AuthLayout from "../layout";
 import { FormDateTimeInput } from "@/components/ui/form-datetime";
@@ -71,8 +70,11 @@ export default function CivilIdPage() {
 
       profile().then(res => {
         dispatch(setUser({ user: res }));
-        form.setValue('candidate_civil_id', res.candidate_civil_id || "");
-        form.trigger('candidate_civil_id');
+
+        if (res.candidate_civil_id) {
+          form.setValue('candidate_civil_id', res.candidate_civil_id || "");
+          form.trigger('candidate_civil_id');
+        }
 
         if (res.candidate_civil_expiry_date) {
           form.setValue('candidate_civil_expiry_date', new Date(res.candidate_civil_expiry_date));
@@ -233,13 +235,13 @@ export default function CivilIdPage() {
       }
 
       if (res.candidate_civil_id) {
-      form.setValue('candidate_civil_id', res.candidate_civil_id);
-      form.trigger('candidate_civil_id');
+        form.setValue('candidate_civil_id', res.candidate_civil_id);
+        form.trigger('candidate_civil_id');
       }
 
       if (res.candidate_civil_expiry_date) {
-      form.setValue('candidate_civil_expiry_date', new Date(res.candidate_civil_expiry_date));
-      form.trigger('candidate_civil_expiry_date');
+        form.setValue('candidate_civil_expiry_date', new Date(res.candidate_civil_expiry_date));
+        form.trigger('candidate_civil_expiry_date');
       }
       
       dispatch(setUser({ user: {

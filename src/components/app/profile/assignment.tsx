@@ -1,6 +1,6 @@
 import i18n from "@/18n";
 import { CandidateWorkHistory } from "@/models/candidate-work-history";
-import { ChevronLeft, ChevronRight, ChevronRightCircle } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useHistory } from "react-router-dom";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";

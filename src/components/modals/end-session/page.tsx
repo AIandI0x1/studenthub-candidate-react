@@ -3,7 +3,7 @@ import { Backdrop } from '@/components/common/backdrop';
 // app/(dash)/end-session/page.tsx
 
 import { page, track } from '@/providers/analytics.service';
-import { CircleX, X } from 'lucide-react';
+import { X } from 'lucide-react';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next'; // Assuming you have a translation hook
 

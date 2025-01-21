@@ -4,7 +4,6 @@ import { Country } from "@/models/country";
 import { useAppSelector } from "@/store/store";
 import { calculateAge } from "@/utils/app";
 import { dateTimeFormat } from "@/utils/common";
-import { format } from "date-fns";
 import { useHistory } from "react-router-dom";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";

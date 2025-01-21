@@ -6,7 +6,7 @@ import { Card, CardContent } from '@/components/ui/card';
 
 import { Salary } from '@/models/salary';
 import { page, track } from '@/providers/analytics.service';
-import { listSalary, profile, profileWithBank } from '@/providers/logged-in/account.service';
+import { listSalary, profile } from '@/providers/logged-in/account.service';
 import { setUser } from '@/store/slices/userSlice';
 import { useAppSelector } from '@/store/store';
 import { useAppDispatch } from '@/store/store';

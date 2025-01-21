@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next'; // Assuming you're using react-i18next for translations
 import { Button } from '../ui/button';
 import { Link } from 'react-router-dom';
-import { startWork, stopWork, updateJobSearchStatus } from '@/providers/logged-in/account.service';
+import { updateJobSearchStatus } from '@/providers/logged-in/account.service';
 import { setUser } from '@/store/slices/userSlice';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 import { useHistory } from 'react-router-dom';
-import { errorMessage } from '@/utils/common';
 import { Candidate } from '@/models/candidate';
 import { Card, CardContent } from '@/components/ui/card';
 

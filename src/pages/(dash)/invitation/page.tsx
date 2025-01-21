@@ -9,7 +9,7 @@ import { page, track } from '@/providers/analytics.service';
 import { requestUpdated$ } from '@/providers/event.service';
 import { listInvitations } from '@/providers/logged-in/invitation.service';
 import { t } from 'i18next';
-import React, { Suspense, useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import Loading from './loading';
 import DashLayout from '../layout';
 

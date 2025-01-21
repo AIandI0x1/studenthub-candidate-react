@@ -9,7 +9,6 @@ import { useEffect, useState, Suspense } from 'react';
 import { useTranslation } from 'react-i18next'; // Assuming you have a translation hook
 import WorkLogDay from '@/components/app/work-log-day';
 import { groupBy } from '@/utils/app';
-import { FormDateInput } from '@/components/ui/form-date';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 // Import necessary components and services

@@ -13,7 +13,7 @@ import OnboardFooter from "@/components/on-board/layout/footer";
 import SubmitButton from "@/components/ui/submit-button";
 
 import { Suspense, useEffect, useState } from "react";
-import { errorMessage, useQuery } from "@/utils/common";
+import { errorMessage } from "@/utils/common";
 import { useIonRouter } from "@ionic/react"; 
 import { useAppDispatch } from "@/store/store";
 import { setIsProfileCompleted } from "@/store/slices/userSlice";

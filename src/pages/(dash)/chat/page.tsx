@@ -10,7 +10,7 @@ import { alertCount$ } from '@/providers/event.service';
 import { listChats } from '@/providers/logged-in/chat.service';
 import { StoreState, useAppSelector } from '@/store/store';
 import { useIonRouter } from '@ionic/react';    
-import React, { useEffect, useState, Suspense } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { useTranslation } from 'react-i18next';
 import Loading from './loading';
 import DashLayout from '../layout';

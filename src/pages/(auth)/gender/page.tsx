@@ -4,7 +4,7 @@ import { OnboardProgress } from "@/components/on-board/progress";
  
 import SubmitButton from "@/components/ui/submit-button";
 import OnboardFooter from "@/components/on-board/layout/footer";
-import React, { Suspense } from "react";
+import { Suspense } from "react";
 import { useEffect, useState } from "react";
 import { profile, updateGender } from "@/providers/logged-in/account.service";
 import { errorMessage, useQuery } from "@/utils/common";
