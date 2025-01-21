@@ -105,7 +105,7 @@ const AccountStatus = () => {
                         <p className="mt-[2px] mb-4 text-sm font-normal leading-tight">{
                         t("You told us you’re not looking for a job, so we’re not going to bother you about it")
                         }</p>
-                        <Button variant={"outline"} className="btn-toggle-job" disabled={updating} onClick={updateJobSearchStatusClicked}>{
+                        <Button variant={"outline"} className="btn-toggle-job" disabled={updating} onClick={() => updateJobSearchStatusClicked()}>{
                             t("I want a job. Sign me up again.")}
                         </Button>
                     </>
