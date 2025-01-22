@@ -110,13 +110,14 @@ const UpdateBankPage = () => {
       setLoading(false);
 
       if (res.operation === 'success') {
-        const eventData = {
+         
+        dispatch(setUser({ user: {
+          ...user,
           bank_account_name: values.benef_name,
           candidate_iban: values.iban,
+          bank_id: res.bank.bank_id,
           bank: res.bank,
-        };
-        //bankUpdated$.next(eventData);
-        //dismiss(eventData);
+        } }));
         router.push("/payments");
       } else {
         handleError(res);

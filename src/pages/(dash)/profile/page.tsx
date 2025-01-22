@@ -203,7 +203,7 @@ const ProfilePage = () => {
                                         <img className='w-6 h-6 inline me-2' src="/assets/images/icon-puzzle.svg" /> {t("Skills")}
                                     </h5>
                                     { user.candidateSkills?.map((candidateSkill: CandidateSkill) => (
-                                        <span className='inline justify-center items-center gap-2.5 [background:var(--Neutral-0,#FFF)] px-3 py-1.5 rounded-lg
+                                        <span className='inline-block justify-center items-center gap-2.5  [background:var(--Neutral-0,#FFF)] px-3 py-1.5 rounded-lg
                                             text-[color:var(--Neutral-90,#4B4B61)] me-2 mb-2 text-sm font-medium leading-5' 
                                             key={candidateSkill.candidate_skill_id}>{candidateSkill.skill}</span>
                                     ))}

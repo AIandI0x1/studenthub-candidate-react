@@ -143,7 +143,7 @@ const AppealDetailPage = () => {
                 total_activity: parseInt(response.headers['x-pagination-total-count']),
             });
 
-            setTotalUnreadActivity(response.headers['X-total-unread-actity']);
+            setTotalUnreadActivity(response.headers['X-total-unread-activity']);
 
         } catch (error) {
             console.error(error);

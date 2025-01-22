@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next'; // For translations
 import { CandidateNotification } from '@/models/candidate-notification';
 import { page, track } from '@/providers/analytics.service';
 import Pager from '@/components/common/pager';
-import { listNotifications, markNotificationRead } from '@/providers/logged-in/candidate-notification.service';
+import { listNotifications, markAllNotificationsRead, markNotificationRead } from '@/providers/logged-in/candidate-notification.service';
 import { alertCount$ } from '@/providers/event.service';
 import NoItems from '@/components/common/no-items';
 import { Button } from '@/components/ui/button';
@@ -21,7 +21,7 @@ import DashLayout from '../layout';
 const ActivityPage = () => {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
-  const [candidateNotifications, setCandidateNotifications] = useState([]);
+  const [candidateNotifications, setCandidateNotifications] = useState<CandidateNotification[]>([]);
   
   const [pagination, setPagination] = useState({
     current_page: 1,
@@ -35,6 +35,7 @@ const ActivityPage = () => {
     alertCount$.subscribe((
       counts : any
     ) => {
+     
       if(!counts)
         return null; 
          
@@ -89,7 +90,7 @@ const ActivityPage = () => {
         total_pages: parseInt(response.headers['x-pagination-page-count']),
       });
 
-      setTotalUnreadActivity(response.headers['X-total-unread-actity']);
+      setTotalUnreadActivity(response.headers['x-total-unread-activity']);
       
     } catch (error) {
       console.error(error);
@@ -109,20 +110,34 @@ const ActivityPage = () => {
     await markNotificationRead(notification.cn_uuid);
   };
 
+  const markAllRead = async () => {
+
+    setCandidateNotifications(candidateNotifications.map((notification: CandidateNotification) => {
+      notification.is_new = false;
+      return notification;
+    }));
+
+    await markAllNotificationsRead();
+  };
+
   return ( 
     <Suspense fallback={<Loading />}>
       <DashLayout>
+        
       <div className=' bg-white'>
           <div className="max-w-4xl mx-auto px-6 shadow-[0px_10px_20px_0px_rgba(0,0,0,0.05) xs:pt-0 sm:pt-6 pb-6">
 
               <h5 className='text-[color:var(--Neutral-95,#23233D)] text-2xl font-bold leading-8 capitalize'>
-                  { t('Activity')}
+                { t('Activity')}
+              
+                { totalUnreadActivity > 0 && <Button onClick={() => markAllRead()} className="rounded-full px-4 py-2 m-auto mb-4 float-end">
+                  {t('Mark all as read')} 
+                </Button> }
               </h5>
-
           </div>    
       </div>
       
-      <div className="max-w-4xl mx-auto p-6"> 
+      <div className="max-w-4xl p-6 m-auto"> 
          
         {showRefresh && (
           <Button onClick={doRefresh} className="rounded-full px-4 py-2 m-auto mb-4 block ">
@@ -142,6 +157,7 @@ const ActivityPage = () => {
             message='' />
         )} 
       </div>
+      
       </DashLayout>
     </Suspense>
   );

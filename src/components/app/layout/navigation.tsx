@@ -24,7 +24,7 @@ export default function Navigation() {
         }));
     }
     
-    const { pendingInvitations, totalUnreadActity } = useAppSelector((state: StoreState) => state.app);
+    const { pendingInvitations, totalUnreadActivity } = useAppSelector((state: StoreState) => state.app);
     
     useEffect(() => {
         dispatch(setPath({
@@ -33,7 +33,7 @@ export default function Navigation() {
     }, []);
 
     return (
-        <div className="xs:fixed sm:relative bottom-0  w-full xs:h-[78px] sm:h-[57px] pt-2 pb-4 bg-white shadow block ">
+        <div className="xs:fixed sm:relative bottom-0  w-full xs:h-[78px] sm:h-[57px] pt-2 pb-4 bg-white shadow block xs:z-10">
 
             <div className="max-w-4xl mx-auto py-1">
 
@@ -139,8 +139,8 @@ export default function Navigation() {
                             {t('Alerts')}
                         </div>
 
-                        {totalUnreadActity > 0 && <Badge variant={"destructive"} className="rounded-full xs:absolute sm:relative top-0 end-0" color="warning">
-                                {totalUnreadActity}
+                        {totalUnreadActivity > 0 && <Badge variant={"destructive"} className="rounded-full xs:absolute sm:relative top-0 end-0" color="warning">
+                                {totalUnreadActivity}
                                 </Badge>}
                     </div>*/}
 

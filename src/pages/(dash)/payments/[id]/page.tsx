@@ -8,7 +8,7 @@ import { useParams } from 'react-router-dom';
 import { Suspense, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Loading from '../loading';
-import { dateTimeFormat } from '@/utils/common';
+import { dateTimeFormat, formatNumber } from '@/utils/common';
 import DashLayout from '../../layout';
 
 const PaymentDetailPage = () => {
@@ -118,7 +118,7 @@ const PaymentDetailPage = () => {
                             {t("Amount")}
                             </span>
                             <span className='w-[271px] text-[color:var(--Neutral-100,#0F0F2C)] text-end float-end text-sm font-normal leading-5'>
-                            {salary.currency_code} {salary.candidate_total?.toFixed(3)} 
+                            {salary.currency_code} {formatNumber(salary.candidate_total || 0)} 
                             </span>
                         </div>
                     </div>

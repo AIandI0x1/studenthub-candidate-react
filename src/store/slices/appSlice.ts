@@ -11,7 +11,7 @@ interface AppState {
   oneSignalStatus: boolean,
   pushNotificationAvailable: boolean,
   canGoForward: boolean,
-  totalUnreadActity: number,
+  totalUnreadActivity: number,
   totalUnreadMessages: number,
   pendingInvitations: number,
   path: string
@@ -27,7 +27,7 @@ const initialState: AppState = {
   oneSignalStatus: false,
   pushNotificationAvailable: false,
   canGoForward: false,
-  totalUnreadActity: 0,
+  totalUnreadActivity: 0,
   totalUnreadMessages: 0,
   pendingInvitations: 0,
   path: ""
@@ -70,8 +70,8 @@ const appSlice = createSlice({
     setCanGoForward: (state, action: PayloadAction<{ canGoForward: boolean }>) => {
       state.canGoForward = action.payload.canGoForward;
     },
-    setTotalUnreadActity: (state, action: PayloadAction<{ totalUnreadActity: number }>) => {
-      state.totalUnreadActity = action.payload.totalUnreadActity;
+    setTotalUnreadActivity: (state, action: PayloadAction<{ totalUnreadActivity: number }>) => {
+      state.totalUnreadActivity = action.payload.totalUnreadActivity;
     },
     setTotalUnreadMessages: (state, action: PayloadAction<{ totalUnreadMessages: number }>) => {
       state.totalUnreadMessages = action.payload.totalUnreadMessages;
@@ -86,6 +86,6 @@ const appSlice = createSlice({
 });
 
 export const { setLanguage, setTempBucket, setCampaignId, setCurrentLocation, 
-  setShowOneSignalPrompt, setCanGoForward, setTotalUnreadActity, setTotalUnreadMessages, 
+  setShowOneSignalPrompt, setCanGoForward, setTotalUnreadActivity, setTotalUnreadMessages, 
   setOneSignalStatus, setPendingInvitations, setPushNotificationAvailable, setPath } = appSlice.actions;
 export default appSlice.reducer;

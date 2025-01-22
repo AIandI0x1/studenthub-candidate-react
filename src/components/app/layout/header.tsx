@@ -14,7 +14,7 @@ export default function Header() {
     const router = useHistory();
     const [canGoBack, setCanGoBack] = useState(false);
     
-    const { totalUnreadActity, path } = useAppSelector((state: StoreState) => state.app);
+    const { totalUnreadActivity, path } = useAppSelector((state: StoreState) => state.app);
 
     const { t} = useTranslation();
 
@@ -40,8 +40,8 @@ export default function Header() {
                 <Button variant="ghost" 
                     className="xs:hidden sm:block absolute top-6 end-4">  
                     <Bell className="size-10" />
-                    {totalUnreadActity > 0 && <Badge variant={"destructive"} className="absolute end-[-5px] top-[-5px] rounded-full"  
-                        color="warning">{totalUnreadActity}</Badge>}
+                    {totalUnreadActivity > 0 && <Badge variant={"destructive"} className="absolute end-[-5px] top-[-5px] rounded-full"  
+                        color="warning">{totalUnreadActivity}</Badge>}
                 </Button>
                 </Link>
             </div>
@@ -65,8 +65,8 @@ export default function Header() {
                     <Button variant="ghost" 
                         className="sm:hidden absolute top-6 end-4">  
                         <Bell className="size-10" />
-                        {totalUnreadActity > 0 && <Badge variant={"destructive"} className="absolute end-[-5px] top-[-5px] rounded-full"  
-                            color="warning">{totalUnreadActity}</Badge>}
+                        {totalUnreadActivity > 0 && <Badge variant={"destructive"} className="absolute end-[-5px] top-[-5px] rounded-full"  
+                            color="warning">{totalUnreadActivity}</Badge>}
                     </Button>    
                 </Link>
             </div>
