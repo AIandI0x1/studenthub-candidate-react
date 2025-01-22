@@ -145,8 +145,8 @@ jobs:
                 name: Invalidate Cloudfront Cache
                 command: aws cloudfront create-invalidation --distribution-id E28DDYWGPS1Q1K --paths '/*'
 
-    # Job: Deploy completed build on Staging S3 Bucket
-    deploy_on_staging_server:
+    # Job: Deploy completed build on prod S3 Bucket
+    deploy_on_prod_server:
         docker:
           - image: circleci/python:3.6.8-jessie
 
@@ -162,23 +162,26 @@ jobs:
                 command: sudo pip install awscli
             - run:
                 name: Deploy to S3
-                command: aws s3 sync ~/completed-build/dist/ s3://studenthub-candidate-staging/
+                command: aws s3 sync ~/completed-build/dist/ s3://studenthub-candidate-prod/
             - run:
                 name: Set Cache-Control headers for specific files
                 command: |
-                  aws s3 cp s3://studenthub-candidate-staging/sw.js s3://studenthub-candidate-staging/sw.js \
+                  aws s3 cp s3://studenthub-candidate-prod/sw.js s3://studenthub-candidate-prod/sw.js \
                     --metadata-directive REPLACE --cache-control "no-store, no-cache, must-revalidate, max-age=0" \
                     --content-type "application/javascript"
                   
-                  aws s3 cp s3://studenthub-candidate-staging/index.html s3://studenthub-candidate-staging/index.html \
+                  aws s3 cp s3://studenthub-candidate-prod/index.html s3://studenthub-candidate-prod/index.html \
                     --metadata-directive REPLACE \
                     --cache-control "no-store, no-cache, must-revalidate, max-age=0" \
                     --content-type "text/html"
 
-                  aws s3 cp s3://studenthub-candidate-staging/manifest.webmanifest s3://studenthub-candidate-staging/manifest.webmanifest \
+                  aws s3 cp s3://studenthub-candidate-prod/manifest.webmanifest s3://studenthub-candidate-prod/manifest.webmanifest \
                     --metadata-directive REPLACE \
                     --cache-control "no-store, no-cache, must-revalidate, max-age=0" \
                     --content-type "application/manifest+json"
+            - run:
+                name: Invalidate Cloudfront Cache
+                command: aws cloudfront create-invalidation --distribution-id E1V7IE2AJ6T7A7 --paths '/*'
             
 # Define Workflows
 workflows:
@@ -198,8 +201,8 @@ workflows:
                 requires:
                     - build_for_dev_server
 
-    # Build main > Then Deploy on Staging Server
-    build_deploy_on_staging_server:
+    # Build main > Then Deploy on prod Server
+    build_deploy_on_prod_server:
         jobs:
             - build_for_prod_server:
                 context: 
@@ -207,7 +210,7 @@ workflows:
                 filters:
                     branches:
                         only: main
-            - deploy_on_staging_server:
+            - deploy_on_prod_server:
                 context: org-global
                 requires:
                     - build_for_prod_server
