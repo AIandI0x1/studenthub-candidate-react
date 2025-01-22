@@ -125,7 +125,6 @@ export function blobToBase64(blob: Blob) {
       resolve(reader.result);
     }
     reader.onerror = error => {
-      console.log('error', error);
       reject(error);
     }
   });

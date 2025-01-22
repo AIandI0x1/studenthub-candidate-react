@@ -180,10 +180,7 @@ export default function VideoPage() {
   
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
    
-    console.log(values);
     if (query.get('fromProfile'))
       router.push('/profile');
     else
@@ -612,7 +609,6 @@ export default function VideoPage() {
   useEffect(() => {
    
     /*if (countDown == 0 && recording) {
-      console.log("startRecording")
       startRecording();
       return;
     }*/

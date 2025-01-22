@@ -58,7 +58,6 @@ const WorkingCounter = () => {
           const data = await startWork(position.coords.latitude, position.coords.longitude);
 
           if (data.operation === "success") {
-              console.log('started');
               
               dispatch(setUser({ user: {
                   ...user,

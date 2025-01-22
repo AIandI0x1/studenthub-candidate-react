@@ -103,7 +103,6 @@ export default function PersonalPhotoPage() {
         if (user) {
           
           //user.candidate_personal_photo = res.candidate_personal_photo;
-          //console.log(user);
 
           dispatch(setUser({ user: {
             ...user,
@@ -186,7 +185,6 @@ export default function PersonalPhotoPage() {
 
                             uploadFileToTempS3(file).then((response: any) => {
                               
-                              console.log(response);
                               form.setValue('candidate_personal_photo', response.Key);
                               form.trigger('candidate_personal_photo');
                               form.setValue('candidate_personal_photo_url', response.Location);

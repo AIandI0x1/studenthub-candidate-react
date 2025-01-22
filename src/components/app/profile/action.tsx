@@ -37,9 +37,8 @@ export function CandidateAction({ onClose }: { onClose: () => void }) {
 
     const changeLanguageClicked = () => {
         const language = i18n.language == "ar"? "en": "ar";
-        console.log(i18n);
+         
         i18n.changeLanguage(language, (e) => {
-            console.log(e);
         });
         dispatch(setLanguage({
             language: language

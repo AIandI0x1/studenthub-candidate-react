@@ -94,8 +94,8 @@ export default function JobDetailPage() {
                                 <div className="w-5 h-5 relative float-end overflow-hidden">
                                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <g clip-path="url(#clip0_2280_1730)">
-                                    <path d="M18.3333 9.2333V9.99997C18.3323 11.797 17.7504 13.5455 16.6744 14.9848C15.5984 16.4241 14.086 17.477 12.3628 17.9866C10.6395 18.4961 8.79768 18.4349 7.11202 17.8121C5.42636 17.1894 3.98717 16.0384 3.00909 14.5309C2.03101 13.0233 1.56645 11.24 1.68469 9.4469C1.80293 7.65377 2.49763 5.94691 3.66519 4.58086C4.83275 3.21482 6.41061 2.26279 8.16345 1.86676C9.91629 1.47073 11.7502 1.65192 13.3916 2.3833" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                    <path d="M18.3333 3.33325L10 11.6749L7.5 9.17492" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M18.3333 9.2333V9.99997C18.3323 11.797 17.7504 13.5455 16.6744 14.9848C15.5984 16.4241 14.086 17.477 12.3628 17.9866C10.6395 18.4961 8.79768 18.4349 7.11202 17.8121C5.42636 17.1894 3.98717 16.0384 3.00909 14.5309C2.03101 13.0233 1.56645 11.24 1.68469 9.4469C1.80293 7.65377 2.49763 5.94691 3.66519 4.58086C4.83275 3.21482 6.41061 2.26279 8.16345 1.86676C9.91629 1.47073 11.7502 1.65192 13.3916 2.3833" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                    <path d="M18.3333 3.33325L10 11.6749L7.5 9.17492" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                                     </g>
                                     <defs>
                                     <clipPath id="clip0_2280_1730">
@@ -132,8 +132,8 @@ export default function JobDetailPage() {
                             <div className="grow shrink basis-0 h-6 justify-start items-center gap-1 flex">
                                 <div className="w-6 h-6 relative top-1">
                                     <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <rect x="1" y="1" width="16" height="16" rx="8" stroke="#F2994A" stroke-width="2"/>
-                                    <path d="M8.39158 3.60315V4.297C7.0293 4.55051 6 5.6302 6 6.92151C6 7.8083 6.49641 8.99076 8.85177 9.58816C10.1352 9.91388 10.7893 10.4146 10.7893 11.0784C10.7893 11.893 9.99005 12.5565 9.00305 12.5565C8.01604 12.5565 7.21684 11.893 7.21684 11.0784C7.21684 10.7466 6.94444 10.4752 6.61147 10.4752C6.2785 10.4752 6.0061 10.7466 6.0061 11.0784C6.0061 12.3695 7.0354 13.4554 8.39768 13.7029V14.3968C8.39768 14.7286 8.67008 15 9.00305 15C9.33602 15 9.60842 14.7286 9.60842 14.3968V13.7029C10.9707 13.4494 12 12.3697 12 11.0784C12 10.1916 11.5036 9.00918 9.14823 8.41785C7.86477 8.09213 7.21074 7.59143 7.21074 6.92157C7.21074 6.10698 8.00995 5.44345 8.99695 5.44345C9.98396 5.44345 10.7832 6.10704 10.7832 6.92157C10.7832 7.25335 11.0556 7.52479 11.3885 7.52479C11.7215 7.52479 11.9939 7.25335 11.9939 6.92157C11.9939 5.63052 10.9646 4.54457 9.60232 4.29706V3.60322C9.60232 3.27144 9.32992 3 8.99695 3C8.66398 2.99975 8.39158 3.26538 8.39158 3.60322V3.60315Z" fill="#F2994A" stroke="#F2994A" stroke-width="0.5"/>
+                                    <rect x="1" y="1" width="16" height="16" rx="8" stroke="#F2994A" strokeWidth="2"/>
+                                    <path d="M8.39158 3.60315V4.297C7.0293 4.55051 6 5.6302 6 6.92151C6 7.8083 6.49641 8.99076 8.85177 9.58816C10.1352 9.91388 10.7893 10.4146 10.7893 11.0784C10.7893 11.893 9.99005 12.5565 9.00305 12.5565C8.01604 12.5565 7.21684 11.893 7.21684 11.0784C7.21684 10.7466 6.94444 10.4752 6.61147 10.4752C6.2785 10.4752 6.0061 10.7466 6.0061 11.0784C6.0061 12.3695 7.0354 13.4554 8.39768 13.7029V14.3968C8.39768 14.7286 8.67008 15 9.00305 15C9.33602 15 9.60842 14.7286 9.60842 14.3968V13.7029C10.9707 13.4494 12 12.3697 12 11.0784C12 10.1916 11.5036 9.00918 9.14823 8.41785C7.86477 8.09213 7.21074 7.59143 7.21074 6.92157C7.21074 6.10698 8.00995 5.44345 8.99695 5.44345C9.98396 5.44345 10.7832 6.10704 10.7832 6.92157C10.7832 7.25335 11.0556 7.52479 11.3885 7.52479C11.7215 7.52479 11.9939 7.25335 11.9939 6.92157C11.9939 5.63052 10.9646 4.54457 9.60232 4.29706V3.60322C9.60232 3.27144 9.32992 3 8.99695 3C8.66398 2.99975 8.39158 3.26538 8.39158 3.60322V3.60315Z" fill="#F2994A" stroke="#F2994A" strokeWidth="0.5"/>
                                     </svg>
                                 </div>
                                  
@@ -167,8 +167,8 @@ export default function JobDetailPage() {
                             <div className="grow shrink basis-0 h-6 justify-start items-start gap-1 flex">
                                 <div className="w-6 h-6 relative">
                                     <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <rect x="1" y="1" width="16" height="16" rx="8" stroke="#23233D" stroke-width="2" />
-                                        <path d="M8 6V8.34252C8 8.66548 8.15597 8.96855 8.41876 9.15626L11 11" stroke="#23233D" stroke-width="2" stroke-linecap="round" />
+                                        <rect x="1" y="1" width="16" height="16" rx="8" stroke="#23233D" strokeWidth="2" />
+                                        <path d="M8 6V8.34252C8 8.66548 8.15597 8.96855 8.41876 9.15626L11 11" stroke="#23233D" strokeWidth="2" strokeLinecap="round" />
                                     </svg>
                                 </div>
                                 <div className="text-[#4b4b61] text-sm font-medium leading-tight">
@@ -183,8 +183,8 @@ export default function JobDetailPage() {
                             <div className="grow shrink basis-0 h-6 justify-start items-start gap-1 flex">
                                 <div className="w-6 h-6 relative">
                                     <svg width="16" height="18" viewBox="0 0 16 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <rect x="1" y="3" width="14" height="14" rx="4" stroke="#23233D" stroke-width="2" />
-                                        <path d="M15 8H1" stroke="#23233D" stroke-width="2" />
+                                        <rect x="1" y="3" width="14" height="14" rx="4" stroke="#23233D" strokeWidth="2" />
+                                        <path d="M15 8H1" stroke="#23233D" strokeWidth="2" />
                                         <rect x="4" width="2" height="6" rx="1" fill="#23233D" />
                                         <rect x="10" width="2" height="6" rx="1" fill="#23233D" />
                                     </svg>

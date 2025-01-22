@@ -45,7 +45,6 @@ export async function setOneSignalSubscription() {
  * check oneSignal subscription status to show prompt in conversation list page
  */
 export async function oneSignalActionBasedOnStatus() {
-  console.log("oneSignalActionBasedOnStatus", oneSignalStatus);
   if (oneSignalStatus) { // already accepted
     setOneSignalSubscription();
   } else { // not sure
@@ -105,7 +104,6 @@ async function checkOneSignalStatus() {
     // Occurs when the user's subscription changes to a new value.
 
     wOneSignal.User.PushSubscription.addEventListener('change', (event: any) => {
-      console.log("change", event);
       store.dispatch(setShowOneSignalPrompt({
         showOneSignalPrompt: !event.current.optedIn
       }));
@@ -117,11 +115,8 @@ async function checkOneSignalStatus() {
  * Include One signal to use stripe element in browser
  */
 export async function includeOneSignalJs() {
-
-  console.log("_includeOneSignalJs");
-
+ 
   if (!window.Notification) {
-    console.log("window.Notification not available");
     store.dispatch(setPushNotificationAvailable({
       pushNotificationAvailable: false
     }));
@@ -135,10 +130,9 @@ export async function includeOneSignalJs() {
 
   const agent = window.navigator.userAgent.toLowerCase();
   //agent.indexOf('safari') > -1 && (!window.safari || !window.safari.pushNotification)
-  console.log("agent", agent);
+ 
   //this.platform.is('ios') 
   if(/iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream) {
-    console.log("window.Notification not available");
     store.dispatch(setPushNotificationAvailable({
       pushNotificationAvailable: false
     }));
@@ -181,9 +175,6 @@ export async function includeOneSignalJs() {
   wOneSignal.push(async (OneSignal: any) => {
 
     // initialize only on first time script load
-
-    console.log("ONE_SIGNAL_APP_ID", import.meta.env.VITE_ONE_SIGNAL_APP_ID);
-    console.log("ONE_SIGNAL_SAFARI_APP_ID", import.meta.env.VITE_ONE_SIGNAL_SAFARI_APP_ID);
 
     await OneSignal.init({
       appId: import.meta.env.VITE_ONE_SIGNAL_APP_ID,

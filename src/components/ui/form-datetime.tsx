@@ -73,8 +73,8 @@ export function FormDateTimeInput({
             
               <div className='absolute end-4 top-[22px] z-8'>
                 <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect x="5" y="6.89258" width="14" height="14" rx="4" stroke="#7D7D8D" stroke-width="2"/>
-                <path d="M19 11.8926L5 11.8926" stroke="#7D7D8D" stroke-width="2"/>
+                <rect x="5" y="6.89258" width="14" height="14" rx="4" stroke="#7D7D8D" strokeWidth="2"/>
+                <path d="M19 11.8926L5 11.8926" stroke="#7D7D8D" strokeWidth="2"/>
                 <rect x="8" y="3.89258" width="2" height="6" rx="1" fill="#7D7D8D"/>
                 <rect x="14" y="3.89258" width="2" height="6" rx="1" fill="#7D7D8D"/>
                 </svg>           
@@ -102,7 +102,6 @@ export function FormDateTimeInput({
                 //$event.stopPropagation();
               }}
               /*onChange={($event) => {
-                console.log("on change");
                 onChange?.($event);
               }}*/
               
@@ -155,9 +154,8 @@ export function FormDateTimeInput({
                        form.getValues(name) ? form.getValues(name).toISOString() : new Date().toISOString()
                      }
                   onIonChange={(e) => {
-                    console.log(e);
                     const date = new Date(e.detail.value as string || "");
-                    console.log(date);
+                    
                     if (date) {
                       form.setValue(name, date);
                       form.trigger(name);

@@ -127,7 +127,6 @@ export default function EducationsPage() {
   }
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values)
 
     setLoading(true);
 

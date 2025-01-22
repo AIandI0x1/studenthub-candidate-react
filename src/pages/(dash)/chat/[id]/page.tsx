@@ -58,7 +58,6 @@ const ChatViewPage = () => {
           });
 
         const subscription = alertUpdate$.subscribe((res) => {
-            console.log(res);
             //checkNewMessages();
         });*/
 
@@ -71,7 +70,6 @@ const ChatViewPage = () => {
         page('Chat Page');
 
         /*const messageSubscription = setInterval(() => {
-            console.log("interval ", messages);
             checkNewMessages();
         }, 5 * 1000); // no need to scroll every time
         */
@@ -103,7 +101,6 @@ const ChatViewPage = () => {
   async function checkNewMessage(scroll = false) {
 
     if (loading || loadingMoreMessages || checkingNewMessages) {
-        console.log("already loading")
       return false;
     }
 

@@ -51,16 +51,12 @@ const WorkLogAppealPage = ({ onClose, candidate_working_hour_uuid }: {onClose: a
   }, []);
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
- 
-    console.log("onSubmit", values);
-
+  
     setSaving(true);
  
     const response = await postWorkingHourAppeal(candidate_working_hour_uuid, values.reason);
     setSaving(false);
-
-    console.log("response", response);
-
+ 
     if (response.operation === "success") {
       
       toast({
