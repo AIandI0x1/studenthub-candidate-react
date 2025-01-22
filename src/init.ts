@@ -13,7 +13,7 @@ import { getJobSearchStatus, profile } from "@/providers/logged-in/account.servi
 import { setUser } from "@/store/slices/userSlice";
 import { clickCampaign } from "@/providers/campaign.service";
 import { setCampaignId, setTotalUnreadActivity, setTotalUnreadMessages } from "@/store/slices/appSlice";
-import { identify, track } from "@/providers/analytics.service";
+import { identify, setMixpanel, track } from "@/providers/analytics.service";
 import { store } from "./store/store";
 import { includeOneSignalJs, oneSignalActionBasedOnStatus, setOneSignalSubscription } from "./utils/oneSignal";
 import { logout } from "./store/slices/authSlice";
@@ -27,16 +27,16 @@ declare global {
 window.global ||= window;
 
 let alertSubscription: any = null;
+let isInitialized = false;
 
-export async function initializeApp() {
+export async function initializeApp(urlParams: any) {
 
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-    
-    if(urlParams.get('auth_key')) {
-      loginByKey(urlParams.get('auth_key') + "");
+    if(isInitialized) {
+      return;
     }
 
+    isInitialized = true;
+ 
     if(urlParams.get('utm_id')) {
       
       store.dispatch(setCampaignId({
@@ -143,6 +143,10 @@ export async function initializeApp() {
     });
 
     includeOneSignalJs();
+
+    setTimeout(() => {
+      setMixpanel();
+    }, 1000);
   }
 
   /**

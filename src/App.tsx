@@ -1,5 +1,5 @@
 
-import { IonApp, IonRouterOutlet, setupIonicReact } from '@ionic/react';
+import { IonApp, IonRouterOutlet, setupIonicReact, useIonViewDidEnter, useIonViewWillEnter } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 //import { Inter } from 'next/font/google';
 
@@ -7,7 +7,6 @@ import { IonReactRouter } from '@ionic/react-router';
 
 import { setCanGoForward } from "@/store/slices/appSlice";
 import { useEffect } from "react";
-import { setMixpanel } from "@/providers/analytics.service";
 import i18n from "./18n";
 import './sentry';
 
@@ -75,6 +74,7 @@ import {
 } from "@/components/ui/alert-dialog"
 import { t } from "i18next";
 import { Toaster } from "@/components/ui/toaster";
+import { useQuery } from './utils/common';
 
 //const LandingPage = React.lazy(() => import('./pages/(auth)/landing/page'));
 //const HomePage = React.lazy(() => import('./pages/(dash)/home/page'));
@@ -92,17 +92,16 @@ const App: React.FC = () => {
   
   const { alertDialogs } = useAlertDialog();
 
+  const query = useQuery();
+
   useEffect(() => {
-
-    initializeApp();
-
+  
     document.getElementsByTagName('html')[0].setAttribute('dir', 
       (i18n.language == 'ar') ? 'rtl' : 'ltr');
-
-
-    setMixpanel();
+      
+    initializeApp(query);
   }, []);
-
+ 
   return (
     <ErrorBoundary>
     <Provider store={store}>
