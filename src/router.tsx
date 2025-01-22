@@ -1,6 +1,6 @@
 import React, { Suspense, useEffect } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
-import { store } from './store/store';
+import { RootState, useAppSelector } from './store/store';
 
 //page loaders
 import LoadingHomePage from './pages/(dash)/home/loading';
@@ -507,9 +507,10 @@ export default function RouterComponent() {
 // screen if you're not yet authenticated.
 function PrivateRoute({ children, ...rest }: any) {//{ children: React.ReactNode, ...rest: any }
 
-  const { isAuthenticated } = store.getState().auth;
+  const { isAuthenticated } = useAppSelector((state: RootState) => state.auth);
+  //store.getState().auth;
   //useAppSelector((state) => state.auth);
-
+  
   return (
     <Route
       {...rest}
@@ -520,7 +521,9 @@ function PrivateRoute({ children, ...rest }: any) {//{ children: React.ReactNode
           <Redirect
             to={{
               pathname: "/landing",
-              state: { from: location }
+              state: { 
+                from: location,
+              },
             }}
           />
         )
