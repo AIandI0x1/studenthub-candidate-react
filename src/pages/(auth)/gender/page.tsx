@@ -40,7 +40,6 @@ export default function GenderPage() {
       profile().then(res => {
         dispatch(setUser({ user: res }));
         setGender(res.candidate_gender);
-        console.log('gender', gender);
       }).finally(() => {
         setLoading(false);
       });
@@ -63,7 +62,6 @@ export default function GenderPage() {
   }, []);
 
   function onSubmit() {
-    console.log('gender', gender);
     if (gender) {
 
       setLoading(true);

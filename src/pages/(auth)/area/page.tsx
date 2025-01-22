@@ -179,9 +179,7 @@ export default function AreaPage() {
   const getItems = async ( ) => {
 
     const { query, country_name } = form.getValues();
-
-    console.log("getItems query", query);
-
+ 
     if (query.length == 0) {
       setPlaces([]);
       return;
@@ -296,7 +294,6 @@ export default function AreaPage() {
   function setArea(country: Country, area: Area, latitude: number, longitude: number) {
 
     if(!country || !area) {
-      console.log('setArea no arguments', country, area);
       return null;
     }
 
@@ -328,9 +325,7 @@ export default function AreaPage() {
     form.trigger('latitude');
     form.setValue('longitude', longitude + '');
     form.trigger('longitude');
-
-    console.log('setArea', form.getValues());
-
+ 
     //save changes
 
     //onSubmit();
@@ -338,7 +333,6 @@ export default function AreaPage() {
 
   function onCountryChange(e: any) {
    
-    console.log('onCountryChange', e);
     setPlaces([]);
 
     form.setValue('area_uuid', "");
@@ -358,7 +352,6 @@ export default function AreaPage() {
 
     //form.trigger();
 
-    console.log('onCountryChange', form)
   }
 
   return (
@@ -420,7 +413,6 @@ export default function AreaPage() {
           src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBSM8o4WSIIRn-sNhn-PvO2s0ovZuLDAaw&libraries=places" // Replace with your script URL
           strategy="lazyOnload" // Load the script after the page has loaded
           onLoad={() => {
-            console.log('google places loaded');
          }}
         />
     </AuthLayout>

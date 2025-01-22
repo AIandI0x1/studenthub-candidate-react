@@ -50,8 +50,8 @@ export function FormTimeInput({
 
           <div className='absolute end-4 top-[22px]'>
             <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="4" y="4.89258" width="16" height="16" rx="8" stroke="#7D7D8D" stroke-width="2"/>
-              <path d="M11 9.89258V12.2351C11 12.5581 11.156 12.8611 11.4188 13.0488L14 14.8926" stroke="#7D7D8D" stroke-width="2" stroke-linecap="round"/>
+              <rect x="4" y="4.89258" width="16" height="16" rx="8" stroke="#7D7D8D" strokeWidth="2"/>
+              <path d="M11 9.89258V12.2351C11 12.5581 11.156 12.8611 11.4188 13.0488L14 14.8926" stroke="#7D7D8D" strokeWidth="2" strokeLinecap="round"/>
             </svg>
           </div>
 

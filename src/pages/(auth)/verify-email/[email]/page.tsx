@@ -188,7 +188,6 @@ export default function VerifyEmailPage() {
       console.log("err:" + err);
       alert("err:" + err);
     }).finally(() => {
-      console.log("finally");
       setLoading(false);
     })
      */

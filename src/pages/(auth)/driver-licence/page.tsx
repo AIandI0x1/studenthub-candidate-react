@@ -35,7 +35,6 @@ export default function DriverLicensePage() {
 
     page('Driver Licence Page');
 
-    console.log('no haveLicence', haveLicence);
     setHaveLicence(user?.candidate_driving_license || 0);
 
     /*if (match && match.params.fromProfile)

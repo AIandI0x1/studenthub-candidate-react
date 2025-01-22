@@ -145,7 +145,7 @@ export function PersonalDdetail()   {
                     <div className="h-6 justify-start items-center gap-2 flex">
                         <div className="w-6 h-6 relative">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M8.12972 4H5.68421C4.75405 4 4 4.75405 4 5.68421C4 13.5906 10.4094 20 18.3158 20C19.246 20 20 19.246 20 18.3158V15.8703C20 15.1433 19.5574 14.4896 18.8825 14.2197L16.5397 13.2825C15.9334 13.04 15.2429 13.1494 14.7413 13.5674L14.1361 14.0718C13.4297 14.6604 12.3911 14.6133 11.7409 13.9631L10.0369 12.2591C9.38671 11.6089 9.33959 10.5703 9.92822 9.86391L10.4326 9.25869C10.8506 8.75706 10.96 8.06662 10.7175 7.46034L9.78034 5.11753C9.51037 4.44258 8.85666 4 8.12972 4Z" stroke="#23233D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M8.12972 4H5.68421C4.75405 4 4 4.75405 4 5.68421C4 13.5906 10.4094 20 18.3158 20C19.246 20 20 19.246 20 18.3158V15.8703C20 15.1433 19.5574 14.4896 18.8825 14.2197L16.5397 13.2825C15.9334 13.04 15.2429 13.1494 14.7413 13.5674L14.1361 14.0718C13.4297 14.6604 12.3911 14.6133 11.7409 13.9631L10.0369 12.2591C9.38671 11.6089 9.33959 10.5703 9.92822 9.86391L10.4326 9.25869C10.8506 8.75706 10.96 8.06662 10.7175 7.46034L9.78034 5.11753C9.51037 4.44258 8.85666 4 8.12972 4Z" stroke="#23233D" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                             </svg>
                         </div>
                         <div className="text-[#22223d] text-sm font-medium leading-tight">
@@ -158,8 +158,8 @@ export function PersonalDdetail()   {
                     <div className="grow shrink basis-0 h-6 justify-start items-center gap-2 flex">
                         <div className="w-6 h-6 relative">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <rect x="4" y="6" width="16" height="12" rx="3" stroke="#23233D" stroke-width="2"/>
-                            <path d="M18.2008 7.75L12.647 12.4528C12.2741 12.7686 11.7275 12.7686 11.3546 12.4528L5.80078 7.75" stroke="#23233D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <rect x="4" y="6" width="16" height="12" rx="3" stroke="#23233D" strokeWidth="2"/>
+                            <path d="M18.2008 7.75L12.647 12.4528C12.2741 12.7686 11.7275 12.7686 11.3546 12.4528L5.80078 7.75" stroke="#23233D" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                             </svg>
                         </div>
                         <div className="text-[#22223d] text-sm font-medium leading-tight">
@@ -171,7 +171,7 @@ export function PersonalDdetail()   {
                 <div className="justify-start items-center gap-2 inline-flex cursor-pointer" onClick={updatePreferredTimeClicked}>
                     <div className="w-6 h-6 relative">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M8.12972 4H5.68421C4.75405 4 4 4.75405 4 5.68421C4 13.5906 10.4094 20 18.3158 20C19.246 20 20 19.246 20 18.3158V15.8703C20 15.1433 19.5574 14.4896 18.8825 14.2197L16.5397 13.2825C15.9334 13.04 15.2429 13.1494 14.7413 13.5674L14.1361 14.0718C13.4297 14.6604 12.3911 14.6133 11.7409 13.9631L10.0369 12.2591C9.38671 11.6089 9.33959 10.5703 9.92822 9.86391L10.4326 9.25869C10.8506 8.75706 10.96 8.06662 10.7175 7.46034L9.78034 5.11753C9.51037 4.44258 8.85666 4 8.12972 4Z" stroke="#23233D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8.12972 4H5.68421C4.75405 4 4 4.75405 4 5.68421C4 13.5906 10.4094 20 18.3158 20C19.246 20 20 19.246 20 18.3158V15.8703C20 15.1433 19.5574 14.4896 18.8825 14.2197L16.5397 13.2825C15.9334 13.04 15.2429 13.1494 14.7413 13.5674L14.1361 14.0718C13.4297 14.6604 12.3911 14.6133 11.7409 13.9631L10.0369 12.2591C9.38671 11.6089 9.33959 10.5703 9.92822 9.86391L10.4326 9.25869C10.8506 8.75706 10.96 8.06662 10.7175 7.46034L9.78034 5.11753C9.51037 4.44258 8.85666 4 8.12972 4Z" stroke="#23233D" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                         </svg>
                     </div>
                     <div className="text-[#22223d] text-sm font-medium leading-tight">
@@ -203,9 +203,9 @@ export function PersonalDdetail()   {
                 <div className="justify-start items-center gap-2 inline-flex cursor-pointer" onClick={updateNationalityClicked}>
                     <div className="w-6 h-6 relative">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4C7.58172 4 4 7.58172 4 12C4 16.4183 7.58172 20 12 20Z" stroke="#23233D" stroke-width="1.8" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M4 12H20" stroke="#23233D" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M12 20C13.6569 20 15 16.4183 15 12C15 7.58172 13.6569 4 12 4C10.3431 4 9 7.58172 9 12C9 16.4183 10.3431 20 12 20Z" stroke="#23233D" stroke-width="1.8" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4C7.58172 4 4 7.58172 4 12C4 16.4183 7.58172 20 12 20Z" stroke="#23233D" strokeWidth="1.8" stroke-miterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M4 12H20" stroke="#23233D" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M12 20C13.6569 20 15 16.4183 15 12C15 7.58172 13.6569 4 12 4C10.3431 4 9 7.58172 9 12C9 16.4183 10.3431 20 12 20Z" stroke="#23233D" strokeWidth="1.8" stroke-miterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
                         </svg>
                     </div>
                     <div className="text-[#22223d] text-sm font-medium leading-tight">
@@ -223,8 +223,8 @@ export function PersonalDdetail()   {
                 <div className="justify-start items-center gap-2 inline-flex cursor-pointer" onClick={updateKuwaitiNationalStatusClicked}>
                     <div className="w-6 h-6 relative">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="12.5" cy="7.5" r="3.5" stroke="#23233D" stroke-width="2"/>
-                        <path d="M7 19.5C7 16.4624 9.46243 14 12.5 14V14C15.5376 14 18 16.4624 18 19.5V20H7V19.5Z" stroke="#23233D" stroke-width="2"/>
+                        <circle cx="12.5" cy="7.5" r="3.5" stroke="#23233D" strokeWidth="2"/>
+                        <path d="M7 19.5C7 16.4624 9.46243 14 12.5 14V14C15.5376 14 18 16.4624 18 19.5V20H7V19.5Z" stroke="#23233D" strokeWidth="2"/>
                         </svg>
                     </div>
                     <div className="text-[#22223d] text-sm font-medium leading-tight">        
@@ -239,8 +239,8 @@ export function PersonalDdetail()   {
                 <div className="justify-start items-center gap-2 inline-flex cursor-pointer" onClick={updateGenderClicked}>
                     <div className="w-6 h-6 relative">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="12.5" cy="7.5" r="3.5" stroke="#23233D" stroke-width="2"/>
-                        <path d="M7 19.5C7 16.4624 9.46243 14 12.5 14V14C15.5376 14 18 16.4624 18 19.5V20H7V19.5Z" stroke="#23233D" stroke-width="2"/>
+                        <circle cx="12.5" cy="7.5" r="3.5" stroke="#23233D" strokeWidth="2"/>
+                        <path d="M7 19.5C7 16.4624 9.46243 14 12.5 14V14C15.5376 14 18 16.4624 18 19.5V20H7V19.5Z" stroke="#23233D" strokeWidth="2"/>
                         </svg>
                     </div>
                     <div className="text-[#22223d] text-sm font-medium leading-tight">        
@@ -255,9 +255,9 @@ export function PersonalDdetail()   {
                     <div className="grow shrink basis-0 h-10 justify-start items-start gap-2 flex">
                         <div className="w-6 h-6 relative">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <rect x="3" y="6" width="18" height="13" rx="3" stroke="#23233D" stroke-width="2"/>
-                            <path d="M10 14L6 14" stroke="#23233D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M14 11L6 11" stroke="#23233D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <rect x="3" y="6" width="18" height="13" rx="3" stroke="#23233D" strokeWidth="2"/>
+                            <path d="M10 14L6 14" stroke="#23233D" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                            <path d="M14 11L6 11" stroke="#23233D" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                             </svg>
                         </div>
                         <div className="w-[262px]">
@@ -274,7 +274,7 @@ export function PersonalDdetail()   {
                 <div className="justify-start items-center gap-2 inline-flex cursor-pointer" onClick={updateDrivingLicenseClicked}>
                     <div className="w-6 h-6 relative">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M19.5207 15.6601C22.4878 15.3564 19.7067 9.69163 18.9656 8.14862L10.4523 8.14842C9.91556 8.41443 9.46117 8.7806 9.03727 9.2375C7.70774 10.6771 7.90895 11.5503 6.05789 12.0198C4.58491 12.3954 2.09344 11.5409 2.11493 15.666H3.32249C3.90488 12.7522 7.87538 12.7522 8.45792 15.666L14.385 15.6662C14.9676 12.7554 18.9321 12.7526 19.5207 15.6601ZM3.32269 16.8149H1.57525C1.27937 16.8149 1.03248 16.5772 1.01724 16.2735C0.873981 13.6225 1.59964 11.4567 4.09111 11.0686C4.42661 11.0185 6.20738 11.1154 6.77459 10.4113C7.25648 9.6602 7.71689 8.99976 8.22923 8.44907C8.62563 8.01719 9.80588 7 10.3334 7H19.3129C19.5173 7 19.7154 7.11578 19.813 7.3193C20.9261 9.60408 24.2775 16.6333 19.5202 16.8179C18.9318 19.7286 14.9673 19.7254 14.3848 16.8147L8.45765 16.8145C7.87526 19.7282 3.90523 19.7287 3.32269 16.8149ZM6.94847 15.0811C5.5397 13.5787 3.41712 15.8885 4.83219 17.4003C6.24411 18.9026 8.36354 16.5928 6.94847 15.0811ZM18.011 15.0811C16.5991 13.5787 14.4766 15.8885 15.8947 17.4003C17.3035 18.9026 19.4259 16.5928 18.011 15.0811Z" fill="#23233D" stroke="#23233D" stroke-width="0.6"/>
+                        <path d="M19.5207 15.6601C22.4878 15.3564 19.7067 9.69163 18.9656 8.14862L10.4523 8.14842C9.91556 8.41443 9.46117 8.7806 9.03727 9.2375C7.70774 10.6771 7.90895 11.5503 6.05789 12.0198C4.58491 12.3954 2.09344 11.5409 2.11493 15.666H3.32249C3.90488 12.7522 7.87538 12.7522 8.45792 15.666L14.385 15.6662C14.9676 12.7554 18.9321 12.7526 19.5207 15.6601ZM3.32269 16.8149H1.57525C1.27937 16.8149 1.03248 16.5772 1.01724 16.2735C0.873981 13.6225 1.59964 11.4567 4.09111 11.0686C4.42661 11.0185 6.20738 11.1154 6.77459 10.4113C7.25648 9.6602 7.71689 8.99976 8.22923 8.44907C8.62563 8.01719 9.80588 7 10.3334 7H19.3129C19.5173 7 19.7154 7.11578 19.813 7.3193C20.9261 9.60408 24.2775 16.6333 19.5202 16.8179C18.9318 19.7286 14.9673 19.7254 14.3848 16.8147L8.45765 16.8145C7.87526 19.7282 3.90523 19.7287 3.32269 16.8149ZM6.94847 15.0811C5.5397 13.5787 3.41712 15.8885 4.83219 17.4003C6.24411 18.9026 8.36354 16.5928 6.94847 15.0811ZM18.011 15.0811C16.5991 13.5787 14.4766 15.8885 15.8947 17.4003C17.3035 18.9026 19.4259 16.5928 18.011 15.0811Z" fill="#23233D" stroke="#23233D" strokeWidth="0.6"/>
                         </svg>
                     </div>
                     <div className="text-[#22223d] text-sm font-medium leading-tight">
@@ -287,8 +287,8 @@ export function PersonalDdetail()   {
                 <div className="justify-start items-center gap-2 inline-flex cursor-pointer" onClick={updateDateOfBirthClicked}>
                     <div className="w-6 h-6 relative">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="5" y="6" width="14" height="14" rx="4" stroke="#23233D" stroke-width="2"/>
-                        <path d="M19 11H5" stroke="#23233D" stroke-width="2"/>
+                        <rect x="5" y="6" width="14" height="14" rx="4" stroke="#23233D" strokeWidth="2"/>
+                        <path d="M19 11H5" stroke="#23233D" strokeWidth="2"/>
                         <rect x="8" y="3" width="2" height="6" rx="1" fill="#23233D"/>
                         <rect x="14" y="3" width="2" height="6" rx="1" fill="#23233D"/>
                         </svg>
@@ -302,9 +302,9 @@ export function PersonalDdetail()   {
                 <div className="justify-start items-center gap-2 inline-flex cursor-pointer" onClick={profilePageClicked}>
                     <div className="w-6 h-6 relative">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4C7.58172 4 4 7.58172 4 12C4 16.4183 7.58172 20 12 20Z" stroke="#23233D" stroke-width="1.8" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M4 12H20" stroke="#23233D" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M12 20C13.6569 20 15 16.4183 15 12C15 7.58172 13.6569 4 12 4C10.3431 4 9 7.58172 9 12C9 16.4183 10.3431 20 12 20Z" stroke="#23233D" stroke-width="1.8" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4C7.58172 4 4 7.58172 4 12C4 16.4183 7.58172 20 12 20Z" stroke="#23233D" strokeWidth="1.8" stroke-miterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M4 12H20" stroke="#23233D" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M12 20C13.6569 20 15 16.4183 15 12C15 7.58172 13.6569 4 12 4C10.3431 4 9 7.58172 9 12C9 16.4183 10.3431 20 12 20Z" stroke="#23233D" strokeWidth="1.8" stroke-miterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
                         </svg>
                     </div>
                     <div className="text-[#22223d] text-sm font-medium leading-tight">
@@ -315,8 +315,8 @@ export function PersonalDdetail()   {
                 { user.candidate_created_at && <div className="justify-start items-start gap-2 inline-flex">
                     <div className="w-6 h-6 relative">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="4" y="4" width="16" height="16" rx="8" stroke="#23233D" stroke-width="2"/>
-                        <path d="M11 9V11.3425C11 11.6655 11.156 11.9685 11.4188 12.1563L14 14" stroke="#23233D" stroke-width="2" stroke-linecap="round"/>
+                        <rect x="4" y="4" width="16" height="16" rx="8" stroke="#23233D" strokeWidth="2"/>
+                        <path d="M11 9V11.3425C11 11.6655 11.156 11.9685 11.4188 12.1563L14 14" stroke="#23233D" strokeWidth="2" strokeLinecap="round"/>
                         </svg>
                     </div>
                     <div>

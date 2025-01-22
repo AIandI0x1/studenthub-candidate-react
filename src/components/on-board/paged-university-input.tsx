@@ -35,7 +35,6 @@ export default function PagedUniversityInput({ selectedUniversity, onSelect, nam
     useEffect(() => {
          
         if (!open || form.getValues(name) == "") {
-            console.log('not open');
             return;
         }
 

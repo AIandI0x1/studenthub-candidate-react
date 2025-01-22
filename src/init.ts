@@ -104,29 +104,24 @@ export async function initializeApp(urlParams: any) {
 
       if (window && window.Notification && window.OneSignal)
       {
-        const OneSignal = window.OneSignal;
+        const wOneSignal = window.OneSignal;
 
-        OneSignal.isPushNotificationsEnabled((isEnabled: any) => {
+        if (
+          wOneSignal.User && 
+          wOneSignal.User.PushSubscription && 
+          wOneSignal.User.PushSubscription.id
+        ) {
 
-          if (isEnabled) {
-
-            // Delete user tags if subscribed
-
-            OneSignal.getUserId().then((userId: any) => {
-
-              if (userId) {
-
-                const tags = [
-                  'candidate_id',
-                  'name',
-                  'email'
-                ];
-
-                OneSignal.deleteTags(tags);
-              }
-            });
-          }
-        });
+          // remove old user tag if any
+   
+            const oldTags = [
+              'candidate_uuid',
+              'name',
+              'email'
+            ];
+  
+            wOneSignal.User.removeTags(oldTags);
+        }
       }
 
       // Show Message explaining logout reason if there's one set

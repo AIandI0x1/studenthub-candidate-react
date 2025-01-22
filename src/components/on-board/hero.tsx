@@ -33,9 +33,7 @@ export function Hero() {
     setGoogleLoginLoading(true);
 
     GoogleAuth.signIn().then(async googleUser => {
-
-      console.log(googleUser);
-
+ 
       if (googleUser && googleUser.authentication && googleUser.authentication.idToken) {
         const res = await useGoogleIdTokenForAuth(googleUser.authentication.idToken);
  
@@ -165,7 +163,6 @@ export function Hero() {
           src="https://appleid.cdn-apple.com/appleauth/static/jsapi/appleid/1/en_US/appleid.auth.js" // Replace with your script URL
           strategy="lazyOnload" 
           onLoad={() => {
-            console.log('google places loaded');
          }}
         />
     </div>
