@@ -19,6 +19,13 @@ export function dateTimeFormat(value: string, dateFormat: string): string {
   return format(value, dateFormat, { locale: i18n.language == 'en' ? enUS : ar })
 }
 
+export function formatNumber(value: number) {
+  return new Intl.NumberFormat('en-US', {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 3,
+  }).format(value);
+}
+
 /**
  * Make date readable by Safari
  * @param date

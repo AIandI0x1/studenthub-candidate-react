@@ -102,7 +102,7 @@ export default function DashLayout({
   }
 
   return (
-    <div className="bg-[#f7f8fa] min-h-screen xs:pb-20 sm:pb-0">
+    <div className="dash-layout bg-[#f7f8fa] min-h-screen xs:pb-20 sm:pb-0">
 
       <Header></Header>
 {/** className="max-w-5xl mx-auto p-[24px]" */}
@@ -110,7 +110,7 @@ export default function DashLayout({
         {children}
       </div>
       
-      { user?.store_id && 
+      { false && user?.store_id && 
       <div className="fixed end-4 xs:bottom-16 sm:bottom-4" id="btn-chat">
         <Button className="btn-fab rounded-full p-4 w-10 h-10" onClick={startChatClicked}>
           {!startingChat ? (

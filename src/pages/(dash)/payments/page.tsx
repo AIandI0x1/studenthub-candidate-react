@@ -15,7 +15,7 @@ import { useIonRouter } from '@ionic/react';
 import React, { Suspense, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Loading from './loading';
-import { dateTimeFormat } from '@/utils/common';
+import { dateTimeFormat, formatNumber } from '@/utils/common';
 import DashLayout from '../layout';
 
 const PaymentsPage = () => {
@@ -35,7 +35,7 @@ const PaymentsPage = () => {
     const { t } = useTranslation();
 
   useEffect(() => {
-    if (!user) {
+   // if (!user) {
 
       setLoading(true);
 
@@ -44,8 +44,8 @@ const PaymentsPage = () => {
       }).finally(() => {
         setLoading(false);
       });
-    }
-  }, [user]);
+  //  }
+  }, []);//user
 
     useEffect(() => {
         loadData();
@@ -103,8 +103,8 @@ const PaymentsPage = () => {
             {loading && <div>{t("Loading...")}</div>}
             {user && (
                 <>
-                    <h1 className="text-2xl font-bold">{!user.bank_id ? t("Bank Information") : t("Payments")}</h1>
-
+                    <h1 className="text-2xl font-bold">{ t("Bank Information") }</h1>
+                    
                     {!user.bank_id && (
                         <h3 className='mt-1'>{t("We'll need your bank information to pay you for work done")}</h3>
                     )}
@@ -112,50 +112,78 @@ const PaymentsPage = () => {
                         <h3 className='mt-1'>{t("We'll be making payments to the following bank account")}</h3>
                     )}
 
-                    <Link to="/bank"> 
+                    { !user.bank_id && <Link to="/bank"> 
                     <Button className="btn mt-2 mb-4">
                         {t("Enter Bank Information")}
                     </Button>
                     </Link>
+                    }
+
+                    { user.bank_id && <Card className="p-0 mt-4 mb-6">
+                        <CardContent className="p-4">      
+                            <h5 className="mt-[2px] mb-4 capitalize font-normal leading-tight">
+                                { user.bank_account_name }
+                            </h5>
+                            { user.bank && <p className="mt-[2px] mb-4 text-[#68687a] text-sm font-normal leading-tight">
+                                { user.bank.bank_name }
+                            </p> }
+                            <p className="mt-[2px] mb-4 text-[#68687a] text-sm font-normal leading-tight">
+                                { user.candidate_iban }
+                            </p>
+                            <Link to="/bank"> 
+                                <Button className="btn mt-2">
+                                    {t("Change bank information")}
+                                </Button>
+                            </Link>
+                        </CardContent>
+                        </Card>
+                    }
+
                     {salaries.length > 0 && (
-                        <div className="salaries">
+                        <>
+                            <h1 className="text-2xl font-bold">{ t("Payments")}</h1>
                             
-                            {salaries.map((salary: any) => (
-                                <Card 
-                                    key={salary.tc_id} 
-                                    onClick={() => router.push('/payments/' + salary.tc_id)}
-                                    className={`cursor-pointer salary-card ${salary.status === 'Unpaid' ? 'border-l-4 border-yellow-400' : 'border-l-4 border-green-500'} shadow-md bg-white rounded-md my-4`}
-                                >
-                                    <CardContent className="p-6">  
-                                        <span className="text-black text-sm">{dateTimeFormat(salary.tc_created_at || '', 'MMMM d, yyyy')}</span>
-                                        <p className="text-black text-lg font-medium">
-                                            {salary.hours > 0 && <span>{salary.hours} {t("hours")} </span>}
-                                            {salary.minutes > 0 && <span>{salary.minutes} {t("minutes")} </span>}
-                                            {salary.seconds > 0 && <span>{salary.seconds} {t("seconds")} </span>}
-                                            x {salary.candidate_hourly_rate.toFixed(3)} {t("per hour")}
-                                            {salary.candidate_bonus > 0 && <span>+ {salary.candidate_bonus.toFixed(3)} {salary.currency_code} {t("bonus")}</span>}
-                                        </p>
-                                        <p className="text-black text-2xl font-semibold">{salary.candidate_total.toFixed(3)} {salary.currency_code}</p>
-                                        <p className="font-bold text-black mb-4">{t("Transfer pending from")} {salary.company_name}</p>
-                                        {salary.status === 'Unpaid' && <p className="text-black text-xs">
-                                            {t("Transfer pending, please contact us if you don’t receive it")}    
-                                        </p>}
-                                        {salary.status === 'Paid' && (
-                                            <div>
-                                                <span>{t("Transferred to")}</span>
-                                                {salary.bank && <span>{salary.bank.bank_name}</span>}
-                                                <span>{salary.transfer_benef_name}</span>
-                                                <span>{salary.transfer_benef_iban}</span>
-                                            </div>
-                                        )}
-                                    </CardContent>
-                                </Card>
-                            ))}
+                            <div className="salaries">
+                                
+                                {salaries.map((salary: any) => (
+                                    <Card 
+                                        key={salary.tc_id} 
+                                        onClick={() => router.push('/payments/' + salary.tc_id)}
+                                        className={`cursor-pointer salary-card ${salary.status === 'Unpaid' ? 'border-l-4 border-yellow-400' : 'border-l-4 border-green-500'} shadow-md bg-white rounded-md my-4`}
+                                    >
+                                        <CardContent className="p-6">  
+                                            <span className="text-black text-sm">{dateTimeFormat(salary.tc_created_at || '', 'MMMM d, yyyy')}</span>
+                                            <p className="text-black text-lg font-medium">
+                                                {salary.hours > 0 && <span>{salary.hours} {t("hours")} </span>}
+                                                {salary.minutes > 0 && <span>{salary.minutes} {t("minutes")} </span>}
+                                                {salary.seconds > 0 && <span>{salary.seconds} {t("seconds")} </span>}
+                                                x {formatNumber(salary.candidate_hourly_rate)} {t("per hour")}
+                                                {salary.candidate_bonus > 0 && <span>+ {formatNumber(salary.candidate_bonus)} {salary.currency_code} {t("bonus")}</span>}
+                                            </p>
+                                            <p className="text-black text-2xl font-semibold">
+                                                {formatNumber(salary.candidate_total)} {salary.currency_code}
+                                            </p>
+                                            <p className="font-bold text-black mb-4">{t("Transfer pending from")} {salary.company_name}</p>
+                                            {salary.status === 'Unpaid' && <p className="text-black text-xs">
+                                                {t("Transfer pending, please contact us if you don’t receive it")}    
+                                            </p>}
+                                            {salary.status === 'Paid' && (
+                                                <div>
+                                                    <span>{t("Transferred to")}</span>
+                                                    {salary.bank && <span>{salary.bank.bank_name}</span>}
+                                                    <span>{salary.transfer_benef_name}</span>
+                                                    <span>{salary.transfer_benef_iban}</span>
+                                                </div>
+                                            )}
+                                        </CardContent>
+                                    </Card>
+                                ))}
 
 
-                            <Pager pagination={pagination} loadPage={loadPage} />
+                                <Pager pagination={pagination} loadPage={loadPage} />
 
-                        </div>
+                            </div>
+                        </> 
                     )}
                 </>
             )}

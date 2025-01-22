@@ -12,7 +12,7 @@ import { loginByKey } from "@/providers/auth.service";
 import { getJobSearchStatus, profile } from "@/providers/logged-in/account.service";
 import { setUser } from "@/store/slices/userSlice";
 import { clickCampaign } from "@/providers/campaign.service";
-import { setCampaignId, setTotalUnreadActity, setTotalUnreadMessages } from "@/store/slices/appSlice";
+import { setCampaignId, setTotalUnreadActivity, setTotalUnreadMessages } from "@/store/slices/appSlice";
 import { identify, track } from "@/providers/analytics.service";
 import { store } from "./store/store";
 import { includeOneSignalJs, oneSignalActionBasedOnStatus, setOneSignalSubscription } from "./utils/oneSignal";
@@ -186,8 +186,8 @@ export async function initializeApp() {
           pendingInvitations: data.pendingInvitations
         }));*/
 
-        store.dispatch(setTotalUnreadActity({
-          totalUnreadActity: data.totalUnreadActity
+        store.dispatch(setTotalUnreadActivity({
+          totalUnreadActivity: data.totalUnreadActivity
         }));
 
         store.dispatch(setTotalUnreadMessages({

@@ -18,7 +18,7 @@ export async function markNotificationRead(id: string): Promise<any> {
   return response.data;
 }
 
-export async function markReadAllNotifications(): Promise<any> {
+export async function markAllNotificationsRead(): Promise<any> {
   const url = _noticationEndpoint + '/mark-read-all';
   const response = await axios.patch(url, {});
   return response.data;
