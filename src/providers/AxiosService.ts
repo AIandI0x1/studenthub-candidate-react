@@ -48,7 +48,7 @@ export async function handleAxiosError(err: any) {
     console.log("axios error:", err);
 
     const response = err.response;
-    const errMsg = response.status ? `${response.status} - ${response.statusText}` : 'Server error';
+    //const errMsg = response.status ? `${response.status} - ${response.statusText}` : 'Server error';
 
     // Handle Bad Requests
     if (response.status === 400) {
@@ -77,6 +77,7 @@ export async function handleAxiosError(err: any) {
 
     // Handle internal server error - 500  
     if (response.status === 500) {
+        console.error(JSON.stringify(response));
         error500$.next({});
     //    Router.push('/500');   
     }
@@ -107,8 +108,7 @@ export async function handleAxiosError(err: any) {
         return empty();
     }*/
 
-    console.error(JSON.stringify(response));
-
+    
     return Promise.reject(err);//errMsg
 }
 
