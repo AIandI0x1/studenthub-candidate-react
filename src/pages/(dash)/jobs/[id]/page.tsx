@@ -178,7 +178,24 @@ export default function JobDetailPage() {
                                 </div>
                             </div>
                         </div>}
-
+        
+                        { job.gender && <div className="self-stretch justify-start items-center gap-6 inline-flex">
+                            <div className="grow shrink basis-0 h-6 justify-start items-start gap-1 flex">
+                            <div className="w-6 h-6 relative -top-1 -start-1">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M19 21V19C19 17.9391 18.5786 16.9217 17.8284 16.1716C17.0783 15.4214 16.0609 15 15 15H9C7.93913 15 6.92172 15.4214 6.17157 16.1716C5.42143 16.9217 5 17.9391 5 19V21" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                <path d="M12 11C14.2091 11 16 9.20914 16 7C16 4.79086 14.2091 3 12 3C9.79086 3 8 4.79086 8 7C8 9.20914 9.79086 11 12 11Z" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                </svg>
+                            </div>
+                            <div className="text-[#4b4b61] text-sm font-medium leading-tight">
+                                { job.gender == 1 && t('Male') } 
+                                { job.gender == 2 && t('Female') } 
+                                { job.gender == 3 && t('Other') } 
+                                    { job.gender == 4 && t('Any') } 
+                                </div>
+                            </div>
+                        </div> }
+                                
                         {(job.available_from || job.available_to) && <div className="self-stretch justify-start items-center gap-6 inline-flex">
                             <div className="grow shrink basis-0 h-6 justify-start items-start gap-1 flex">
                                 <div className="w-6 h-6 relative">
@@ -235,6 +252,17 @@ export default function JobDetailPage() {
 
                         <p>
                             {langContent(job.description, job.description_ar)}
+                        </p>
+
+                    </div>}
+
+                    {job.compensation_description && <div className="my-2.5 w-full bg-white rounded-lg shadow-[0px_2px_4px_0px_rgba(0,0,0,0.10)] flex-col justify-start items-start inline-flex overflow-hidden p-4 gap-4">
+                        <div className="h-6 justify-start items-center flex text-[#22223d] text-lg font-bold leading-normal">
+                            {t("Other Details")}
+                        </div>
+
+                        <p>
+                            {langContent(job.compensation_description, job.compensation_description_ar)}
                         </p>
 
                     </div>}
