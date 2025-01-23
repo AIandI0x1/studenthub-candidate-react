@@ -68,6 +68,22 @@ export default function JobComponent({ job }: IJobComponent) {
                     </div> )}
                 </div> }
 
+                { job.gender && <div className="self-stretch justify-center items-center gap-2.5 inline-flex">
+                    
+                    <div className="w-6 h-6 relative -top-1">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M19 21V19C19 17.9391 18.5786 16.9217 17.8284 16.1716C17.0783 15.4214 16.0609 15 15 15H9C7.93913 15 6.92172 15.4214 6.17157 16.1716C5.42143 16.9217 5 17.9391 5 19V21" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M12 11C14.2091 11 16 9.20914 16 7C16 4.79086 14.2091 3 12 3C9.79086 3 8 4.79086 8 7C8 9.20914 9.79086 11 12 11Z" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                    </div>
+                    <div className="relative top-[-3px] grow shrink basis-0 text-[#22223d] text-sm font-medium leading-tight">
+                        { job.gender == 1 && t('Male') } 
+                        { job.gender == 2 && t('Female') } 
+                        { job.gender == 3 && t('Other') } 
+                        { job.gender == 4 && t('Any') } 
+                    </div>
+                </div> }
+
                 { (job.available_from || job.available_to) && <div className="self-stretch justify-center items-center gap-2.5 inline-flex">
                     
                     <div className="w-6 h-6 relative">
