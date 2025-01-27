@@ -24,6 +24,7 @@ const DiscountsPage = () => {
     const [pagination, setPagination] = useState({
         current_page: 1,
         total_pages: 1,
+        total_count: 0,
     });
     
     const [filters, setFilters] = useState<{ category_id: number | null | undefined }>({ category_id: null });
@@ -63,6 +64,7 @@ const DiscountsPage = () => {
         setPagination({
             current_page: parseInt(response.headers['x-pagination-current-page']),
             total_pages: parseInt(response.headers['x-pagination-page-count']),
+            total_count: parseInt(response.headers['X-Pagination-Total-Count']),
         });
 
         setDiscounts(response.data);

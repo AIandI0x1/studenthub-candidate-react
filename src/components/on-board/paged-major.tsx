@@ -30,6 +30,7 @@ export default function PagedMajorInput({ selectedMajor, onSelect, name, form }:
     const [pagination, setPagination] = useState({
         current_page: 1,
         total_pages: 1,
+        total_count: 0,
     });
 
     useEffect(() => {
@@ -67,6 +68,7 @@ export default function PagedMajorInput({ selectedMajor, onSelect, name, form }:
             setPagination({
                 current_page: parseInt(res.headers.get('x-pagination-current-page') || '1'),
                 total_pages: parseInt(res.headers.get('x-pagination-page-count') || '1'),
+                total_count: parseInt(res.headers.get('x-pagination-total-count') || '0'),
             });
 
         }).finally(() => {

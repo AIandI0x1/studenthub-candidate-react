@@ -51,6 +51,7 @@ const AssignmentPage = () => {
     const [pagination, setPagination] = useState({
         current_page: 1,
         total_pages: 1,
+        total_count: 0,
     });
 
     const { handleSubmit, reset } = useForm();
@@ -132,6 +133,7 @@ const AssignmentPage = () => {
             setPagination({
                 current_page: parseInt(res.headers['x-pagination-current-page']),
                 total_pages: parseInt(res.headers['x-pagination-page-count']),
+                total_count: parseInt(res.headers['x-pagination-total-count']),
             });
         }).finally(() => {
             setLoading(false);
