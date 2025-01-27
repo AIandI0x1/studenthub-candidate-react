@@ -1,5 +1,12 @@
 
 {
+    "txt_shortlisted_for": "Your application for the job of {{position}} has been shortlisted.",
+    "txt_rejected_for": "Your application for the job of {{position}} has been rejected.",
+    "Your application has been shortlisted": "تمت الموافقة على طلب التطبيق",
+    "Your application has been rejected": "تم رفض طلب التطبيق",
+    "Shortlisted": "مؤهل",
+    "Application Shortlisted": "تمت الموافقة على طلب التطبيق",
+    "Application Rejected": "تم رفض طلب التطبيق",
     "Other Details": "تفاصيل أخرى",
     "Mark all as read": "تحديد الكل كمقروء",
     "Delete": "حذف",

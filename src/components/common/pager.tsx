@@ -2,21 +2,22 @@ import { Pagination, PaginationLink, PaginationNext, PaginationContent, Paginati
 
 interface IPagerProps {
     pagination: {
-        total_pages: number;
-        current_page: number;
+        total_pages: number | null;
+        current_page: number | null;
+        total_count: number | null;
     };
     loadPage: (page: number) => void;
 }
 
 export default function Pager({ pagination, loadPage }: IPagerProps) {
     return (
-        pagination.total_pages > 1 && (
+        pagination.total_pages && pagination.total_pages > 1 && (
             <Pagination>
             <PaginationContent>
             <PaginationItem>
                 <PaginationPrevious 
                     className="cursor-pointer"
-                    onClick={() => loadPage(pagination.current_page - 1)} />
+                    onClick={() => pagination.current_page && loadPage(pagination.current_page - 1)} />
             </PaginationItem>
 
             {/**Math.min(, 2) */}
@@ -42,7 +43,7 @@ export default function Pager({ pagination, loadPage }: IPagerProps) {
             <PaginationItem>
                 <PaginationNext 
                     className="cursor-pointer"
-                    onClick={() => loadPage(pagination.current_page + 1)} />
+                    onClick={() => pagination.current_page && loadPage(pagination.current_page + 1)} />
             </PaginationItem>
                 </PaginationContent>
             </Pagination>

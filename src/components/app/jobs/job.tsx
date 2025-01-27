@@ -27,9 +27,18 @@ export default function JobComponent({ job }: IJobComponent) {
                     </div>
                     
                     { job.jobInterest && <div className="px-3 py-1.5 bg-[#f5f5f7] rounded-lg justify-center items-center gap-2.5 flex">
-                        <div className="text-[#219653]  text-sm font-medium leading-tight">
+                        
+                        { job.jobInterest.status == 'INTERESTED' && <div className="text-[#219653]  text-sm font-medium leading-tight">
                             { t('Applied') }
-                        </div>
+                        </div> }
+
+                        { job.jobInterest.status == 'SHORTLISTED' && <div className="text-[#219653]  text-sm font-medium leading-tight">
+                            { t('Shortlisted') }
+                        </div> }
+
+                        { job.jobInterest.status == 'REJECTED' && <div className="text-[#68687a]  text-sm font-medium leading-tight">
+                            { t('Rejected') }
+                        </div> }
                     </div> }
 
                     { job.status == 1 && !job.is_available && <div className="px-3 py-1.5 bg-[#f5f5f7] rounded-lg justify-center items-center gap-2.5 flex">

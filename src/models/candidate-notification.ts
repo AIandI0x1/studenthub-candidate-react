@@ -7,6 +7,7 @@ import { Store } from "./store";
 import { Salary } from "./salary";
 import { CandidateWorkLogFeedback } from "./candidate-work-log-feedback";
 import { Staff } from "./staff";
+import { Job } from "./job";
 
 
 const CN_TYPE_INVITATION = 0;
@@ -47,6 +48,7 @@ export class CandidateNotification {
     store?: Store;
     staff!: Staff;
     transferCandidate?: Salary;
+    job?: Job;
     candidateWorkLogFeedback?: CandidateWorkLogFeedback;
 }
 
