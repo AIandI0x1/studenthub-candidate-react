@@ -21,6 +21,7 @@ const InvitationListPage = () => {
     const [pagination, setPagination] = useState({
         current_page: 1,
         total_pages: 1,
+        total_count: 0,
     });
 
     useEffect(() => {

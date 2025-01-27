@@ -34,6 +34,7 @@ const LogDateListPage = () => {
   const [pagination, setPagination] = useState({
     current_page: 1,
     total_pages: 1,
+    total_count: 0,
   });
 
 
@@ -107,7 +108,8 @@ const LogDateListPage = () => {
 
     setPagination({
       current_page: parseInt(response.headers.get('x-pagination-current-page')),
-      total_pages: parseInt(response.headers.get('x-pagination-page-count'))
+      total_pages: parseInt(response.headers.get('x-pagination-page-count')),
+      total_count: parseInt(response.headers.get('X-Pagination-Total-Count')),
     });
 
     setCandidateWorkingDates(groupBy(response.data, 'date'));

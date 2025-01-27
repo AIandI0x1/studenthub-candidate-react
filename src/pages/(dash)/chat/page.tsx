@@ -25,6 +25,7 @@ const ChatListPage = () => {
     const [pagination, setPagination] = useState({
         current_page: 1,
         total_pages: 1,
+        total_count: 0,
     });
     
     const { totalUnreadMessages} = useAppSelector((state: StoreState) => state.app);
@@ -56,6 +57,7 @@ const ChatListPage = () => {
         setPagination({
             current_page: parseInt(response.headers['x-pagination-current-page']),
             total_pages: parseInt(response.headers['x-pagination-page-count']),
+            total_count: parseInt(response.headers['x-pagination-total-count']),
         });
            
         setChats(response.data);
