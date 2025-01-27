@@ -9,6 +9,8 @@ import Unassigned from "./unassigned";
 import TransferInit from "./transfer-init";
 import TransferPaid from "./transfer-paid";
 import TransferUnpaid from "./transfer-unpaid";
+import ApplicationShortlisted from "./application-shortlisted";
+import ApplicationRejected from "./application-rejected";
 
 export function Activity({candidateNotification, markRead}: {candidateNotification: CandidateNotification, markRead: any}) {
     return (
@@ -69,6 +71,18 @@ candidateNotification={candidateNotification as any}></WorkHourApproved>: null
             candidateNotification.type == 7 ? <TransferUnpaid 
   onClick={() => markRead(candidateNotification)}
       candidateNotification={candidateNotification as any }></TransferUnpaid>: null
+  }
+
+  {
+    candidateNotification.type == 10 ? <ApplicationShortlisted 
+      onClick={() => markRead(candidateNotification)}
+      candidateNotification={candidateNotification as any }></ApplicationShortlisted>: null
+  }
+
+  {
+    candidateNotification.type == 11 ? <ApplicationRejected 
+      onClick={() => markRead(candidateNotification)}
+      candidateNotification={candidateNotification as any }></ApplicationRejected>: null
   }
 
   { /*

@@ -1,7 +1,7 @@
 
 
 // src/components/ActivityPage.tsx
-import { Suspense, useEffect, useState } from 'react';
+import { Suspense, useEffect, useRef, useState } from 'react';
  
 import { useTranslation } from 'react-i18next'; // For translations
 import { CandidateNotification } from '@/models/candidate-notification';
@@ -23,31 +23,57 @@ const ActivityPage = () => {
   const [loading, setLoading] = useState(false);
   const [candidateNotifications, setCandidateNotifications] = useState<CandidateNotification[]>([]);
   
-  const [pagination, setPagination] = useState({
-    current_page: 1,
-    total_pages: 1,
+  const [pagination, setPagination] = useState<{
+    current_page: number | null;
+    total_pages: number | null;
+    total_count: number | null;
+  }>({
+    current_page: null,
+    total_pages: null,
+    total_count: null,
   });
  
   const [showRefresh, setShowRefresh] = useState(false);
   const [totalUnreadActivity, setTotalUnreadActivity] = useState(0);
-
+ 
   useEffect(() => {
-    alertCount$.subscribe((
+    const subscription = alertCount$.subscribe((
       counts : any
     ) => {
      
       if(!counts)
         return null; 
          
-      if (totalUnreadActivity > 0 && totalUnreadActivity != counts.totalUnreadActivity) {
+      setTotalUnreadActivity(counts.totalUnreadActivity);
+
+      checkRefresh(counts);
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    }
+  }, []);
+
+  const checkRefresh = (counts: any) => {
+    
+    if (loading) 
+      return;
+
+    /*if (totalUnreadActivity > 0 && totalUnreadActivity != counts.totalUnreadActivity) {
         setShowRefresh(true);
-      } /*else {
+      } else {
         this.showRefresh = false;
       }*/
 
-      setTotalUnreadActivity(counts.totalUnreadActivity);
+    setPagination(pagination => {
+
+      if (counts.totalActivity != pagination.total_count) {
+        loadData(); 
+      } 
+
+      return pagination;
     });
-  }, []);
+  }
 
   useEffect(() => {
     loadData();
@@ -61,7 +87,7 @@ const ActivityPage = () => {
 
   const loadPage = (page: number) => {
 
-    if ((page > 1 && page > pagination.total_pages) || page < 1) {
+    if ((page > 1 && pagination.total_pages && page > pagination.total_pages) || page < 1) {
       return;
     }
 
@@ -76,7 +102,8 @@ const ActivityPage = () => {
   function getUrlParams() {
     //invitation.request.requestSkills,
     return "&expand=invitation,invitation.request,invitation.company," + 
-      "company,staff,store,candidateWorkingHour,candidateWorkingDate,candidateWorkLogFeedback,candidateWorkLogFeedback.createdBy";
+      "company,staff,store,candidateWorkingHour,candidateWorkingDate,candidateWorkLogFeedback,candidateWorkLogFeedback.createdBy," +
+      "job";
   }
 
   const loadData = async (page = 1) => {
@@ -88,6 +115,7 @@ const ActivityPage = () => {
       setPagination({
         current_page: parseInt(response.headers['x-pagination-current-page']),
         total_pages: parseInt(response.headers['x-pagination-page-count']),
+        total_count: parseInt(response.headers['x-pagination-total-count'])
       });
 
       setTotalUnreadActivity(response.headers['x-total-unread-activity']);
@@ -112,12 +140,17 @@ const ActivityPage = () => {
 
   const markAllRead = async () => {
 
-    setCandidateNotifications(candidateNotifications.map((notification: CandidateNotification) => {
-      notification.is_new = false;
-      return notification;
-    }));
-
     await markAllNotificationsRead();
+
+    setCandidateNotifications([]);
+    setTimeout(() => {
+
+      const newNotifications = candidateNotifications.map((notification: CandidateNotification) => {
+        notification.is_new = false;
+        return notification;
+      });
+      setCandidateNotifications(newNotifications);
+    }, 10);
   };
 
   return ( 

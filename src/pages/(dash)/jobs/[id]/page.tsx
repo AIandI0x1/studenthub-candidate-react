@@ -87,29 +87,42 @@ export default function JobDetailPage() {
                     </Button> }
 
                     { job.jobInterest && <div className="my-2.5 w-full bg-white rounded-lg shadow-[0px_2px_4px_0px_rgba(0,0,0,0.10)] overflow-hidden p-4 gap-4">
-                        <div className="self-stretch justify-start items-center my-1">
-                            <div className="my-1  text-[#22223d] text-lg font-bold leading-normal">
-                                {t('Application Sent')}
+                        
+                        { job.jobInterest.status == 'SHORTLISTED' && <div className="my-1  text-[#22223d] text-lg font-bold leading-normal">
+                            {t('Application Shortlisted')}
+                        </div> }
+                        
+                        { job.jobInterest.status == 'REJECTED' && <div className="my-1  text-[#22223d] text-lg font-bold leading-normal">
+                            {t('Application Rejected')}
+                        </div> }    
+                        
+                        { job.jobInterest.status == 'INTERESTED' && <>
+                            <div className="self-stretch justify-start items-center my-1">
 
-                                <div className="w-5 h-5 relative float-end overflow-hidden">
-                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <g clip-path="url(#clip0_2280_1730)">
-                                    <path d="M18.3333 9.2333V9.99997C18.3323 11.797 17.7504 13.5455 16.6744 14.9848C15.5984 16.4241 14.086 17.477 12.3628 17.9866C10.6395 18.4961 8.79768 18.4349 7.11202 17.8121C5.42636 17.1894 3.98717 16.0384 3.00909 14.5309C2.03101 13.0233 1.56645 11.24 1.68469 9.4469C1.80293 7.65377 2.49763 5.94691 3.66519 4.58086C4.83275 3.21482 6.41061 2.26279 8.16345 1.86676C9.91629 1.47073 11.7502 1.65192 13.3916 2.3833" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                                    <path d="M18.3333 3.33325L10 11.6749L7.5 9.17492" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                                    </g>
-                                    <defs>
-                                    <clipPath id="clip0_2280_1730">
-                                    <rect width="20" height="20" fill="white"/>
-                                    </clipPath>
-                                    </defs>
-                                    </svg>
+                                <div className="my-1  text-[#22223d] text-lg font-bold leading-normal">
+                                    {t('Application Sent')}
+
+                                    <div className="w-5 h-5 relative float-end overflow-hidden">
+                                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <g clip-path="url(#clip0_2280_1730)">
+                                        <path d="M18.3333 9.2333V9.99997C18.3323 11.797 17.7504 13.5455 16.6744 14.9848C15.5984 16.4241 14.086 17.477 12.3628 17.9866C10.6395 18.4961 8.79768 18.4349 7.11202 17.8121C5.42636 17.1894 3.98717 16.0384 3.00909 14.5309C2.03101 13.0233 1.56645 11.24 1.68469 9.4469C1.80293 7.65377 2.49763 5.94691 3.66519 4.58086C4.83275 3.21482 6.41061 2.26279 8.16345 1.86676C9.91629 1.47073 11.7502 1.65192 13.3916 2.3833" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                        <path d="M18.3333 3.33325L10 11.6749L7.5 9.17492" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                        </g>
+                                        <defs>
+                                        <clipPath id="clip0_2280_1730">
+                                        <rect width="20" height="20" fill="white"/>
+                                        </clipPath>
+                                        </defs>
+                                        </svg>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        
-                        <div className="text-[#4b4b61] text-sm font-medium leading-tight my-4">
-                            {t('Your application has been received and will be reviewed, goodluck!')}
-                        </div>
+                            
+                            <div className="text-[#4b4b61] text-sm font-medium leading-tight my-4">
+                                {t('Your application has been received and will be reviewed, goodluck!')}
+                            </div>
+                            </>
+                        }
 
                         <div className="my-1">
                             <div className="mb-1 w-full text-[#4b4b61] text-sm font-semibold leading-tight">
