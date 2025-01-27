@@ -137,15 +137,15 @@ export default function JobComponent({ job }: IJobComponent) {
                         </div>
                         
                         { job.compensation_type == 'MONTHLY_SALARY' && <div className="text-[#4b4b61] text-sm font-medium leading-tight">
-                            { job.compensation_amount } KD / { t("month") }
+                            { job.compensation_amount } {/**KD / { t("month") } */}
                         </div> }
 
                         { job.compensation_type == 'HOURLY' && <div className="text-[#4b4b61] text-sm font-medium leading-tight">
-                            { job.compensation_amount } KD / { t("hour") }
+                            { job.compensation_amount } {/**KD / { t("hour") } */}
                         </div> }
 
                         { job.compensation_type == 'FIXED_PRICE' && <div className="text-[#4b4b61] text-sm font-medium leading-tight">
-                            { job.compensation_amount } KD 
+                            { job.compensation_amount } {/**KD */}
                         </div> }
                     </div>
                     { job.area && <div className="justify-start items-center gap-1 flex">
