@@ -161,6 +161,11 @@ export async function initializeApp(urlParams: any) {
    * Update alert count on app
    */
   export async function updateAlert() {
+
+    if (!navigator.onLine) {
+      return false;
+    }
+    
     unreadCount().then(async data => {
 
       if (data.operation && data.operation == 'error') {
