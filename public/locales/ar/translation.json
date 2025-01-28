@@ -1,5 +1,8 @@
 
 {
+    "Please check your internet connection.": "يرجى التحقق من اتصالك بالإنترنت.",       
+    "Try again": "حاول ثانية",
+    "Oops! No internet!": "عفواً! لا يوجد إنترنت!",     
     "txt_shortlisted_for": "Your application for the job of {{position}} has been shortlisted.",
     "txt_rejected_for": "Your application for the job of {{position}} has been rejected.",
     "Your application has been shortlisted": "تمت الموافقة على طلب التطبيق",

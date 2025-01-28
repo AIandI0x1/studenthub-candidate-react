@@ -50,6 +50,11 @@ export async function handleAxiosError(err: any) {
     const response = err.response;
     //const errMsg = response.status ? `${response.status} - ${response.statusText}` : 'Server error';
 
+    if (!response) {
+        internetOffline$.next({});
+        return Promise.reject(err);
+    }
+
     // Handle Bad Requests
     if (response.status === 400) {
         error404$.next({});
@@ -62,10 +67,10 @@ export async function handleAxiosError(err: any) {
     //    Router.push('/no-internet');  
     }
     
-    /*if(!navigator.onLine) {
+    if(!navigator.onLine) {
         internetOffline$.next({});
     //    Router.push('/no-internet');  
-    }*/
+    }
 
     // Handle Expired Session Error
     if (response.status === 401) { 
