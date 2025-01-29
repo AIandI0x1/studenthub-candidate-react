@@ -75,6 +75,72 @@ const HomePage = () => {
         setWorkHistory(response);
     };
  
+    const completeProfile = () => {
+        console.log(user);
+        if (!user?.pendingField || user?.pendingField?.length == 0) {
+            router.push('/profile');
+        } else {
+            switch(user?.pendingField[0]) {
+                case 'university':
+                    router.push('/education-complete');
+                    break;
+                case 'country':
+                    router.push('/area');
+                    break;
+                case 'name':
+                    router.push('/name');
+                    break;
+                case 'Name Arabic':
+                    router.push('/name');
+                    break;
+                case 'gender':
+                    router.push('/gender');
+                    break;
+                case 'objective':
+                    router.push('/objective');
+                    break;
+                case 'personal photo':
+                    router.push('/personal-photo');
+                    break;
+                case 'email':
+                    router.push('/email');
+                    break;
+                case 'phone':
+                    router.push('/phone-number');
+                    break;
+                case 'birth date':
+                    router.push('/dob');
+                    break;
+                case 'civil id':
+                    router.push('/civil-id');
+                    break;
+                case 'civil expiry date':
+                    router.push('/civil-id');
+                    break;
+                case 'civil photo front':
+                    router.push('/civil-id');
+                    break;
+                case 'civil photo back':
+                    router.push('/civil-id');
+                    break;
+                case 'driving license':
+                    router.push('/driving-license');
+                    break;
+                case 'location':
+                    router.push('/area');
+                    break;
+                case 'experience':
+                    router.push('/experience');
+                    break;
+                case 'skill':
+                    router.push('/skills');
+                    break;
+                default:
+                    router.push('/profile');
+                    break;
+            }
+        }
+    };
 
     //todo: 
     const downloadCertificate = async (event: any) => {
@@ -98,6 +164,22 @@ const HomePage = () => {
                 <div>
                     {/* Student Account Status */}
                     <AccountStatus />
+
+                    { user && !user.isProfileCompleted && <Card className="p-0 mb-4">
+                            <CardHeader>
+                            <CardTitle className='font-bold'>
+                                {t("Your profile is incomplete.")}    
+                            </CardTitle>
+                        </CardHeader>
+                        <CardContent>      
+                            <p className="mt-[2px] mb-4 text-[#68687a] text-sm font-normal leading-tight">
+                                { t("Please complete your profile to start working with StudentHub.") }</p>
+                            <Button variant={'outline'} onClick={() => completeProfile()}>
+                                { t("Complete profile") }
+                            </Button>
+                        </CardContent>
+                        </Card>
+                    }
 
                     {/* Push Notification Card */}
                     {pushNotificationAvailable && showOneSignalPrompt && (
