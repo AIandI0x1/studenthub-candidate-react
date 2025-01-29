@@ -1,5 +1,11 @@
 
 {
+    "Your wallet transactions will appear here.": "سيتم عرض عمليات المحفظة الخاصة بك هنا.",
+    "There are no wallet transactions yet!": "لا يوجد عمليات محفظة بعد!",
+    "Search Degree Group...": "البحث عن مجموعة الدرجات...",
+    "Search Degree...": "البحث عن الدرجة...",
+    "Search major...": "البحث عن التخصص...",
+    "Search country...": "البحث عن البلد...",
     "Please check your internet connection.": "يرجى التحقق من اتصالك بالإنترنت.",       
     "Try again": "حاول ثانية",
     "Oops! No internet!": "عفواً! لا يوجد إنترنت!",     

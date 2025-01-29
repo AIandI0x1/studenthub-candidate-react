@@ -103,7 +103,7 @@ export default function MajorInput({ major_uuid, onSelect }: MajorInputProps) {
             </PopoverTrigger>
             <PopoverContent className="w-[300px] p-0">
                 <Command>
-                    <CommandInput placeholder="Search major..." />
+                    <CommandInput placeholder={t('Search major...')} />
                     <CommandList>
                         <ScrollArea className="h-72">
                             <CommandEmpty>

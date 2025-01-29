@@ -11,6 +11,8 @@ import { useTranslation } from 'react-i18next';
 import Loading from './loading';
 import { dateTimeFormat } from '@/utils/common';
 import DashLayout from '../layout';
+import NoItems from '@/components/common/no-items';
+import { IonSkeletonText } from '@ionic/react';
 
 const WalletBalanceListPage = () => {
 
@@ -82,10 +84,9 @@ const WalletBalanceListPage = () => {
         </div>
         
         <div className="max-w-4xl mx-auto p-4"> 
-            
-            {loading && <div className="progress-bar">{t("Loading...")}</div>}
+            {/*
             <h2 className="font-semibold text-lg mt-6">{t("Wallet Balance")}</h2>
-
+            */}
             {balances.length > 0 ? (
                 balances.map((balance) => (
                     <div key={balance.id} className="bg-white shadow-md rounded-lg p-4 mb-4">
@@ -103,9 +104,26 @@ const WalletBalanceListPage = () => {
                     </div>
                 ))
             ) : (
-                <p className="text-center">{t("No record found")}</p>
+                <NoItems image="assets/icons/no-wallet.svg" 
+                    title={ t('There are no wallet transactions yet!') }    
+                    message={ t('Your wallet transactions will appear here.') } />
+            
             )}
 
+            {loading && <div className="bg-white shadow-md rounded-lg p-4 mb-4">
+                <p>
+                    <IonSkeletonText style={{ width: '60%' }} animated={true} />
+                </p>
+                <p><strong>{t("Balance:")}</strong> <IonSkeletonText style={{ width: '80%' }} animated={true} /></p>
+                <p><strong>{t("Note:")}</strong> <IonSkeletonText style={{ width: '40%' }} animated={true} /></p>
+                <p><strong>{t("Created At:")}</strong> 
+                    <IonSkeletonText style={{ width: '50%' }} animated={true} />
+                </p>
+                <p><strong>{t("Transaction time:")}</strong> 
+                    <IonSkeletonText style={{ width: '60%' }} animated={true} />
+                </p>
+            </div>}
+            
             <Pager pagination={pagination} loadPage={loadPage} />
 
         </div>

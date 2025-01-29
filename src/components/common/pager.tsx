@@ -11,7 +11,7 @@ interface IPagerProps {
 
 export default function Pager({ pagination, loadPage }: IPagerProps) {
     return (
-        pagination.total_pages && pagination.total_pages > 1 && (
+        pagination.total_pages != null && pagination.total_pages > 1 && (
             <Pagination>
             <PaginationContent>
             <PaginationItem>

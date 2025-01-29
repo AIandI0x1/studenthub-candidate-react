@@ -104,7 +104,7 @@ export default function NationalityInput({ university_id, onSelect }: Nationalit
             </PopoverTrigger>
             <PopoverContent className="w-[300px] p-0">
                 <Command>
-                    <CommandInput placeholder="Search university..." />
+                    <CommandInput placeholder={t('Search university...')} />
                     <CommandList>
                         <ScrollArea className="h-72">
                             <CommandEmpty>

@@ -11,7 +11,7 @@ import { setUser } from '@/store/slices/userSlice';
 import { useAppSelector } from '@/store/store';
 import { useAppDispatch } from '@/store/store';
 import { Link } from 'react-router-dom';   
-import { useIonRouter } from '@ionic/react';
+import { IonSkeletonText, useIonRouter } from '@ionic/react';
 import React, { Suspense, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Loading from './loading';
@@ -102,7 +102,7 @@ const PaymentsPage = () => {
             </div>    
         </div>
         <div className="max-w-4xl mx-auto p-6">
-            {loading && <div>{t("Loading...")}</div>}
+            
             {user && (
                 <>
                     <h1 className="text-2xl font-bold">{ t("Bank Information") }</h1>
@@ -181,6 +181,27 @@ const PaymentsPage = () => {
                                     </Card>
                                 ))}
 
+                                {loading && <Card 
+                                        className={`cursor-pointer salary-card border-l-4 border-green-500 shadow-md bg-white rounded-md my-4`}
+                                    >
+                                        <CardContent className="p-6">  
+                                            <span className="text-black text-sm">
+                                                <IonSkeletonText style={{ width: '60%' }} animated={true} />
+                                            </span>
+                                            <p className="text-black text-lg font-medium">
+                                                <IonSkeletonText style={{ width: '80%' }} animated={true} />
+                                            </p>
+                                            <p className="text-black text-2xl font-semibold">
+                                                <IonSkeletonText style={{ width: '70%' }} animated={true} />
+                                            </p>
+                                            <p className="font-bold text-black mb-4">
+                                                <IonSkeletonText style={{ width: '60%' }} animated={true} />
+                                            </p>
+                                            <p className="text-black text-xs">
+                                                <IonSkeletonText style={{ width: '90%' }} animated={true} />    
+                                            </p>
+                                        </CardContent>
+                                    </Card>}
 
                                 <Pager pagination={pagination} loadPage={loadPage} />
 
