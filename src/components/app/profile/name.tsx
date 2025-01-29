@@ -10,6 +10,8 @@ import {
 import { CandidateAction } from "./action";
 import { useHistory } from 'react-router-dom';
 import { useEffect, useState } from "react";
+import { IonBadge, IonIcon } from "@ionic/react";
+import { useTranslation } from "react-i18next";
 
 export function Name() {
 
@@ -17,6 +19,8 @@ export function Name() {
     const router = useHistory();
 
     const [isActionOpen, setIsActionOpen] = useState(false);
+    
+    const { t } = useTranslation();
     
     useEffect(() => {
         //router.prefetch("/name?fromProfile=1");
@@ -46,18 +50,12 @@ export function Name() {
                 <div className="w-full justify-start items-center gap-6 inline-flex">
                     <div className="grow shrink basis-0 text-[#22223d] text-2xl font-bold leading-loose">
                         <span className="cursor-pointer" onClick={updateNameClicked}>{user.candidate_name}</span>
-
-                        <Popover open={isActionOpen} onOpenChange={setIsActionOpen}>
-                            <PopoverTrigger asChild>
-                                <Button variant="ghost" className="float-end">
-                                    <MoreVertical size={24} />
-                                </Button>
-                            </PopoverTrigger>
-                            <PopoverContent className="w-50 p-0">
-                                <CandidateAction onClose={() => { setIsActionOpen(false)}} />
-                            </PopoverContent>
-                        </Popover>
-
+ 
+                        { user.isProfileCompleted ? 
+                            <IonIcon src="assets/images/ic_verified.svg" className="m-1 relative top-1.5" title="Completed Profile"></IonIcon>: 
+                            <IonBadge color="warning" className="m-1 relative top-1.5 bg-red-500 hidden">
+                              { t("Incomplete profile") }
+                            </IonBadge> }
                     </div>
                 </div>
                 <div className="justify-start items-center gap-6 inline-flex">
@@ -66,6 +64,18 @@ export function Name() {
                     </div>
                 </div>
             </div>
+
+            <Popover open={isActionOpen} onOpenChange={setIsActionOpen}>
+                <PopoverTrigger asChild>
+                    <Button variant="ghost" className="float-end">
+                        <MoreVertical size={24} />
+                    </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-50 p-0">
+                    <CandidateAction onClose={() => { setIsActionOpen(false)}} />
+                </PopoverContent>
+            </Popover>
+
         </div>
     )
 }
