@@ -155,7 +155,7 @@ export async function basicAuth(email: string, password: string, token: string):
         'g-recaptcha-response': token
       },
       params: {
-        token: token
+      //  token: token
       }
     })
     .get("/auth/login");
