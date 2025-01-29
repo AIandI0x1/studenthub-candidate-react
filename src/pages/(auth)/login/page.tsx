@@ -23,6 +23,7 @@ import Loading from "./loading";
 import AuthLayout from "../layout"
 //import { useQuery } from "@/utils/common"
 
+declare let grecaptcha: any;
 
 export default function LoginPage() {
 
@@ -64,7 +65,22 @@ export default function LoginPage() {
 
     setLoading(true);
 
-    basicAuth(values.email, values.password).then(res => {
+    grecaptcha.ready(() => {
+      grecaptcha.execute('6Lei9R4pAAAAAEJYoXxoIvP2Uu0oq8iXkCVfmy6V', {action: 'submit'}).then((token: string) => {
+
+        const params = {
+          ...values, 
+          token: token
+        };
+
+        onValidCaptcha(params);
+      });
+    });  
+  } 
+
+  function onValidCaptcha(values: any) {
+
+    basicAuth(values.email, values.password, values.token).then(res => {
  
       // After successful login
       dispatch(setCredentials({

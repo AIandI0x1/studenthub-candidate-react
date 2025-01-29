@@ -14,6 +14,11 @@ export async function locate(): Promise<any> {
   return response.data;
 }
 
+/**
+ * Login by key
+ * @param auth_key
+ * @returns
+ */
 export async function loginByKey(auth_key: string) {
   const response = await axios.post('/auth/login-by-key', {
     auth_key: auth_key
@@ -138,14 +143,19 @@ export async function updateEmail(params: any): Promise<any> {
  * subsequent requests.
  * @param  {string} email
  * @param  {string} password
+ * @param  {string} token
  */
-export async function basicAuth(email: string, password: string): Promise<any> {
+export async function basicAuth(email: string, password: string, token: string): Promise<any> {
   // Add Basic Auth Header with Base64 encoded email and password
 //encodeURIComponent(
   const response = await axios
     .create({
       headers: {
-        Authorization: 'Basic ' + btoa(`${email}:${password}`)
+        Authorization: 'Basic ' + btoa(`${email}:${password}`),
+        'g-recaptcha-response': token
+      },
+      params: {
+        token: token
       }
     })
     .get("/auth/login");
