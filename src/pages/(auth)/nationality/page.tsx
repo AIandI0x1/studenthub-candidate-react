@@ -19,7 +19,7 @@ import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { useEffect, useState } from "react";
 import { profile, updateNationality } from "@/providers/logged-in/account.service";
-import { errorMessage, useQuery } from "@/utils/common";
+import { errorMessage, langContent, useQuery } from "@/utils/common";
 import { useIonRouter } from "@ionic/react"; 
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { setUser } from "@/store/slices/userSlice";
@@ -28,6 +28,7 @@ import { alertDialog } from "@/hooks/use-alert-dialog";
 import { useTranslation } from "react-i18next";
 import Loading from "./loading";
 import AuthLayout from "../layout";
+import { Country } from "@/models/country";
  
 
 export default function NationalityPage() {
@@ -39,12 +40,9 @@ export default function NationalityPage() {
   const dispatch = useAppDispatch();
   const router = useIonRouter();
   const query = useQuery();
-
-  let [country, setCountry] = React.useState({
-    country_id: 84,
-    country_nationality_name_en: "Kuwaiti"
-  });
-
+ 
+  let [country, setCountry] = React.useState<Country | undefined>(undefined);
+ 
   // 1. Define your form.
 
   const formSchema = z.object({
@@ -84,12 +82,17 @@ export default function NationalityPage() {
       profile().then(res => {
         dispatch(setUser({ user: res }));
         form.setValue('country_id', res.country_id || 84);
-        setCountry(res.country || {
+        setCountry(res.nationality || {
           country_id: 84,
           country_nationality_name_en: "Kuwaiti"
         });
       }).finally(() => {
         setLoading(false);
+      });
+    } else {
+      setCountry(user?.nationality || {
+        country_id: 84,
+        country_nationality_name_en: "Kuwaiti"
       });
     }
   }, [user]);
@@ -99,16 +102,14 @@ export default function NationalityPage() {
     setLoading(true);
 
     updateNationality(values.country_id).then(res => {
+
       if (res.operation == 'success') {
 
-        if (user) {
-          
-          dispatch(setUser({ user: {
-            ...user,
-            country_id: res.country.country_id,
-            country: res.country
-          } }));
-        }
+        dispatch(setUser({ user: {
+          ...user,
+          country_id: res.country.country_id,
+          nationality: res.country
+        } }));
 
         if (query.get('fromProfile'))
           router.push('/profile');

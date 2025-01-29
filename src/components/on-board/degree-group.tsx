@@ -102,7 +102,7 @@ export default function DegreeGroupInput({ degree_group_uuid, onSelect }: Degree
             </PopoverTrigger>
             <PopoverContent className="w-[300px] p-0">
                 <Command>
-                    <CommandInput placeholder="Search degreeGroup..." />
+                    <CommandInput placeholder={t('Search Degree Group...')} />
                     <CommandList>
                         <ScrollArea className="h-72">
                             <CommandEmpty>

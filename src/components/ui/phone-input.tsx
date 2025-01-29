@@ -149,6 +149,8 @@ const CountrySelect = ({
         selectedCountry = "KW"
     }
 
+    const { t } = useTranslation();
+
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -173,7 +175,7 @@ const CountrySelect = ({
       </PopoverTrigger>
       <PopoverContent className="w-[300px] p-0">
         <Command>
-          <CommandInput placeholder="Search country..." />
+          <CommandInput placeholder={t('Search country...')} />
           <CommandList>
             <ScrollArea className="h-72">
               <CommandEmpty>No country found.</CommandEmpty>

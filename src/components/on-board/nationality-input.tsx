@@ -93,7 +93,7 @@ export default function NationalityInput({ selectedCountry, onSelect }: National
             </PopoverTrigger>
             <PopoverContent className="w-[300px] p-0">
                 <Command>
-                    <CommandInput placeholder="Search country..." />
+                    <CommandInput placeholder={t('Search country...')} />
                     <CommandList>
                         <ScrollArea className="h-72">
                             <CommandEmpty>
