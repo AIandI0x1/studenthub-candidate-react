@@ -12,55 +12,61 @@ import OnboardFooter from "@/components/on-board/layout/footer";
 import SubmitButton from "@/components/ui/submit-button";
 import { setCredentials } from "@/store/slices/authSlice";
 import { useAppDispatch } from "@/store/store";
-import { basicAuth } from "@/providers/auth.service";
+import {  loginTwoStep } from "@/providers/auth.service";
 import { Suspense, useEffect, useState } from "react";
 import { setIsProfileCompleted } from "@/store/slices/userSlice";
 import { useIonRouter } from "@ionic/react"; 
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { page, track } from "@/providers/analytics.service";
 import { useTranslation } from "react-i18next";
 import Loading from "./loading";
 import AuthLayout from "../layout"
 import { alertDialog } from "@/hooks/use-alert-dialog";
+import { errorMessage } from "@/utils/common";
 //import { useQuery } from "@/utils/common"
 
 declare let grecaptcha: any;
 
-export default function LoginPage() {
+export default function LoginTwoStepPage() {
+
+  const params = useParams() as { token: string };
+ 
+  const token: string = decodeURIComponent(params.token as string); 
+
+  const [numberOfLoginAttempts, setNumberOfLoginAttempts] = useState(0);
+  //let numberOfLoginAttempts = 0;
 
   const router = useIonRouter();
 
   const dispatch = useAppDispatch();
 
   const [loading, setLoading] = useState(false);
-  
-  const [numberOfLoginAttempts, setNumberOfLoginAttempts] = useState(0);
-  
+
   //const query = useQuery();
 
   const { t } = useTranslation();
 
   const formSchema = z.object({
-    email: z.string().email(t('Please enter valid email address')),
-    password: z.string().min(4, { message: t("Password must be at least 4 characters long") })
+    token: z.string().min(1, { message: t("Please enter the code sent to your email") }),
+    otp: z.string().min(1, { message: t("Please enter the code sent to your email") }),
   })
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: "",
-      password: "",
+      token: token,
+      otp: "",
     },
   })
 
   useEffect(() => {
 
-    page('Login Page');
+    page('Login Two Step Page');
 
     //router.prefetch('/home');
      
     return () => {
-        track('page_exit', { page: 'Login Page' });
+        track('page_exit', { page: 'Login Two Step Page' });
     }
   }, []);
 
@@ -73,7 +79,7 @@ export default function LoginPage() {
 
         const params = {
           ...values, 
-          token: token
+          grecaptchaToken: token
         };
 
         onValidCaptcha(params);
@@ -83,12 +89,9 @@ export default function LoginPage() {
 
   function onValidCaptcha(values: any) {
 
-    basicAuth(values.email, values.password, values.token).then(res => {
+    loginTwoStep(values.grecaptchaToken, values.token, values.otp).then(res => {
  
-      if (res.token_status == 0) {
-        router.push('/login-two-step/' + res.token); 
-      } else {
-        
+      if (res.operation == 'success') {
         // After successful login
         dispatch(setCredentials({
           token: res.token
@@ -102,33 +105,42 @@ export default function LoginPage() {
         //language_pref
 
         router.push('/home');
-      }
-    }).catch(err => {
-      if (err.status == 401) {
-        setNumberOfLoginAttempts(numberOfLoginAttempts + 1); 
- 
-        // Check how many login attempts this user made, offer to reset password
-        if (numberOfLoginAttempts > 2) {
-           alertDialog({
-            title: t('Trouble Logging In?'),
-            description: t("If you've forgotten your password, contact us to have it reset."),
-          });
-        }
-        else {
-          alertDialog({
-            title: t('Invalid email or password'),
-            description: t('The information entered is incorrect. Please try again.'),
-          });
-        }
       } else {
-        /**
-         * Error not accounted for. Show Message
-         */
+        
         alertDialog({
-          title: t('Unable to Log In'),
-          description: t('There seems to be an issue connecting to Payroll servers. Please contact us if the issue persists.'),
+          title: t('Error'),
+          description: errorMessage(res.message),
         });
       }
+      
+    }).catch(async err => {
+     // alert("err:" + err);
+
+     if (err.status == 401) {
+       setNumberOfLoginAttempts(numberOfLoginAttempts + 1); 
+
+       // Check how many login attempts this user made, offer to reset password
+       if (numberOfLoginAttempts > 2) {
+          alertDialog({
+           title: t('Trouble Logging In?'),
+           description: t("If you've forgotten your password, contact us to have it reset."),
+         });
+       }
+       else {
+         alertDialog({
+           title: t('Invalid email or password'),
+           description: t('The information entered is incorrect. Please try again.'),
+         });
+       }
+     } else {
+       /**
+        * Error not accounted for. Show Message
+        */
+       alertDialog({
+         title: t('Unable to Log In'),
+         description: t('There seems to be an issue connecting to Payroll servers. Please contact us if the issue persists.'),
+       });
+     }
     }).finally(() => {
       setLoading(false);
     });
@@ -140,29 +152,19 @@ export default function LoginPage() {
       <div className="bg-[#fff]">
 
           <h5 className="mt-[102px] mb-[40px] text-center text-[40px] font-bold leading-[56px]">
-            {t("What is your email address?")}
+            {t("Enter the OTP sent to your email")}
           </h5>
 
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 max-w-[560px] m-auto mb-[100px]">
     
             <FormInput
-                name="email"
-                label="Email Address"
+                name="otp"
+                label="OTP"
                 form={form as any}
-                type="email"
+                type="text"
               />
-
-              <FormInput
-                name="password"
-                label="Password"
-                form={form as any}
-                type="password"
-              />
-              <Link to="/forgot-password">
-                {t("Forgot Password?")}
-              </Link>
-
+ 
               <SubmitButton disabled={!form.formState.isValid || loading } loading={loading}></SubmitButton>
               
             </form>

@@ -119,6 +119,7 @@ import LandingPage from './pages/(auth)/landing/page';
 
 import { error404$, error500$, internetOffline$, userLogout$ } from "@/providers/event.service";
 import { useIonRouter } from '@ionic/react';
+import LoginTwoStepPage from './pages/(auth)/login-two-step/page';
 
 export default function RouterComponent() {
 
@@ -170,6 +171,12 @@ export default function RouterComponent() {
               {/*<Suspense fallback={<LoadingLandingPage />}> */}
               <LandingPage />
               {/*</Suspense>*/}
+            </Route>
+
+            <Route exact={true} path="/login-two-step/:token">
+              <Suspense fallback={<LoadingLogin />}>
+                <LoginTwoStepPage />
+              </Suspense>
             </Route>
 
             <Route exact={true} path="/login">

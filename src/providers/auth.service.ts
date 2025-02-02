@@ -138,6 +138,21 @@ export async function updateEmail(params: any): Promise<any> {
   return response.data;
 }
 
+export async function loginTwoStep(grecaptchaToken: string, token: string, otp: string): Promise<any> {
+  const response = await axios
+    .create({
+      headers: {
+        'g-recaptcha-response': grecaptchaToken
+      } 
+    })
+    .post("/auth/login-two-step", {
+      token: token,
+      otp: otp
+    });
+
+  return response.data;
+}
+
 /**
  * Basic auth, exchanges access details for a bearer access token to use in
  * subsequent requests.

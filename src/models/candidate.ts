@@ -58,7 +58,7 @@ export class Candidate {
     isWorking?: CandidateWorkingHour;
     candidate_created_at!: string; 
     candidate_updated_at?: string;
-
+    enable_two_step_auth?: boolean;
     civilExpired?: any;
     
     tempLocation?: any; //temp profile photo location while photo upload 

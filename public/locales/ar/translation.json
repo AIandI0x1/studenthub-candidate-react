@@ -1,5 +1,8 @@
 
 {
+    "Enable Two-Step Authentication": "تفعيل المصادقة الثنائية",
+    "Disable Two-Step Authentication": "تعطيل المصادقة الثنائية",
+    "Enter the OTP sent to your email": "أدخل الرمز المرسل إلى بريدك الإلكتروني",
     "Your profile is incomplete.": "الحساب الخاص بك غير مكتمل.",
     "Please complete your profile to start working with StudentHub.": "يرجى إكمال حسابك للبدء في العمل مع StudentHub.",
     "Complete profile": "إكمال الحساب",
