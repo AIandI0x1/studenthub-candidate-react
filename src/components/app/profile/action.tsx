@@ -1,17 +1,18 @@
 import { setLanguage } from "@/store/slices/appSlice";
 import { logout } from "@/store/slices/authSlice";
-import { EyeClosed, Globe, KeyRound, LogOut, Trash } from "lucide-react";
+import { EyeClosed, Globe, KeyRound, Loader2, LogOut, Trash } from "lucide-react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import i18n from "@/18n";
-import { removeProfile, updateJobSearchStatus } from "@/providers/logged-in/account.service";
+import { removeProfile, toggleTwoStepAuth, updateJobSearchStatus } from "@/providers/logged-in/account.service";
 import { useAppSelector } from "@/store/store";
 import { useEffect, useState } from "react";
 import { setUser } from "@/store/slices/userSlice";
 import { alertDialog } from "@/hooks/use-alert-dialog";
 import { userLogout$ } from "@/providers/event.service";
 import { IonAlert } from "@ionic/react";
+import { toast } from "@/hooks/use-toast";
 
 export function CandidateAction({ onClose }: { onClose: () => void }) {
     const router = useHistory();
@@ -23,6 +24,7 @@ export function CandidateAction({ onClose }: { onClose: () => void }) {
     const [updating, setUpdating] = useState(false);
 
     const [isDeleteAlertOpen, setIsDeleteAlertOpen] = useState(false);
+    const [updatingTwoStepAuth, setUpdatingTwoStepAuth] = useState(false);
 
     useEffect(() => {
         //router.prefetch("/change-password");
@@ -88,6 +90,37 @@ export function CandidateAction({ onClose }: { onClose: () => void }) {
         });
     }
 
+    const toggleTwoStepAuthClicked = () => {
+
+        onClose();
+
+        setUpdatingTwoStepAuth(true);
+
+        toggleTwoStepAuth().then((response) => {
+
+            setUpdatingTwoStepAuth(false);
+
+            if (response.operation != 'success') {
+                alertDialog({
+                    title: t('Error'),
+                    description: response.message
+                });
+            } else {
+                dispatch(setUser({
+                    user: {
+                        ...user,
+                        enable_two_step_auth: response.enable_two_step_auth
+                    }
+                }));
+  
+                toast({
+                    title: t('Success'),
+                    description: response.message
+                });
+            }
+        });
+    }
+
     return (
         <div className="w-full py-2 bg-white rounded-2xl flex-col justify-start items-start inline-flex">
              
@@ -98,6 +131,17 @@ export function CandidateAction({ onClose }: { onClose: () => void }) {
                     </div>
                     <div className="grow shrink basis-0 text-[#22223d] text-sm font-medium leading-tight">
                         {t("Change Password")}
+                    </div>
+                </div>
+            </div>
+
+            <div onClick={() => toggleTwoStepAuthClicked()} className="cursor-pointer border-slate-200 border-b self-stretch h-12 p-3 flex-col justify-start items-start gap-2 flex">
+                <div className="self-stretch justify-start items-center gap-2 inline-flex">
+                    <div className="w-6 h-6 relative">
+                         { updatingTwoStepAuth? <Loader2 className="animate-spin" /> : <KeyRound /> }  
+                    </div>
+                    <div className="grow shrink basis-0 text-[#22223d] text-sm font-medium leading-tight">
+                        { user?.enable_two_step_auth ? t("Disable Two-Step Authentication") : t("Enable Two-Step Authentication")}
                     </div>
                 </div>
             </div>

@@ -120,6 +120,16 @@ import axios from "@/providers/AxiosService";
   }
 
   /**
+   * toggle-two-step-auth
+   * @returns {Observable<any>}
+   */
+  export async function toggleTwoStepAuth(): Promise<any> {
+    const url = `${_accountEndpoint}` + '/toggle-two-step-auth';
+    const response = await axios.patch(url, { });
+    return response.data;
+  }
+  
+  /**
    * Create
    * @param {oldPassword} string
    * @param {newPassword} string

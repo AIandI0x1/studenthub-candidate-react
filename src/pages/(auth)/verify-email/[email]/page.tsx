@@ -46,10 +46,11 @@ export default function VerifyEmailPage() {
 
   //const params = useParams();
   const query = useQuery();
+  
   const params = useParams() as { email: string, code: string | null };
  
   const email: string = decodeURIComponent(params.email as string); // Access the dynamic parameter
-  const code: string =params.code? decodeURIComponent(params.code as string): "";
+  const code: string = params.code? decodeURIComponent(params.code as string): "";
 
   // 1. Define your form.
 
