@@ -18,7 +18,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { useEffect, useState } from "react";
-import { profile, updateNationality } from "@/providers/logged-in/account.service";
+import { profile, updateNationalityWithKuwaitiStatus } from "@/providers/logged-in/account.service";
 import { errorMessage, langContent, useQuery } from "@/utils/common";
 import { useIonRouter } from "@ionic/react"; 
 import { useAppDispatch, useAppSelector } from "@/store/store";
@@ -50,12 +50,16 @@ export default function NationalityPage() {
     country_id: z.number({
       required_error: t('Please enter valid nationality')
     }),
+    candidate_mom_kuwaiti: z.number({
+      required_error: t('Please enter valid nationality')
+    }),
   })
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       country_id: user?.country_id || 84,
+      candidate_mom_kuwaiti: user?.candidate_mom_kuwaiti || 1,
       // nationality: any
     },
   })
@@ -82,6 +86,7 @@ export default function NationalityPage() {
       profile().then(res => {
         dispatch(setUser({ user: res }));
         form.setValue('country_id', res.country_id || 84);
+        form.setValue('candidate_mom_kuwaiti', res.candidate_mom_kuwaiti || 1);
         setCountry(res.nationality || {
           country_id: 84,
           country_nationality_name_en: "Kuwaiti"
@@ -101,12 +106,13 @@ export default function NationalityPage() {
   function onSubmit(values: z.infer<typeof formSchema>) {
     setLoading(true);
 
-    updateNationality(values.country_id).then(res => {
+    updateNationalityWithKuwaitiStatus(values.country_id, values.candidate_mom_kuwaiti).then(res => {
 
       if (res.operation == 'success') {
 
         dispatch(setUser({ user: {
           ...user,
+          candidate_mom_kuwaiti: values.candidate_mom_kuwaiti,
           country_id: res.country.country_id,
           nationality: res.country
         } }));
@@ -167,17 +173,21 @@ export default function NationalityPage() {
             </Popover>
           </p>
 
-          <RadioGroup defaultValue="option-one" className="mt-[0]" dir={i18n.language == 'ar' ? 'rtl' : 'ltr'}>
+          <RadioGroup 
+            onValueChange={(value) => form.setValue('candidate_mom_kuwaiti', parseInt(value))} 
+            defaultValue={form.getValues('candidate_mom_kuwaiti')?.toString()} 
+            className="mt-[0]" 
+            dir={i18n.language == 'ar' ? 'rtl' : 'ltr'}
+          >
             <div className={ `flex items-center space-x-2` }>
-              <RadioGroupItem value="option-one" id="option-one" className="mx-1" />
+              <RadioGroupItem value="1" id="option-one" className="mx-1" />
               <Label htmlFor="option-one"> {t("Yes")}</Label>
             </div>
             <div className={ `flex items-center space-x-2` }>
-              <RadioGroupItem value="option-two" id="option-two" className="mx-1" />
+              <RadioGroupItem value="2" id="option-two" className="mx-1" />
               <Label htmlFor="option-two">{t("No")}</Label>
             </div>
           </RadioGroup>
-
 
           <SubmitButton disabled={!form.formState.isValid || loading } loading={loading}></SubmitButton>
         </form>

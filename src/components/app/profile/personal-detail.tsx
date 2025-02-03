@@ -261,9 +261,9 @@ export function PersonalDdetail()   {
                             </svg>
                         </div>
                         <div className="w-[262px]">
-                            { user.candidate_civil_id && <span className="text-[#22223d] text-sm font-medium leading-tight">
+                            <span className="text-[#22223d] text-sm font-medium leading-tight">
                                 {user.candidate_civil_id? user.candidate_civil_id: t('Civil ID (not set)')}
-                            </span> }
+                            </span> 
                             { user.candidate_civil_expiry_date && <><br/><span className="text-[#68687a] text-sm font-normal leading-tight">
                                 {t('Expiring on')} {dateTimeFormat(user.candidate_civil_expiry_date, 'MMM d, yyyy')} 
                             </span></> }
