@@ -435,6 +435,20 @@ import axios from "@/providers/AxiosService";
   }
 
   /**
+   * update kuwaiti National Status with country id
+   * @param country_id number
+   * @param candidate_mom_kuwaiti number
+   */
+  export async function updateNationalityWithKuwaitiStatus(country_id: number, candidate_mom_kuwaiti: number): Promise<any> {
+    const url = `${_accountEndpoint}` + '/update-nationality-with-kuwaiti-status'; 
+    const response = await axios.post(url, {
+      country_id: country_id,
+      candidate_mom_kuwaiti: candidate_mom_kuwaiti
+    });
+    return response.data;
+  }
+
+  /**
    * update kuwaiti National Status
    * @param candidate_mom_kuwaiti number
    */
