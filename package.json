@@ -15,15 +15,18 @@
     "test.e2e": "cypress run",
     "test.unit": "vitest",
     "lint": "eslint",
+    "generate-assets": "npx @capacitor/assets generate",
     "sentry:sourcemaps": "sentry-cli sourcemaps inject --org pogi --project sh-student-app ./dist && sentry-cli sourcemaps upload --org pogi --project sh-student-app ./dist"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.731.1",
     "@aws-sdk/lib-storage": "^3.731.1",
+    "@capacitor/android": "^6.2.0",
     "@capacitor/app": "6.0.2",
     "@capacitor/core": "6.2.0",
     "@capacitor/geolocation": "^6.1.0",
     "@capacitor/haptics": "6.0.2",
+    "@capacitor/ios": "^6.2.0",
     "@capacitor/keyboard": "6.0.3",
     "@capacitor/status-bar": "6.0.2",
     "@codetrix-studio/capacitor-google-auth": "^3.4.0-rc.4",
@@ -73,6 +76,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@capacitor/assets": "^3.0.5",
     "@capacitor/cli": "6.2.0",
     "@testing-library/dom": ">=7.21.4",
     "@testing-library/jest-dom": "^5.16.5",
