@@ -46,6 +46,7 @@ export default function PreferredTimePage() {
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
+    mode: "all",
     defaultValues: {
       preferred_time: user?.candidate_preferred_time || "",
     },

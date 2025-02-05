@@ -57,6 +57,7 @@ export default function NationalityPage() {
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
+    mode: "all",
     defaultValues: {
       country_id: user?.country_id || 84,
       candidate_mom_kuwaiti: user?.candidate_mom_kuwaiti || 1,

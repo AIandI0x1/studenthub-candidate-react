@@ -59,6 +59,7 @@ export default function NamePage() {
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
+    mode: "all",
     defaultValues: {
       name_en: user?.candidate_name || "",
       name_ar: user?.candidate_name_ar || "",

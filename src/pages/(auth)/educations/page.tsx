@@ -63,6 +63,7 @@ export default function EducationsPage() {
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
+    mode: "all",
     defaultValues: {
       candidateEducations: generateFormValue(user?.candidateEducations || [])
     },

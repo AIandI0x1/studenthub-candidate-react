@@ -16,7 +16,10 @@ import { alertDialog } from '@/hooks/use-alert-dialog';
 const FeedbackPage = ({ invitation, invitation_status, onClose }: { 
         invitation: Invitation, invitation_status: number, onClose: (value: boolean) => void }) => {
 
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, formState: { errors } } = useForm({
+        mode: "all",
+    });
+    
     const { t } = useTranslation();
     const [loading, setLoading] = useState(false);
 

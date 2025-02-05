@@ -53,6 +53,7 @@ export default function LoginTwoStepPage() {
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
+    mode: "all",
     defaultValues: {
       token: token,
       otp: "",

@@ -1,5 +1,6 @@
 
 {
+    "Please enter password": "يرجى إدخال كلمة المرور",
     "Enable Two-Step Authentication": "تفعيل المصادقة الثنائية",
     "Disable Two-Step Authentication": "تعطيل المصادقة الثنائية",
     "Enter the OTP sent to your email": "أدخل الرمز المرسل إلى بريدك الإلكتروني",

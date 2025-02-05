@@ -46,6 +46,7 @@ const UpdateBankPage = () => {
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
+    mode: "all",
     defaultValues: {
       benef_name: user?.bank_account_name || "",
       iban: user?.candidate_iban || "",

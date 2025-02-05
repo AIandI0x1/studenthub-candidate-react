@@ -82,6 +82,7 @@ export default function CivilIdPage() {
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
+    mode: "all",
     defaultValues: {
         candidate_civil_id: user?.candidate_civil_id || "",
         candidate_civil_expiry_date: user?.candidate_civil_expiry_date && user?.candidate_civil_expiry_date?.length > 0? 

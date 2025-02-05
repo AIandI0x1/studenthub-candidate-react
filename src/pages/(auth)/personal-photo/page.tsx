@@ -52,6 +52,7 @@ export default function PersonalPhotoPage() {
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
+    mode: "all",
     defaultValues: {
         candidate_personal_photo: user?.candidate_personal_photo || "",
         candidate_personal_photo_url: import.meta.env.VITE_CLOUDINARY_URL + 'candidate-photo/' + 
