@@ -47,6 +47,7 @@ export default function ProfileUrlPage() {
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
+    mode: "all",
     defaultValues: {
       profile_url: user?.profile_url || "",
     },

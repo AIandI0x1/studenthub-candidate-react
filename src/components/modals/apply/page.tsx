@@ -40,6 +40,7 @@ export default function Apply({ job, seen_at, onClose }: IApply) {
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
+        mode: "all",
         defaultValues: {
         },
     })

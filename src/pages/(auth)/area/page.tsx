@@ -84,6 +84,7 @@ export default function AreaPage() {
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
+    mode: "all",
     defaultValues: {
       country_name: user?.country?.country_name_en || 'Kuwait',//, 'الكويت'), langContent(user?.country?.country_name_en, 
       //user?.country?.country_name_ar)

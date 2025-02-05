@@ -46,6 +46,7 @@ export default function AboutYourselfPage() {
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
+    mode: "all",
     defaultValues: {
       candidate_intro: user?.candidate_intro || "",
     },

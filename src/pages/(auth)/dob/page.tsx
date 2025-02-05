@@ -46,6 +46,7 @@ export default function DobPage() {
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
+    mode: "all",
     defaultValues: {
       candidate_birth_date: user?.candidate_birth_date? 
         new Date(user?.candidate_birth_date || "") : undefined,

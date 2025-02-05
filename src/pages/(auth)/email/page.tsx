@@ -46,13 +46,17 @@ export default function EmailPage() {
   const formSchema = z.object({
     email: z.string().email(t('Please enter valid email address.')),
     password: z.string({
-      required_error: query.get("fromProfile") ? undefined : "Please enter password"
+      required_error: query.get("fromProfile") ? undefined : 
+       t("Please enter password")
     })
   })
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
+    mode: "all",
+    //reValidateMode: "onChange",
     defaultValues: {
+      password: "",
       email: user?.candidate_new_email || user?.candidate_email || "",
     },
   })

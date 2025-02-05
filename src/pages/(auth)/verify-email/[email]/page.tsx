@@ -71,6 +71,7 @@ export default function VerifyEmailPage() {
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
+    mode: "all",
     defaultValues: {
       c1: code[0] || "",
       c2: code[1] || "",  
@@ -233,8 +234,8 @@ export default function VerifyEmailPage() {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 max-w-[560px] m-auto mb-[100px]">
 
-          <div className="flex">
-          <FormField 
+          <div className="flex" dir="ltr">
+            <FormField 
                   control={form.control}
                   name="c1"
                   render={({ field }) => (

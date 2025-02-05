@@ -60,6 +60,7 @@ const LogTimeManuallyPage = ({ onClose }: {onClose: any}) => {
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
+    mode: "all",
     defaultValues: {
      // end_time: "00:00 AM"
     },

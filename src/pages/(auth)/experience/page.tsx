@@ -50,6 +50,7 @@ export default function ExperiencesPage() {
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
+    mode: "all",
     defaultValues: {
       experiences: formattedExperiences || [
         { candidate_experience_id: "", experience: '', employer: "", 

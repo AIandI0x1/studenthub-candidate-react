@@ -45,6 +45,7 @@ export default function ObjectivePage() {
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
+    mode: "all",
     defaultValues: {
       objective: user?.candidate_objective || "",
     },
