@@ -5,6 +5,10 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import authReducer from './slices/authSlice';
 import userReducer from './slices/userSlice';
 import appReducer from './slices/appSlice';
+import { Storage } from '@ionic/storage';
+
+const storage = new Storage();
+await storage.create();
 
 export type StoreState = {
   auth: ReturnType<typeof authReducer>;
@@ -12,9 +16,10 @@ export type StoreState = {
   app: ReturnType<typeof appReducer>;
 }
 
-const loadState = () => {
+const loadState = async () => {
   try {
-    const serializedState = localStorage.getItem('state')
+    const serializedState = await storage.get('state');
+    
     if (!serializedState) 
       return undefined
     return JSON.parse(serializedState)
@@ -24,7 +29,7 @@ const loadState = () => {
 }
 
 export const store = configureStore<StoreState>({
-  preloadedState: loadState(),
+  preloadedState: await loadState(),
   reducer: {
     auth: authReducer,
     user: userReducer,
@@ -34,7 +39,7 @@ export const store = configureStore<StoreState>({
 
 
 // Save to local storage
-store.subscribe(() => {
+store.subscribe(async () => {
    
   const state = {
     ...store.getState(),
@@ -44,7 +49,8 @@ store.subscribe(() => {
       path: ""
     }
   };
-  localStorage.setItem('state', 
+
+  await storage.set('state',   
     JSON.stringify(state)
   ) 
 });
