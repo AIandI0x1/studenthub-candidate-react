@@ -203,9 +203,9 @@ export function PersonalDdetail()   {
                 <div className="justify-start items-center gap-2 inline-flex cursor-pointer" onClick={updateNationalityClicked}>
                     <div className="w-6 h-6 relative">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4C7.58172 4 4 7.58172 4 12C4 16.4183 7.58172 20 12 20Z" stroke="#23233D" strokeWidth="1.8" stroke-miterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4C7.58172 4 4 7.58172 4 12C4 16.4183 7.58172 20 12 20Z" stroke="#23233D" strokeWidth="1.8" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
                         <path d="M4 12H20" stroke="#23233D" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
-                        <path d="M12 20C13.6569 20 15 16.4183 15 12C15 7.58172 13.6569 4 12 4C10.3431 4 9 7.58172 9 12C9 16.4183 10.3431 20 12 20Z" stroke="#23233D" strokeWidth="1.8" stroke-miterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M12 20C13.6569 20 15 16.4183 15 12C15 7.58172 13.6569 4 12 4C10.3431 4 9 7.58172 9 12C9 16.4183 10.3431 20 12 20Z" stroke="#23233D" strokeWidth="1.8" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
                         </svg>
                     </div>
                     <div className="text-[#22223d] text-sm font-medium leading-tight">
@@ -302,9 +302,9 @@ export function PersonalDdetail()   {
                 <div className="justify-start items-center gap-2 inline-flex cursor-pointer" onClick={profilePageClicked}>
                     <div className="w-6 h-6 relative">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4C7.58172 4 4 7.58172 4 12C4 16.4183 7.58172 20 12 20Z" stroke="#23233D" strokeWidth="1.8" stroke-miterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4C7.58172 4 4 7.58172 4 12C4 16.4183 7.58172 20 12 20Z" stroke="#23233D" strokeWidth="1.8" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
                         <path d="M4 12H20" stroke="#23233D" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
-                        <path d="M12 20C13.6569 20 15 16.4183 15 12C15 7.58172 13.6569 4 12 4C10.3431 4 9 7.58172 9 12C9 16.4183 10.3431 20 12 20Z" stroke="#23233D" strokeWidth="1.8" stroke-miterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M12 20C13.6569 20 15 16.4183 15 12C15 7.58172 13.6569 4 12 4C10.3431 4 9 7.58172 9 12C9 16.4183 10.3431 20 12 20Z" stroke="#23233D" strokeWidth="1.8" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
                         </svg>
                     </div>
                     <div className="text-[#22223d] text-sm font-medium leading-tight">

@@ -10,11 +10,13 @@ export function Education({ education }: { education: CandidateEducation }) {
                 { education.degree && <div className="self-stretch text-[#0f0f2c] text-base font-semibold leading-normal">
                     { i18n.language == 'ar' && education.degree.degree_name_ar? education.degree.degree_name_ar: education.degree.degree_name_en }
                 </div> }
-                <div className="self-stretch h-5 justify-start items-center gap-4 inline-flex">
-                    { education.major && <div className="grow shrink basis-0 text-[#4b4b61] text-sm font-normal leading-tight">
+                
+                { education.major && <div className="self-stretch text-[#4b4b61] text-sm font-normal leading-tight">
                         { i18n.language == 'ar' && education.major.major_name_ar? education.major.major_name_ar: education.major.major_name_en }
                     </div> }
                     
+                <div className="self-stretch h-5 justify-start items-center gap-4 inline-flex">
+                   
                     { education.university && <div className="grow shrink basis-0 text-[#4b4b61] text-sm font-normal leading-tight">
                         { i18n.language == 'ar' && education.university.university_name_ar? education.university.university_name_ar: education.university.university_name_en }
                     </div> }

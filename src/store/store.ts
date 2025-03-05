@@ -8,7 +8,8 @@ import appReducer from './slices/appSlice';
 import { Storage } from '@ionic/storage';
 
 const storage = new Storage();
-await storage.create();
+ 
+
 
 export type StoreState = {
   auth: ReturnType<typeof authReducer>;
@@ -18,6 +19,8 @@ export type StoreState = {
 
 const loadState = async () => {
   try {
+    await storage.create();
+    
     const serializedState = await storage.get('state');
     
     if (!serializedState) 
