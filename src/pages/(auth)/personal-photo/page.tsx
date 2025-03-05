@@ -184,7 +184,13 @@ export default function PersonalPhotoPage() {
                         if (file) {
                             setUploading(true);
 
-                            uploadFileToTempS3(file).then((response: any) => {
+                            const upload = uploadFileToTempS3(file);
+
+                            upload.on('httpUploadProgress', (progress: any) => {
+                              console.log(progress);
+                            });
+
+                            upload.done().then((response: any) => {
                               
                               form.setValue('candidate_personal_photo', response.Key);
                               form.trigger('candidate_personal_photo');

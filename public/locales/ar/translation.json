@@ -1,5 +1,13 @@
 
 {
+    "Uploaded": "مرفوع",
+    "Remove CV": "إزالة السيرة الذاتية",
+    "Remove Intro": "إزالة الفيديو التعريفي",
+    "Update CV/ Portfolio": "تحديث السيرة الذاتية/الملف الشخصي",
+    "Upload your CV to help our recruiters learn more about you": "رفع السيرة الذاتية لمساعدة محرري التوظيف على التعرف أكثر على المتقدم",
+    "Upload your Portfolio to showcase your work/personal projects": "رفع الملف الشخصي لعرض أعمالك/مشاريعك الشخصية",
+    "Upload CV": "رفع السيرة الذاتية",
+    "Upload Portfolio": "رفع الملف الشخصي",
     "Please enter password": "يرجى إدخال كلمة المرور",
     "Enable Two-Step Authentication": "تفعيل المصادقة الثنائية",
     "Disable Two-Step Authentication": "تعطيل المصادقة الثنائية",

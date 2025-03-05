@@ -296,10 +296,17 @@ export default function CivilIdPage() {
                     accept="image/*"
                     onChange={(e) => {
                         const file = e.target.files?.[0];
+
                         if (file) {
                             setUploadingFrontId(true);
 
-                            uploadFileToTempS3(file).then((response: any) => {
+                            const upload = uploadFileToTempS3(file);
+
+                            upload.on('httpUploadProgress', (progress: any) => {
+                              console.log(progress);
+                            });
+
+                            upload.done().then((response: any) => {
                              
                                 updateCivilPhotoFront(response.Key).then((res: any) => {
                                    
@@ -369,7 +376,13 @@ export default function CivilIdPage() {
                         if (file) {
                             setUploadingBackId(true);
 
-                            uploadFileToTempS3(file).then((response: any) => {
+                            const upload = uploadFileToTempS3(file);  
+
+                            upload.on('httpUploadProgress', (progress: any) => {
+                              console.log(progress);
+                            });
+
+                            upload.done().then((response: any) => {
                                
                                 // Handle successful upload
 
