@@ -2,7 +2,7 @@ import axios from "../AxiosService";
 import { store } from '@/store/store';
 //import { setTempBucket } from '@/store/slices/appSlice';
 //import { ManagedUpload } from 'aws-sdk/clients/s3';
-import { S3Client, ObjectCannedACL } from "@aws-sdk/client-s3";
+import { S3Client, ObjectCannedACL, HeadObjectCommand } from "@aws-sdk/client-s3";
 import { Upload } from "@aws-sdk/lib-storage";
 
 let s3: S3Client;
@@ -59,7 +59,7 @@ let s3: S3Client;
      * @param { File } file
      * @returns { Observable<any> }
      */
-    export function uploadFileToTempS3(file: File, metadata = {}): Promise<any> {
+    export function uploadFileToTempS3(file: File, metadata = {}): Upload {
         
         /*const maxUploadSize = 18874368; // 18 MB
         const maxImageUploadSize = 5000000; // 5 MB //https://sentry.io/organizations/pogi/issues/1885937107/?project=168200&query=is%3Aunresolved&statsPeriod=14d
@@ -69,13 +69,14 @@ let s3: S3Client;
         const state = store.getState(); // Get the state directly from the store
 
         let { temp_bucket } = state.app;  
-        // Check if temp_bucket is defined and not empty
-    if (!temp_bucket) {
-        //console.error("Error: temp_bucket is not defined or is empty.");
-        //throw new Error("Bucket name is required for S3 upload.");
+            
+            // Check if temp_bucket is defined and not empty
+        if (!temp_bucket) {
+            //console.error("Error: temp_bucket is not defined or is empty.");
+            //throw new Error("Bucket name is required for S3 upload.");
 
-        temp_bucket = "studenthub-public-anyone-can-upload-24hr-expiry";
-    }
+            temp_bucket = "studenthub-public-anyone-can-upload-24hr-expiry";
+        }
 
         /*let s3 = new S3({
             apiVersion: '2006-03-01'
@@ -118,8 +119,8 @@ let s3: S3Client;
 
            // const currUpload = s3.send(new PutObjectCommand(params)); 
         
-            return upload.done();
-
+            return upload;
+            
             /*observer.next(currUpload);
 
             currUpload.on('httpUploadProgress', (progress: ManagedUpload.Progress) => {
@@ -136,6 +137,37 @@ let s3: S3Client;
         //});
     }
 
+    /**
+     * Get file metadata from S3
+     * @param key
+     * @returns
+     */
+     export async function getFileMetadata(key: string) {
+
+        /*const url = `https://${import.meta.env.VITE_PERMANENT_BUCKET}.s3.amazonaws.com/${key}`;
+        try {
+            const response = await fetch(url, { method: 'HEAD' });
+            console.log(response);
+        //    return response.headers
+          } catch (error) {
+            console.error('Error:', error);
+          }*/
+
+        try {
+          const command = new HeadObjectCommand({ 
+            Bucket: import.meta.env.VITE_PERMANENT_BUCKET, 
+            Key: key,
+          });
+          //`File size: ${response.ContentLength} bytes`
+          return await s3.send(command);
+        } catch (err) {
+          console.error('Error:', err);
+          return new Promise((resolve, reject) => {
+            reject(err);
+          });
+        }
+    }
+      
     /**
      * Take file name / path and return the file name without extension.
      */

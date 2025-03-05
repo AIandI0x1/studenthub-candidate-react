@@ -12,11 +12,11 @@ import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Suspense, useEffect, useRef, useState } from "react";
 import { checkVideoStatus, deleteResume, deleteVideo, profile, updateResume, updateVideo } from "@/providers/logged-in/account.service";
-import { errorMessage, useQuery } from "@/utils/common";
+import { dateTimeFormat, errorMessage, useQuery } from "@/utils/common";
 import { useIonRouter } from "@ionic/react"; 
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { setUser } from "@/store/slices/userSlice";
-import { setAWSConfig, uploadFileToTempS3 } from "@/providers/logged-in/aws.service";
+import { setAWSConfig, uploadFileToTempS3, getFileMetadata } from "@/providers/logged-in/aws.service";
 import { page, track } from "@/providers/analytics.service";
 import { alertDialog } from "@/hooks/use-alert-dialog";
 import { useTranslation } from "react-i18next";
@@ -26,7 +26,8 @@ import { PlayCircle, SaveIcon, VideoIcon, X } from "lucide-react";
 import Spinner from "@/components/common/spinner";
 import Loading from "./loading";
 import AuthLayout from "../layout";
-//import { Backdrop } from "@/components/common/backdrop";
+import { Progress } from "@/components/ui/progress";
+  //import { Backdrop } from "@/components/common/backdrop";
 
 const formSchema = z.object({
     video: z.string({
@@ -34,7 +35,7 @@ const formSchema = z.object({
     }).nullable(),
     resume: z.string({
       //  required_error: 'Please upload front side of your national id.'
-    }).nullable(),
+    }).nullable()
 })
 
 
@@ -53,6 +54,10 @@ export default function VideoPage() {
   const [removingResume, setRemovingResume] = useState(false);
   const [uploadingVideo, setUploadingVideo] = useState(false);
   const [uploadingResume, setUploadingResume] = useState(false);
+  const [uploadingPortfolio, setUploadingPortfolio] = useState(false);
+  const [uploadType, setUploadType] = useState('resume');
+  const [resumeSize, setResumeSize] = useState(0);
+  const [resumeUploadedAt, setResumeUploadedAt] = useState(null);
 
   const [progress, setProgress] = useState(0);
 
@@ -91,7 +96,10 @@ export default function VideoPage() {
 
     page('Video Page');
 
-    setAWSConfig();
+    setAWSConfig().then(() => {
+      updateResumeMetadata();
+    });
+
     /*if (query.get('fromProfile'))
       //router.prefetch('/profile');
     else
@@ -173,12 +181,37 @@ export default function VideoPage() {
         dispatch(setUser({ user: res }));
         form.setValue('video', res.candidate_video || "");
         form.setValue('resume', res.candidate_resume || "");
+
+        if (res.candidate_resume) {
+          updateResumeMetadata(); 
+        }
       }).finally(() => {
         setLoading(false);
       });
     }
   }, [user]);
   
+  function updateResumeMetadata() {
+
+    if (!form.getValues().resume) {
+      console.log("No resume");
+      return;
+    }
+
+    const key = 'candidate-resume/' + form.getValues().resume;
+
+    getFileMetadata(key).then((response: any) => {
+       
+      const size = response.ContentLength;//headers.get('content-length') || "0";
+      const sizeInKB = (Number(size) / 1024).toFixed(2);
+
+      const lastModified = response.LastModified;//.headers.get('last-modified');
+
+      setResumeSize(Number(sizeInKB));   
+      setResumeUploadedAt(lastModified);
+    });
+  }
+
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
    
@@ -219,6 +252,9 @@ export default function VideoPage() {
 
     deleteResume().then(() => {
       form.setValue('resume', "");
+
+      setResumeSize(0);   
+      setResumeUploadedAt(null);
 
       dispatch(setUser({ user: {
         ...user,
@@ -348,7 +384,13 @@ export default function VideoPage() {
 
     setUploadingVideo(true);
 
-    uploadFileToTempS3(file).then((res: any) => {
+    const upload = uploadFileToTempS3(file);
+
+    upload.on('httpUploadProgress', (progress: any) => {
+      console.log(progress);
+    });
+
+    upload.done().then((res: any) => {
       
       updateVideo(res.Key).then((res: any) => {
        
@@ -739,22 +781,36 @@ export default function VideoPage() {
     setPlayingRecording(false);
   }
 
+  function uploadResume() {
+    setUploadType('resume');
+    document.getElementById('resumeUpload')?.click();
+  }
+
+  function uploadPortfolio() {
+    setUploadType('portfolio');
+    document.getElementById('resumeUpload')?.click();
+  }
+
   return (
     <Suspense fallback={<Loading />}>
       <AuthLayout>
         { !query.get('fromProfile') && <OnboardProgress arrProgress={[100, 100, 60]}></OnboardProgress> }
 
         <h5 className="text-[color:var(--Neutral-100,#0F0F2C)] text-center 
-         text-[40px] font-bold leading-[56px] mt-[102px] mb-[38px]">
-          { t("You’re almost there")}
+         text-[40px] font-bold leading-[56px] mt-[102px] mb-2">
+          { t("Tell us about yourself")}
         </h5>
   
+        <p className="text-center text-[#4b4b61] text-base font-normal leading-normal mb-10">
+          { t("We know it’s hard, but you can do it!") }
+        </p>
+
         { /**block-inline max-w-[313px] xs:max-w-full xs:w-full  */}
 
-       <div suppressHydrationWarning={true} className="flex flex-col sm:flex-row max-w-[640px]  min-h-[196px] m-auto mb-[24px]">
+       <div suppressHydrationWarning={true} className="flex flex-col md:flex-row max-w-[750px]  min-h-[196px] m-auto mb-[24px]">
             
-            { !form.getValues().video && <div className="relative xs:max-w-full sm:max-w-[313px]  flex-none text-center py-[24px] px-[46px] shrink-0 border-[color:var(--Neutral-30,#EEEEF0)] 
-                [background:var(--Neutral-10,#FAFAFA)] rounded-2xl border-[1.333px] border-dashed mb-[24px] sm:mb-0 sm:me-[24px]">
+            { !form.getValues().video && <div className="relative xs:max-w-full md:max-w-[375px]  flex-none text-center py-[24px] px-[46px] shrink-0 border-[color:var(--Neutral-30,#EEEEF0)] 
+                [background:var(--Neutral-10,#FAFAFA)] rounded-2xl border-[1.333px] border-dashed mb-[24px] md:mb-0 md:me-[24px]">
 
               { shouldStop && recordedChunks.length == 0 && <>
 
@@ -899,8 +955,8 @@ export default function VideoPage() {
 
             </div> }
 
-            { form.getValues().video && <div className="xs:max-w-full w-full sm:max-w-[313px]  flex-none 
-                  rounded-2xl mb-[24px] sm:mb-0 sm:me-[24px]">
+            { form.getValues().video && <div className="xs:max-w-full w-full md:max-w-[375px]  flex-none 
+                  rounded-2xl mb-[24px] md:mb-0 md:me-[24px]">
 
                 {/*<img src={ import.meta.env.VITE_PERMANENT_BUCKET_URL + 'candidate-video/' +  form.getValues().video + '.jpg' } 
                   onError={() => onVideoError()}
@@ -936,15 +992,55 @@ export default function VideoPage() {
                           type="video/mp4" /> }
                   </video>
 
-                  <Button variant={ "ghost"} onClick={() => removeVideo()} 
-                    className="text-[color:var(--Neutral-70,#7D7D8D)] text-sm font-medium leading-5 text-center m-auto mt-[12px]">
+                  <div className="flex justify-center items-center">
+                    <Button variant={ "ghost"} onClick={() => removeVideo()} 
+                      className="text-[color:var(--Neutral-70,#7D7D8D)] text-sm font-medium leading-5 text-center m-auto mt-[12px]">
                       <img src="/assets/icons/trash.svg" className="w-[16px]"></img>    
-                      { removingVideo ? t("Removing...") : t("Remove") } 
-                  </Button> 
+                      { removingVideo ? t("Removing...") : t("Remove Intro") } 
+                    </Button> 
+                  </div>
                 </>}
             </div> }
             
-            { !form.getValues().resume && <div className="xs:max-w-full sm:max-w-[313px] flex-none text-center py-[24px] px-[46px] shrink-0 border-[color:var(--Neutral-30,#EEEEF0)] 
+            { uploadingResume && <div className="xs:max-w-full h-auto md:max-w-[375px] flex-none py-[24px] px-[24px] shrink-0
+             bg-white rounded-2xl shadow-[0px_4px_6px_0px_rgba(0,0,0,0.09)] border border-slate-200">
+              <div className="self-stretch flex-col justify-start items-start gap-1 flex">
+                  <div className="self-stretch text-[#22223d] text-lg font-semibold leading-7">
+                    {t("Upload CV")}</div>
+                  <div className="mt-1 self-stretch text-[#4b4b61] text-xs font-normal leading-none">
+                    {t("Upload your CV to help our recruiters learn more about you")}</div>
+              </div>
+              <div className="my-2.5 self-stretch justify-between items-start inline-flex">
+                  <div className="text-[#0f0f2c] text-xs font-normal leading-none">
+                    {t("Uploading...")}</div>
+                  <div className="text-[#0f0f2c] text-xs font-normal leading-none">
+                    {progress}%
+                  </div>
+              </div>
+              <Progress value={progress} />
+            </div> }
+
+            { uploadingPortfolio && <div className="xs:max-w-full h-auto md:max-w-[375px] flex-none py-[24px] px-[24px] shrink-0
+             bg-white rounded-2xl shadow-[0px_4px_6px_0px_rgba(0,0,0,0.09)] border border-slate-200">
+              <div className="self-stretch flex-col justify-start items-start gap-1 flex">
+                  <div className="self-stretch text-[#22223d] text-lg font-semibold leading-7">
+                    {t("Upload Portfolio")}
+                  </div>
+                  <div className="mt-1 self-stretch text-[#4b4b61] text-xs font-normal leading-none">
+                    {t("Upload your Portfolio to showcase your work/personal projects")}
+                   </div>
+              </div>
+              <div className="my-2.5 self-stretch justify-between items-start inline-flex">
+                  <div className="text-[#0f0f2c] text-xs font-normal leading-none">
+                    {t("Uploading...")}</div>
+                  <div className="text-[#0f0f2c] text-xs font-normal leading-none">
+                    {progress}%
+                  </div>
+              </div>
+              <Progress value={progress} />
+            </div> }
+
+            { !form.getValues().resume && !uploadingResume && !uploadingPortfolio && <div className="xs:max-w-full md:max-w-[375px] flex-none text-center py-[24px] px-[24px] shrink-0 border-[color:var(--Neutral-30,#EEEEF0)] 
                 [background:var(--Neutral-10,#FAFAFA)] rounded-2xl border-[1.333px] border-dashed">
 
                 <img src="/assets/icons/cv.svg" className="m-auto" />
@@ -958,25 +1054,67 @@ export default function VideoPage() {
                   {t("Have a cool file to showcase your skills and experiences?")}
                 </p>
 
+                <div className="mt-4 h-10 justify-start items-start gap-2.5 inline-flex">
+                  <button onClick={() => uploadResume()} className="px-4 py-2 bg-white rounded-md border border-slate-200 justify-center items-center gap-2.5 inline-flex text-slate-900 text-sm font-medium leading-normal">
+                    { t("Upload CV") }
+                  </button>
+                  <button onClick={() => uploadPortfolio()} className="px-4 py-2 bg-white rounded-md border border-slate-200 justify-center items-center gap-2.5 inline-flex text-slate-900 text-sm font-medium leading-normal">
+                    { t("Upload Portfolio") }
+                  </button>
+                </div>
+
+{/*
                 <a onClick={() => document.getElementById('resumeUpload')?.click()} className="cursor-pointer text-[color:var(--Blue-Tint-Main,#4C70F2)] text-center text-xs font-medium leading-4 mt-[16px] block">
                 { uploadingResume ? t("Uploading...") : t("Upload CV or Portfolio") }   
                 </a>
-
+  */}
             </div> }
 
-            { form.getValues().resume && <div className="xs:max-w-full sm:max-w-[313px] w-full flex-none 
-                  rounded-2xl mb-[24px] sm:mb-0">
+            { form.getValues().resume && !uploadingResume && !uploadingPortfolio && <div className="xs:max-w-full md:max-w-[390px] w-full flex-none 
+                  rounded-2xl mb-[24px] md:mb-0 justify-center items-center">
+  
+                <div className="h-[106px] justify-start items-start gap-2.5 inline-flex">
 
-                { /** TODO: show resume preview */ }
-                <img src="/assets/icons/cv.svg" className="w-full"></img>   
+                  <embed className="w-[122.50px] h-[106px] rounded-2xl border border-[#eeeef0]" src={ import.meta.env.VITE_PERMANENT_BUCKET_URL + 'candidate-resume/' + form.getValues().resume} type="application/pdf" 
+                  ></embed>
+                   
+                  <div className="grow shrink basis-0 flex-col justify-start items-start gap-[17px] inline-flex">
+                      <div className="self-stretch h-12 flex-col justify-start items-start gap-1 flex">
+                          <div className="w-56 text-[#22223d] text-base font-semibold leading-normal capitalize">
+                          { form.getValues().resume }
+                          </div>
 
-                <Button variant={ "ghost"} onClick={() => removeResume()} 
-                  className="text-[color:var(--Neutral-70,#7D7D8D)] text-sm font-medium leading-5 text-center m-auto mt-[12px]">
-                    <img src="/assets/icons/trash.svg" className="w-[16px]"></img>   
-                    { removingResume ? t("Removing...") : t("Remove") } 
-                </Button>
+                          { resumeSize > 0 && <div className="w-56 text-[#4b4b61] text-sm font-normal leading-tight">
+                            { resumeSize } KB { resumeUploadedAt && '| ' + t('Uploaded') + ' ' + dateTimeFormat(resumeUploadedAt, 'MMM d, yyyy')  } 
+                          </div>
+                          }
+                         
+                      </div>
+                      <div className="self-stretch justify-start items-start gap-2.5 inline-flex mt-4">
+                          <a href={ import.meta.env.VITE_PERMANENT_BUCKET_URL + 'candidate-resume/' + form.getValues().resume} target="_blank" className="px-4 py-2 bg-white rounded-md border border-slate-200 justify-center items-center gap-2.5 flex">
+                              <div className="text-slate-900 text-sm font-medium leading-normal">
+                                {t("Download")}
+                              </div>
+                          </a>
+                          <button onClick={() => uploadResume()} className="grow shrink basis-0 h-10 px-4 py-2 bg-white rounded-md border border-slate-200 justify-center items-center gap-2.5 flex">
+                              <div className="text-slate-900 text-sm font-medium leading-normal">
+                                {t("Update Portfolio")}
+                              </div>
+                          </button>
+                      </div>
+                  </div>
+                </div>
+                
+                <div className="flex justify-center items-center">
+                  <Button variant={ "ghost"} onClick={() => removeResume()} 
+                    className="text-[color:var(--Neutral-70,#7D7D8D)] text-sm font-medium leading-5 text-center m-auto mt-[12px]">
+                      <img src="/assets/icons/trash.svg" className="w-[16px]"></img>   
+                      { removingResume ? t("Removing...") : t("Remove CV") } 
+                  </Button>
+                </div>
             </div> }
-        </div> 
+
+        </div>  
     
         <input
           type="file"
@@ -985,16 +1123,40 @@ export default function VideoPage() {
           accept="application/pdf"
           onChange={(e) => {
               const file = e.target.files?.[0];
-              if (file) {
-                  setUploadingResume(true);
 
-                  uploadFileToTempS3(file).then((res: any) => {
+              if (file) {
+                  //
+
+                  if (uploadType == 'portfolio') {
+                    setUploadingPortfolio(true);
+                  } else {
+                    setUploadingResume(true);
+                  }
+
+                  setProgress(0);
+
+                  /*setInterval(() => {
+                    setProgress(progress + 10);
+                  }, 1000);*/
+
+                  const upload = uploadFileToTempS3(file);
+                  
+                  console.log(upload);
+
+                  upload.on('httpUploadProgress', (progress: any) => {
+                    console.log(progress);
+                    setProgress(progress.loaded / progress.total * 100);
+                  });
+
+                  upload.done().then((res: any) => {
                     
                     updateResume(res.Key).then((res: any) => { 
                      
                       if (res.operation == 'success') {   
 
                         form.setValue('resume', res.candidate_resume);
+                        
+                        updateResumeMetadata(); 
 
                         dispatch(setUser({ user: {
                           ...user,
@@ -1008,11 +1170,13 @@ export default function VideoPage() {
                       }
                     }).finally(() => {
                       setUploadingResume(false);
+                      setUploadingPortfolio(false);
                     });
                   }).catch((error) => {
                     // Handle upload error
                     console.error('Upload failed:', error);
                     setUploadingResume(false);
+                    setUploadingPortfolio(false);
                   })
               }
           }}

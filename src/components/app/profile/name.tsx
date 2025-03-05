@@ -49,7 +49,7 @@ export function Name() {
             <div className="grow shrink basis-0 flex-col justify-start items-start gap-1 inline-flex">
                 <div className="w-full justify-start items-center gap-6 inline-flex">
                     <div className="grow shrink basis-0 text-[#22223d] text-2xl font-bold leading-loose">
-                        <span className="cursor-pointer" onClick={updateNameClicked}>{user.candidate_name}</span>
+                        <span className="cursor-pointer whitespace-nowrap" onClick={updateNameClicked}>{user.candidate_name}</span>
  
                         { user.isProfileCompleted ? 
                             <IonIcon src="assets/images/ic_verified.svg" className="m-1 relative top-1.5" title="Completed Profile"></IonIcon>: 

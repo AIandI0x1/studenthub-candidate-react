@@ -151,7 +151,7 @@ const ProfilePage = () => {
                                         <div className="justify-start items-center gap-1 inline-flex">
                                             <div className="w-6 h-6 relative me-1">
                                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21Z" stroke="#23233D" strokeWidth="2" stroke-miterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+                                                <path d="M12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21Z" stroke="#23233D" strokeWidth="2" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
                                                 <path d="M14.9104 12.4287C15.2341 12.2345 15.2341 11.7655 14.9104 11.5713L10.7572 9.07935C10.424 8.87939 10 9.11945 10 9.5081V14.4919C10 14.8806 10.424 15.1206 10.7572 14.9207L14.9104 12.4287Z" stroke="#23233D" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round"/>
                                                 </svg>
                                             </div>

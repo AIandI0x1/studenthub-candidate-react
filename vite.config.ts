@@ -11,10 +11,22 @@ import { VitePWA } from 'vite-plugin-pwa';
 export default defineConfig({
 
   build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom'],
+          utils: ['lodash', 'axios'],
+          i18n: ['i18next', 'react-i18next'],
+          store: ['redux', '@reduxjs/toolkit'],
+          router: ['react-router', 'react-router-dom'],
+          // Add more chunks as needed
+        }
+      }
+    },
     commonjsOptions: {
     //  strictRequires: ['node_modules/aws-sdk/clients/s3.js'],
     },
-    chunkSizeWarningLimit: 1000, // Increase limit to 1000 kB
+    chunkSizeWarningLimit: 1500, // Increase limit to 1000 kB
   },
   server: {
     /*https: {

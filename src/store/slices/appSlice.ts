@@ -39,6 +39,7 @@ const appSlice = createSlice({
   reducers: {
     setLanguage: (state, action: PayloadAction<{ language: string }>) => {
 
+      console.log('setLanguage',action.payload.language);
       state.language = action.payload.language;
       //i18n.changeLanguage(action.payload.language);
 

@@ -5,21 +5,21 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import authReducer from './slices/authSlice';
 import userReducer from './slices/userSlice';
 import appReducer from './slices/appSlice';
-import { Storage } from '@ionic/storage';
+//import { Storage } from '@ionic/storage';
 
-const storage = new Storage();
-await storage.create();
-
+//const storage = new Storage();
+  
 export type StoreState = {
   auth: ReturnType<typeof authReducer>;
   user: ReturnType<typeof userReducer>;
   app: ReturnType<typeof appReducer>;
 }
 
-const loadState = async () => {
+const loadState = () => {
   try {
-    const serializedState = await storage.get('state');
-    
+   //await storage.create();
+   //const serializedState = await storage.get('state');
+    const serializedState = localStorage.getItem('state');
     if (!serializedState) 
       return undefined
     return JSON.parse(serializedState)
@@ -27,16 +27,15 @@ const loadState = async () => {
     return undefined
   }
 }
-
+ 
 export const store = configureStore<StoreState>({
-  preloadedState: await loadState(),
+  preloadedState: loadState(),
   reducer: {
     auth: authReducer,
     user: userReducer,
     app: appReducer,
   },
 });
-
 
 // Save to local storage
 store.subscribe(async () => {
@@ -50,9 +49,12 @@ store.subscribe(async () => {
     }
   };
 
-  await storage.set('state',   
-    JSON.stringify(state)
-  ) 
+  localStorage.setItem('state', JSON.stringify(state));
+  
+  /*await storage.set('state',   
+      JSON.stringify(state)
+    ) 
+  }*/
 });
 
 // Types for hooks

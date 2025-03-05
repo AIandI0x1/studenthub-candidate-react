@@ -96,10 +96,16 @@ const App: React.FC = () => {
 
   useEffect(() => {
   
-    document.getElementsByTagName('html')[0].setAttribute('dir', 
-      (i18n.language == 'ar') ? 'rtl' : 'ltr');
-      
     initializeApp(query);
+
+    setTimeout(() => {
+      if (i18n.language) {
+          document.getElementsByTagName('html')[0].setAttribute('dir', 
+            (i18n.language == 'ar') ? 'rtl' : 'ltr');
+      }
+    }, 100);
+      
+    
   }, []);
  
   return (

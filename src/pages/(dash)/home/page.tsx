@@ -233,7 +233,9 @@ const HomePage = () => {
                                 </CardTitle>
                             </CardHeader>
                             <CardContent>    
-                                <p className="mt-[2px] mb-4 text-[#68687a] text-sm font-normal leading-tight">You won’t be able to receive payments until we have your valid civil ID.</p>
+                                <p className="mt-[2px] mb-4 text-[#68687a] text-sm font-normal leading-tight">
+                                   { t("You won’t be able to receive payments until we have your valid civil ID.") }
+                                </p>
                                 <Link to='/civil-id?fromProfile=1'>
                                 <Button variant={'outline'} className="btn-civil-detail">
                                     {t("Upload Civil ID")}
