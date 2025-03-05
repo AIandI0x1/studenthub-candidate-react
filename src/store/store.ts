@@ -9,7 +9,7 @@ import { Storage } from '@ionic/storage';
 
 const storage = new Storage();
  
-
+let isLocalStorage = false;
 
 export type StoreState = {
   auth: ReturnType<typeof authReducer>;
@@ -20,9 +20,7 @@ export type StoreState = {
 const loadState = async () => {
   try {
     await storage.create();
-    
     const serializedState = await storage.get('state');
-    
     if (!serializedState) 
       return undefined
     return JSON.parse(serializedState)
@@ -31,15 +29,24 @@ const loadState = async () => {
   }
 }
 
+// Use this pattern instead:
+let preloadedState;
+try {
+  preloadedState = await loadState();
+  isLocalStorage = false;
+} catch (error) {
+  preloadedState = JSON.parse(localStorage.getItem('state') || '{}');
+  isLocalStorage = true;
+}
+
 export const store = configureStore<StoreState>({
-  preloadedState: await loadState(),
+  preloadedState: preloadedState,
   reducer: {
     auth: authReducer,
     user: userReducer,
     app: appReducer,
   },
 });
-
 
 // Save to local storage
 store.subscribe(async () => {
@@ -53,9 +60,13 @@ store.subscribe(async () => {
     }
   };
 
-  await storage.set('state',   
-    JSON.stringify(state)
-  ) 
+  if (isLocalStorage) {
+    localStorage.setItem('state', JSON.stringify(state));
+  } else {
+    await storage.set('state',   
+      JSON.stringify(state)
+    ) 
+  }
 });
 
 // Types for hooks
