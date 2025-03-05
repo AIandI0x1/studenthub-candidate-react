@@ -5,22 +5,21 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import authReducer from './slices/authSlice';
 import userReducer from './slices/userSlice';
 import appReducer from './slices/appSlice';
-import { Storage } from '@ionic/storage';
+//import { Storage } from '@ionic/storage';
 
-const storage = new Storage();
- 
-let isLocalStorage = false;
-
+//const storage = new Storage();
+  
 export type StoreState = {
   auth: ReturnType<typeof authReducer>;
   user: ReturnType<typeof userReducer>;
   app: ReturnType<typeof appReducer>;
 }
 
-const loadState = async () => {
+const loadState = () => {
   try {
-    await storage.create();
-    const serializedState = await storage.get('state');
+   //await storage.create();
+   //const serializedState = await storage.get('state');
+    const serializedState = localStorage.getItem('state');
     if (!serializedState) 
       return undefined
     return JSON.parse(serializedState)
@@ -28,19 +27,9 @@ const loadState = async () => {
     return undefined
   }
 }
-
-// Use this pattern instead:
-let preloadedState;
-try {
-  preloadedState = await loadState();
-  isLocalStorage = false;
-} catch (error) {
-  preloadedState = JSON.parse(localStorage.getItem('state') || '{}');
-  isLocalStorage = true;
-}
-
+ 
 export const store = configureStore<StoreState>({
-  preloadedState: preloadedState,
+  preloadedState: loadState(),
   reducer: {
     auth: authReducer,
     user: userReducer,
@@ -60,13 +49,12 @@ store.subscribe(async () => {
     }
   };
 
-  if (isLocalStorage) {
-    localStorage.setItem('state', JSON.stringify(state));
-  } else {
-    await storage.set('state',   
+  localStorage.setItem('state', JSON.stringify(state));
+  
+  /*await storage.set('state',   
       JSON.stringify(state)
     ) 
-  }
+  }*/
 });
 
 // Types for hooks
