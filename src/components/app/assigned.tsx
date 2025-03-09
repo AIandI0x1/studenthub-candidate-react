@@ -30,8 +30,9 @@ const Assigned = ({ candidateNotification, onClick }: { candidateNotification: C
                     </p>
                 )}
                 
-                { candidateNotification.staff && <p className="text-gray-600 text-sm leading-4">
-                    {t("hired_by", { by: candidateNotification.staff.staff_name })}
+                { candidateNotification.company && <p className="text-gray-600 text-sm leading-4">
+                    {t("hired_by", { by: candidateNotification.company.company_name })}
+                    {/**, staff: candidateNotification.staff.staff_name */}
                 </p> }
 
                 <p className="text-end">
