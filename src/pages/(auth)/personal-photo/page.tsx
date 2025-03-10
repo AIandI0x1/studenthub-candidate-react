@@ -207,7 +207,7 @@ export default function PersonalPhotoPage() {
                     }}
                 />
 
-            <SubmitButton disabled={ !form.getValues().candidate_personal_photo || loading } float={ false } 
+            <SubmitButton disabled={ !form.getValues().candidate_personal_photo || loading || uploading } float={ false } 
               loading={loading}></SubmitButton>
             
           </form>
