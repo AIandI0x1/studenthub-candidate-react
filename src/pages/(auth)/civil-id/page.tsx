@@ -61,22 +61,24 @@ export default function CivilIdPage() {
     }
   }, []);
 
+  const maxCivilIdExpiryDate = new Date(new Date().setFullYear(new Date().getFullYear() + 10));
   const formSchema = z.object({
     candidate_civil_photo_back_url: z.string().nullable(),
     candidate_civil_photo_front_url: z.string().nullable(),
     candidate_civil_photo_back: z.string({
-       //   required_error: 'Please upload back side of your national id.'
-      }).nullable(),
+          required_error: 'Please upload back side of your national id.'
+      }).min(1, t('Please upload back side of your national id.')),
     candidate_civil_photo_front: z.string({
-      //    required_error: 'Please upload front side of your national id.'
-      }).nullable(),
+          required_error: 'Please upload front side of your national id.'
+      }).min(1, t('Please upload front side of your national id.')),
     candidate_civil_expiry_date: z.date({
       }).min(new Date(), {
         message: t("Expired ID not allowed."),
+      }).max(maxCivilIdExpiryDate, {
+        message: t("ID cannot be more than 10 years from now."),
       }),
-      //.min(1, t('Please add expiry date.')),
     candidate_civil_id: z.string({
-        //required_error: 'Please add id number.'
+        required_error: 'Please add id number.'
     }).min(1, t('Please add id number.'))
   })
 
@@ -158,10 +160,11 @@ export default function CivilIdPage() {
           } }));
         }
 
-        if (query.get('fromProfile'))
+        if (query.get('fromProfile')) {
           router.push('/profile');
-        else
+        } else {
           router.push('/preferred-time');
+        }
 
       } else {
          
@@ -180,7 +183,7 @@ export default function CivilIdPage() {
     setRemovingFrontId(true);
 
     removeCivilPhotoFront().then(() => {
-      form.setValue('candidate_civil_photo_front', null);
+      form.setValue('candidate_civil_photo_front', '');
       form.trigger('candidate_civil_photo_front');
       form.setValue('candidate_civil_photo_front_url', '');
       form.trigger('candidate_civil_photo_front_url');
@@ -200,7 +203,7 @@ export default function CivilIdPage() {
     setRemovingBackId(true);
 
     removeCivilPhotoBack().then(() => {
-      form.setValue('candidate_civil_photo_back', null);
+      form.setValue('candidate_civil_photo_back', '');
       form.trigger('candidate_civil_photo_back');
       form.setValue('candidate_civil_photo_back_url', '');
       form.trigger('candidate_civil_photo_back_url');
@@ -217,22 +220,25 @@ export default function CivilIdPage() {
 
   function onCivilIdUploaded(res: any) {
 
-    if (res.candidate_civil_id && res.candidate_civil_expiry_date) {
+    console.log('onCivilIdUploaded', res); 
+
+   // if (res.candidate_civil_id && res.candidate_civil_expiry_date) {
 
       if (res.candidate_civil_photo_back) {
-        form.setValue('candidate_civil_photo_back', res.candidate_civil_photo_back);
-        form.trigger('candidate_civil_photo_back');
+
         form.setValue('candidate_civil_photo_back_url', 
           import.meta.env.VITE_PERMANENT_BUCKET_URL  + 'photos/' + res.candidate_civil_photo_back);
+        form.setValue('candidate_civil_photo_back', res.candidate_civil_photo_back);
         form.trigger('candidate_civil_photo_back_url');
+        form.trigger('candidate_civil_photo_back');
       }
 
       if (res.candidate_civil_photo_front) {  
-        form.setValue('candidate_civil_photo_front', res.candidate_civil_photo_front);
-        form.trigger('candidate_civil_photo_front');
         form.setValue('candidate_civil_photo_front_url', 
           import.meta.env.VITE_PERMANENT_BUCKET_URL  + 'photos/' + res.candidate_civil_photo_front);
+        form.setValue('candidate_civil_photo_front', res.candidate_civil_photo_front);
         form.trigger('candidate_civil_photo_front_url');
+        form.trigger('candidate_civil_photo_front');
       }
 
       if (res.candidate_civil_id) {
@@ -259,7 +265,7 @@ export default function CivilIdPage() {
       router.push('/profile');
     else
       router.push('/preferred-time');*/
-    }
+    //}
   }
 
   return (
@@ -443,6 +449,7 @@ export default function CivilIdPage() {
               label="ID Number"
               form={form as any}
               type="text"
+              required={true}
             />
 { /* todo: have date field
 
@@ -466,9 +473,11 @@ export default function CivilIdPage() {
             ></IonDatetime>*/ }
              
            <FormDateTimeInput
+            required={true}
               name="candidate_civil_expiry_date"
               label="Expiry Date"
               form={form as any}
+              maxDate={maxCivilIdExpiryDate}
             />
  
             <SubmitButton disabled={!form.formState.isValid || loading } 

@@ -39,7 +39,6 @@ const PhoneInput: React.ForwardRefExoticComponent<PhoneInputProps> =
   React.forwardRef<React.ElementRef<typeof RPNInput.default>, PhoneInputProps>(
     ({ className, onChange, ...props }, ref) => {
  
-
       return (
         <RPNInput.default
           ref={ref}
@@ -66,7 +65,7 @@ const PhoneInput: React.ForwardRefExoticComponent<PhoneInputProps> =
 PhoneInput.displayName = "PhoneInput";
 
 const InputComponent = React.forwardRef<HTMLInputElement, React.ComponentProps<"input">>(
-  ({ className, ...props }, ref) => {
+    ({ className, required, ...props }, ref) => {
     
 
       //${fieldState.error 
@@ -120,7 +119,7 @@ const InputComponent = React.forwardRef<HTMLInputElement, React.ComponentProps<"
   
               `}
           >
-          {t("Your phone number")}
+          {t("Your phone number")} {required && <span className='text-destructive'>*</span>}
       </FormLabel>
   
       </>

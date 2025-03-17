@@ -41,8 +41,13 @@ export default function ExperiencesPage() {
   const formSchema = z.object({
     experiences: z.array(z.object({
       candidate_experience_id: z.any().nullable(),
-      experience: z.string().max(128).min(1, t('Job title is required')),
-      employer: z.string().max(128).nullable().optional(),
+      experience: z.string({
+        required_error: t('Job title is required')
+      }).max(128).min(1, t('Job title is required')),
+      employer: z.string({
+        required_error: t('Employer is required')
+      }).max(128).min(1, t('Employer is required')),   
+      //.nullable().optional(),
       start_year: z.coerce.number().min(1900).max((new Date()).getFullYear()).nullable().optional(),
       end_year: z.coerce.number().min(1900).max((new Date()).getFullYear()).nullable().optional()
     }))
@@ -153,6 +158,7 @@ export default function ExperiencesPage() {
                   name={`experiences.${index}.experience`}
                   label={ t("Job Title") }
                   form={form as any}
+                  required={true}
                 />
 
                 <div className="sm:flex">
@@ -161,6 +167,7 @@ export default function ExperiencesPage() {
                       name={`experiences.${index}.employer`}
                       label={ t("Employer") }
                       form={form as any}
+                      required={true}
                   />
                   </div>  
 
@@ -213,8 +220,7 @@ export default function ExperiencesPage() {
               <img src="/assets/icons/plus.svg" /> { t("Add experience") }
             </Button>
 
-            { /**!form.formState.isValid || */}
-            <SubmitButton disabled={ loading } loading={loading}></SubmitButton>
+            <SubmitButton disabled={!form.formState.isValid || loading } loading={loading}></SubmitButton>
           </form>
         </Form>
 

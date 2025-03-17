@@ -41,8 +41,13 @@ export default function LoginPage() {
   const { t } = useTranslation();
 
   const formSchema = z.object({
-    email: z.string().email(t('Please enter valid email address')),
-    password: z.string().min(4, { message: t("Password must be at least 4 characters long") })
+    email: z.string({
+      required_error: t('Please enter email address')
+    }).email(t('Please enter valid email address'))
+    .min(1, t('Please enter email address')),
+    password: z.string({
+      required_error: t("Please enter password")
+    }).min(4, { message: t("Password must be at least 4 characters long") })
   })
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -152,6 +157,7 @@ export default function LoginPage() {
                 label="Email Address"
                 form={form as any}
                 type="email"
+                required={true}
               />
 
               <FormInput
@@ -159,6 +165,7 @@ export default function LoginPage() {
                 label="Password"
                 form={form as any}
                 type="password"
+                required={true}
               />
               <Link to="/forgot-password">
                 {t("Forgot Password?")}

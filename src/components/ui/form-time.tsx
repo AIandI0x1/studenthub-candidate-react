@@ -20,7 +20,8 @@ interface FormInputProps {
   helper?: string,
   inputDir?: string,
   onFocus?: () => void,
-  autoComplete?: string
+  autoComplete?: string,
+  required?: boolean
 }
 
 //todo: show CircularTimePicker on click on icon + mask input to accept only time 
@@ -32,7 +33,8 @@ export function FormTimeInput({
   helper,
   inputDir = i18n.language == "ar"? "rtl": "ltr",
   onFocus,
-  autoComplete = "off"
+  autoComplete = "off",
+  required = false
 }: FormInputProps) {
   const id = useId()
 
@@ -114,7 +116,7 @@ export function FormTimeInput({
 
               ${fieldState.error ? 'text-destructive' : 'text-gray-500 peer-focus:text-primary'}`}
           >
-            {t(label)}
+            {t(label)} {required && <span className='text-destructive'>*</span>}
           </FormLabel>
           </div>
 

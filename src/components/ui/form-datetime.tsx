@@ -24,7 +24,9 @@ interface FormInputProps {
   helper?: string,
   inputDir?: string,
   onFocus?: () => void,
-  onChange?: (date: any) => void
+  onChange?: (date: any) => void,
+  required?: boolean,
+  maxDate?: Date
 }
 
 export function FormDateTimeInput({
@@ -34,7 +36,9 @@ export function FormDateTimeInput({
   helper,
   inputDir = i18n.language == "ar"? "rtl": "ltr",
   onFocus,
-  onChange
+  onChange,
+  required = false,
+  maxDate = undefined 
 }: FormInputProps) {
   const id = useId()
 
@@ -142,7 +146,7 @@ export function FormDateTimeInput({
                   ${fieldState.error ? 'text-destructive' : 'text-gray-500 peer-focus:text-primary'}`}
                   
             >
-                {t(label)}
+                {t(label)} {required && <span className='text-destructive'>*</span>}
             </FormLabel>
           </div>
           </PopoverTrigger>
@@ -153,6 +157,7 @@ export function FormDateTimeInput({
                   value={ 
                        form.getValues(name) ? form.getValues(name).toISOString() : new Date().toISOString()
                      }
+                  max={maxDate ? maxDate.toISOString() : undefined}
                   onIonChange={(e) => {
                     const date = new Date(e.detail.value as string || "");
                     

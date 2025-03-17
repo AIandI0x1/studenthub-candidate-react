@@ -23,9 +23,10 @@ import { useTranslation } from "react-i18next";
 interface DegreeGroupInputProps {
     degree_group_uuid?: string;
     onSelect: (degreeGroup: any) => void;
+    required?: boolean;
 }
 
-export default function DegreeGroupInput({ degree_group_uuid, onSelect }: DegreeGroupInputProps) {
+export default function DegreeGroupInput({ degree_group_uuid, onSelect, required = false }: DegreeGroupInputProps) {
 
     const [open, setOpen] = React.useState(false)
     const [loading, setLoading] = useState(false);
@@ -94,7 +95,7 @@ export default function DegreeGroupInput({ degree_group_uuid, onSelect }: Degree
                                 
                             `}
                     >
-                        {t('Degree Group')}
+                        {t('Degree Group')} {required && <span className='text-destructive'>*</span>}   
                     </FormLabel>
                     <FormMessage />
                 </FormItem>

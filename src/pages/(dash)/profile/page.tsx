@@ -15,7 +15,7 @@ import { CandidateExperience } from '@/models/candidate.experience';
 import { CandidateSkill } from '@/models/candidate.skill';
 import { Certificate } from '@/models/certificate';
 import { page, track } from '@/providers/analytics.service';
-import { profile } from '@/providers/logged-in/account.service';
+import { getNextRouteToCompleteProfile, profile } from '@/providers/logged-in/account.service';
 import { listWorkHistory } from '@/providers/logged-in/candidate.service';
 import { setUser } from '@/store/slices/userSlice';
 import { useAppDispatch } from '@/store/store';
@@ -67,12 +67,29 @@ const ProfilePage = () => {
     }, [workHistories]);
 */
 
+    const completeProfile = (user: Candidate) => {
+            
+        const nextRoute: string | undefined = getNextRouteToCompleteProfile(user);
+ 
+        if (nextRoute) {
+            router.push('/' + nextRoute);
+        } /*else {
+            router.push('/profile');
+        }*/
+    };
+
     function loadProfile() {
         
       setLoading(true);
 
       profile().then(res => {
+ 
         dispatch(setUser({ user: res }));
+
+        if (!res?.isProfileCompleted) {
+            completeProfile(res);
+        }
+
       }).finally(() => {
         setLoading(false);
       });

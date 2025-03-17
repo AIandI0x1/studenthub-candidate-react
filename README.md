@@ -210,3 +210,25 @@ https://raw.githubusercontent.com/sangam14/dockercheatsheets/master/dockercheats
 # google analytics 
 
 https://www.ultimateakash.com/blog-details/Ii1DRGAKYAo=/How-To-Integrate-Google-Analytics-in-Angular-2022
+
+# profile buildung route direction 
+
+- email 
+- phone-number
+- dob
+- gender
+- nationality
+- area
+- personal-info-complete
+- educations
+- skills
+- experience
+- education-complete
+- driver-license
+- personal-photo
+- about-yourself
+- objective
+- video
+- civil-id
+- preferred-time
+- complete

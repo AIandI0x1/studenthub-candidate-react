@@ -39,8 +39,8 @@ export default function AboutYourselfPage() {
 
   const formSchema = z.object({
     candidate_intro: z.string({
-          required_error: t('Please add introduction note')
-      })
+      required_error: t('Please add introduction note')
+    }).min(1, t('Please add introduction note'))
   })
   
   // 1. Define your form.
@@ -129,9 +129,10 @@ export default function AboutYourselfPage() {
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 max-w-[560px] m-auto mb-[100px]">
   
             <FormTextarea
-              label=""
+              required={true}
+              label={t("Small brief about yourself")}
               name="candidate_intro"
-              placeholder={t("Small brief about yourself")}
+              placeholder=""
               form={form as any}
             />
  

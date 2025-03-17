@@ -183,6 +183,14 @@ export default function AreaPage() {
  
     if (query.length == 0) {
       setPlaces([]);
+
+      form.setValue('area_uuid', ""); 
+      form.trigger('area_uuid');
+      form.setValue('latitude', "");
+      form.trigger('latitude');
+      form.setValue('longitude', "");
+      form.trigger('longitude');
+      
       return;
     }
 
@@ -385,6 +393,7 @@ export default function AreaPage() {
                     name="query"
                     //label="Profile Url"
                     form={form as any}
+                    required={true}
                     type="text"
                     label={getPlaceholderText()}
                     autoComplete="off"

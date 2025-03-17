@@ -24,9 +24,10 @@ import { filterCountries } from "@/providers/country.service";
 interface NationalityInputProps {
     selectedCountry: any;
     onSelect: (country: any) => void;
+    required?: boolean;
 }
 
-export default function NationalityInput({ selectedCountry, onSelect }: NationalityInputProps) {
+export default function NationalityInput({ selectedCountry, onSelect, required = false }: NationalityInputProps) {
 
     const [open, setOpen] = React.useState(false)
     const [loading, setLoading] = useState(false);
@@ -85,7 +86,7 @@ export default function NationalityInput({ selectedCountry, onSelect }: National
                                 
                             `}
                     >
-                        {t('Nationality')}
+                        {t('Nationality')} {required && <span className='text-destructive'>*</span>}
                     </FormLabel>
                     <FormMessage />
                 </FormItem>

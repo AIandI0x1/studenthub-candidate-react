@@ -57,16 +57,16 @@ export default function VerifyEmailPage() {
   const formSchema = z.object({
     c1: z.string({
       required_error: t('Please enter code'),
-    }),
+    }).min(1, t('Please enter code')),
     c2: z.string({
       required_error: t('Please enter code'),
-    }),
+    }).min(1, t('Please enter code')),
     c3: z.string({
       required_error: t('Please enter code'),
-    }),
+    }).min(1, t('Please enter code')),
     c4: z.string({
       required_error: t('Please enter code'),
-    })
+    }).min(1, t('Please enter code')),
   })
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -158,9 +158,9 @@ export default function VerifyEmailPage() {
 
         if (res.isProfileCompleted) {
           router.push('/');
-        } else if (query.get('fromProfile'))
+        } else if (query.get('fromProfile')) {
           router.push('/profile');
-        else {
+        } else {
           router.push('/phone-number');
         }
 

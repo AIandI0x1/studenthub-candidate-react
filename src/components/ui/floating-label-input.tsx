@@ -6,7 +6,8 @@ import { useTranslation } from "react-i18next"
 
 interface FloatingLabelInputProps {
   label: string,
-  field?: ControllerRenderProps<FieldValues, string>
+  field?: ControllerRenderProps<FieldValues, string>,
+  required?: boolean
 }
 
 /**
@@ -16,7 +17,7 @@ interface FloatingLabelInputProps {
  * @returns 
  */
 
-export default function FloatingLabelInput({ label, field}: FloatingLabelInputProps) {
+export default function FloatingLabelInput({ label, field, required = false}: FloatingLabelInputProps) {
 
   const { t } = useTranslation();
   
@@ -27,7 +28,7 @@ export default function FloatingLabelInput({ label, field}: FloatingLabelInputPr
       peer-focus-visible:-translate-y-10 peer-focus-visible:text-xs 
       peer-focus:-translate-y-10 peer-focus:text-xs 
       ">
-        {t(label)}
+        {t(label)} {required && <span className='text-destructive'>*</span>}
       </FormLabel>
       <FormControl className='peer block m-0 border-none h-[72px] px-[20px] py-[24px]'>
         <Input 

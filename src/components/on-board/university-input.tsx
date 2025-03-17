@@ -24,9 +24,10 @@ import { useTranslation } from "react-i18next";
 interface NationalityInputProps {
     university_id?: number;
     onSelect: (university: any) => void;
+    required?: boolean;
 }
 
-export default function NationalityInput({ university_id, onSelect }: NationalityInputProps) {
+export default function NationalityInput({ university_id, onSelect, required = false }: NationalityInputProps) {
 
     const [selectedUniversity, setSelectedUniversity] = useState(null);
 
@@ -96,7 +97,7 @@ export default function NationalityInput({ university_id, onSelect }: Nationalit
                                 
                             `}
                     >
-                        {t('University')}
+                        {t('University')} {required && <span className='text-destructive'>*</span>}
                     </FormLabel>
                     <FormMessage />
                 </FormItem>

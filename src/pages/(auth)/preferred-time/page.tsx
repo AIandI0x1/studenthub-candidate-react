@@ -41,7 +41,7 @@ export default function PreferredTimePage() {
   const formSchema = z.object({
     preferred_time: z.string({
           required_error: t('Please add preferred time to contact you.')
-      })
+      }).min(1, t('Please add preferred time to contact you.'))
   })
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -131,6 +131,7 @@ export default function PreferredTimePage() {
               label="Preferred Time"
               form={form as any}
               type="text"
+              required={true}
             />
  
             <SubmitButton disabled={!form.formState.isValid || loading } loading={loading}></SubmitButton>

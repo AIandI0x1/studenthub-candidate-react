@@ -22,7 +22,7 @@ import { useTranslation } from 'react-i18next';
 const formSchema = z.object({
     reason: z.string({
         required_error: t('Please mention the reason.')
-    })
+    }).min(1, t('Please mention the reason.'))
 });
 
 interface IApply {
@@ -90,6 +90,7 @@ export default function Apply({ job, seen_at, onClose }: IApply) {
                         className="space-y-4">
 
                         <FormTextarea
+                            required={true}
                             name="reason"
                             label="E.g: Talk about your skills and what you can offer..."
                             form={form as any}

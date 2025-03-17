@@ -21,7 +21,8 @@ interface FormInputProps {
   helper?: string,
   inputDir?: string,
   onFocus?: () => void, 
-  onChange?: (e: any) => void,
+  onChange?: (e: any) => void,  
+  required?: boolean    
 }
 
 export function FormSelect({
@@ -32,7 +33,8 @@ export function FormSelect({
   options,
   inputDir = i18n.language == "ar"? "rtl": "ltr",
   onFocus, 
-  onChange
+  onChange,
+  required = false
 }: FormInputProps) {
   const id = useId()
 
@@ -91,7 +93,7 @@ export function FormSelect({
               ${fieldState.error ? 'text-destructive' : 'text-gray-500 peer-focus:text-primary'}`}
               
           >
-            {t(label)}
+            {t(label)} {required && <span className='text-destructive'>*</span>}
           </FormLabel>
           </div>
           <FormDescription dir="ltr" className='mt-[8px]'>

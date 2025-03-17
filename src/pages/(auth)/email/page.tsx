@@ -44,11 +44,13 @@ export default function EmailPage() {
   // 1. Define your form.
 
   const formSchema = z.object({
-    email: z.string().email(t('Please enter valid email address.')),
-    password: z.string({
-      required_error: query.get("fromProfile") ? undefined : 
-       t("Please enter password")
-    })
+    email: z.string({
+      required_error: t('Please enter email address')
+    }).email(t('Please enter valid email address.'))
+    .min(1, t('Please enter email address')),
+    password: query.get("fromProfile") ? z.string().optional().nullable() : z.string({
+      required_error: t("Please enter password")
+    }).min(1, t("Please enter password")),
   })
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -111,9 +113,10 @@ export default function EmailPage() {
 
   function onValidCaptcha(values: any) {
 
-    const fromProfile = query.get('fromProfile');
+    const fromProfile = parseInt(query.get('fromProfile') || '0');
 
-    const action = fromProfile ? updateEmail(values.email): createAccount(values);
+    const action = fromProfile ? updateEmail(values.email): 
+      createAccount(values);
 
     action.then(res => {
 
@@ -123,7 +126,11 @@ export default function EmailPage() {
           token: res.unVerifiedToken
         }));
       
-        router.push('/verify-email/' + values.email + '?fromProfile=' + fromProfile);
+        const url = fromProfile == 1 ? 
+          '/verify-email/' + values.email + '?fromProfile=' + fromProfile : 
+          '/verify-email/' + values.email;
+
+        router.push(url);
 
       } else if (res.operation === 'error') {
 
@@ -172,6 +179,7 @@ export default function EmailPage() {
               label="Email Address"
               form={form as any}
               type="email"
+              required={true}
             />
 
             { !query.get('fromProfile') && <FormInput
@@ -179,6 +187,7 @@ export default function EmailPage() {
               label="Password"
               form={form as any}
               type="password"
+              required={true}
             /> }
  
             <SubmitButton disabled={!form.formState.isValid || loading } loading={loading}></SubmitButton>

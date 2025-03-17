@@ -22,7 +22,8 @@ interface FormInputProps {
   inputDir?: string,
   onFocus?: () => void,
   onChange?: () => void,
-  autoComplete?: string
+  autoComplete?: string,
+  required?: boolean
 }
 
 export function FormInput({
@@ -34,7 +35,8 @@ export function FormInput({
   inputDir = i18n.language == "ar"? "rtl": "ltr", 
   onFocus,
   onChange,
-  autoComplete = "on"
+  autoComplete = "on",
+  required = false
 }: FormInputProps) {
   const id = useId()
 
@@ -95,7 +97,7 @@ export function FormInput({
 
               ${fieldState.error ? 'text-destructive' : 'text-gray-500 peer-focus:text-primary'}`}
           >
-            {t(label)}
+            {t(label)} {required && <span className='text-destructive'>*</span>}  
           </FormLabel>
           </div>
           <FormDescription className='mt-[8px]'>

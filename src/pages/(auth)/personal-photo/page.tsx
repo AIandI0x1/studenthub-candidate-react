@@ -46,7 +46,7 @@ export default function PersonalPhotoPage() {
   const formSchema = z.object({
     candidate_personal_photo: z.string({
         required_error: t("Please upload photo.")
-    }),
+    }).min(1, t('Please upload photo.')),
     candidate_personal_photo_url: z.string(),
   })
 

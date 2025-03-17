@@ -47,8 +47,12 @@ export default function LoginTwoStepPage() {
   const { t } = useTranslation();
 
   const formSchema = z.object({
-    token: z.string().min(1, { message: t("Please enter the code sent to your email") }),
-    otp: z.string().min(1, { message: t("Please enter the code sent to your email") }),
+    token: z.string({
+      required_error: t("Please enter the code sent to your email")
+    }).min(1, { message: t("Please enter the code sent to your email") }),
+    otp: z.string({
+      required_error: t("Please enter the code sent to your email")
+    }).min(1, { message: t("Please enter the code sent to your email") }),
   })
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -164,6 +168,7 @@ export default function LoginTwoStepPage() {
                 label="OTP"
                 form={form as any}
                 type="text"
+                required={true}
               />
  
               <SubmitButton disabled={!form.formState.isValid || loading } loading={loading}></SubmitButton>
