@@ -37,7 +37,7 @@ export default function ForgotPasswordPage() {
   const formSchema = z.object({
     email: z.string({
       required_error: t('Please add email address.')
-      })
+      }).min(1, t('Please add email address.'))
   })
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -102,6 +102,7 @@ export default function ForgotPasswordPage() {
               label="Email Address"
               form={form as any}
               type="email"
+              required={true}
             />
  
             <SubmitButton disabled={!form.formState.isValid || loading } loading={loading}></SubmitButton>

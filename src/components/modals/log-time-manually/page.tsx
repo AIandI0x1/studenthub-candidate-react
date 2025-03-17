@@ -34,16 +34,18 @@ const timeComparisonValidator = (data: any) => {
 const formSchema = z.object({
   start_time: z.string({
     required_error: t('Please add start time.')
-  }),
+  }).min(1, t('Please add start time.')),
   end_time: z.string({
     required_error: t('Please add end time.')
-  }),
+  }).min(1, t('Please add end time.')),
   note: z.string({
     required_error: t('Please add notes.')
-  }),
+  }).min(1, t('Please add notes.')) ,
   date: z.date({
     required_error:t( 'Please add date.')
-  }).max(new Date(), {
+  })
+  //.min( new Date(new Date().setDate(new Date().getDate() - 1)), t('Please add date.'))
+  .max(new Date(), {
     message: t("Can not add future dates."),
   })
  // dateFormatted: z.string({
@@ -138,12 +140,14 @@ const LogTimeManuallyPage = ({ onClose }: {onClose: any}) => {
       
               <div className="grid grid-cols-2 gap-4 mb-4">
                 <FormTimeInput
+                    required={true}
                     name="start_time"
                     label="Check-in"
                     form={form as any}
                   />
                
                 <FormTimeInput
+                    required={true}
                     name="end_time"
                     label="Check-out"
                     form={form as any}
@@ -151,12 +155,14 @@ const LogTimeManuallyPage = ({ onClose }: {onClose: any}) => {
               </div>
 
               <FormTextarea
+                required={true}
                 name="note"
                 label="Notes"
                 form={form as any}
               />
  
               <FormDateTimeInput
+                required={true}
                 name="date"
                 label="Select date"
                 form={form as any}

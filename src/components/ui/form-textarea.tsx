@@ -22,7 +22,8 @@ interface FormInputProps {
   helper?: string,
   inputDir?: string,
   onFocus?: () => void,
-  autoComplete?: string
+  autoComplete?: string,
+  required?: boolean
 }
 
 export function FormTextarea({
@@ -33,8 +34,10 @@ export function FormTextarea({
   placeholder = " ",
   inputDir = i18n.language == "ar"? "rtl": "ltr",
   onFocus,
-  autoComplete = "on"
+  autoComplete = "on",
+  required = false
 }: FormInputProps) {
+
   const id = useId()
 
   const { t } = useTranslation();
@@ -91,7 +94,7 @@ export function FormTextarea({
 
               ${fieldState.error ? 'text-destructive' : 'text-gray-500 peer-focus:text-primary'}`}
           >
-            {t(label)}
+            {t(label)} {required && <span className='text-destructive inline-block'>*</span>}    
           </FormLabel>
           </div>
           <FormDescription dir="ltr" className='mt-[8px]'>

@@ -25,7 +25,7 @@ import { alertDialog } from '@/hooks/use-alert-dialog';
 const formSchema = z.object({
   reason: z.string({
     required_error: t('Please mention the reason.')
-  })
+  }).min(1, t('Please mention the reason.'))
 });
   
 const WorkLogAppealPage = ({ onClose, candidate_working_hour_uuid }: {onClose: any, candidate_working_hour_uuid: string}) => {
@@ -113,6 +113,7 @@ const WorkLogAppealPage = ({ onClose, candidate_working_hour_uuid }: {onClose: a
                 </div>
 
               <FormTextarea
+                required={true}
                 name="reason"
                 label="Enter your appeal reason here..."
                 form={form as any}

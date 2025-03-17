@@ -38,10 +38,10 @@ const UpdateBankPage = () => {
   const formSchema = z.object({
     benef_name: z.string({
       required_error: t('Please add beneficiary name.')
-    }),
+    }).min(1, t('Please add beneficiary name.')),
     iban: z.string({
       required_error: t('Please add IBAN.')
-    }),
+    }).min(1, t('Please add IBAN.')),
   });
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -164,6 +164,7 @@ const UpdateBankPage = () => {
               label="Beneficiary Name"
               form={form as any}
               type="text"
+              required={true}
             />
 
             <FormInput
@@ -171,6 +172,7 @@ const UpdateBankPage = () => {
               label="Bank IBAN"
               form={form as any}
               type="text"
+              required={true}
             />
  
             <SubmitButton disabled={!form.formState.isValid || loading } loading={loading}></SubmitButton>

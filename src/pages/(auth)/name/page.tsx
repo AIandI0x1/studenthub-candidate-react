@@ -40,14 +40,17 @@ export default function NamePage() {
   // 1. Define your form.
 
   const formSchema = z.object({
-    name_en: z.string()
-    .refine((data: any) => {
+    name_en: z.string({
+      required_error: t("Please enter your first and last name.")
+    }).refine((data: any) => {
       const nameParts = data.split(' ');
       return nameParts.length >= 2 && nameParts[0] && nameParts[1];
     }, {
       message: t("Please enter your first and last name."),
     }),  
-    name_ar: z.string().refine((data: any) => {
+    name_ar: z.string({
+      required_error: t("Please enter your first and last name in Arabic.")
+    }).refine((data: any) => {
       const nameParts = data.split(' ');
       return nameParts.length >= 2 && nameParts[0] && nameParts[1];
     }, {
@@ -168,6 +171,7 @@ export default function NamePage() {
             name="name_en"
             label="Name in English"
             form={form as any}
+            required={true}
           />
 
           <FormInput 
@@ -176,6 +180,7 @@ export default function NamePage() {
             form={form as any}
             helper="It should match what’s on your civil ID."
             inputDir="rtl"
+            required={true}
           />
 
           <SubmitButton disabled={!form.formState.isValid || loading } loading={loading}>

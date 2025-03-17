@@ -6,7 +6,6 @@
  */
 
 import { store } from '@/store/store';
-import { ca } from 'date-fns/locale';
 import mixpanel from 'mixpanel-browser';
 
 
@@ -17,6 +16,8 @@ declare global {
   }
 }
 
+let distinct_id: string;
+
 export function setMixpanel() {
 
   if (typeof window == 'undefined') {
@@ -25,7 +26,14 @@ export function setMixpanel() {
 
   if (import.meta.env.VITE_MIXPANEL_KEY) { 
     try {
-      mixpanel.init(import.meta.env.VITE_MIXPANEL_KEY+ "");
+      mixpanel.init(import.meta.env.VITE_MIXPANEL_KEY+ "", {
+       // persistence: 'localStorage',
+       // debug: true,
+        loaded: (mixpanel) => {
+          console.log('mixpanel loaded');
+          distinct_id = mixpanel.get_distinct_id();
+        }
+      });
     } catch (error) { 
       console.log("mixpanel error", error);
     }
@@ -42,6 +50,7 @@ export function identify(id: string, params: any) {
   if (typeof window == 'undefined') {
     return;
   }
+
   //segment
 
   if (window.analytics)
@@ -52,10 +61,23 @@ export function identify(id: string, params: any) {
 
   //mixpanel 
 
-  try {
-    mixpanel.identify(id);
+  identifyMixpanel(id, params);
+}
 
+function identifyMixpanel(id: string, params: any) {
+
+  if (!distinct_id) {
+    setTimeout(() => {
+      identifyMixpanel(id, params);
+    }, 100);
+    return;
+  }
+
+  try {
+    mixpanel.identify(distinct_id);
     mixpanel.people.set(params);
+
+    console.log("mixpanel identify", distinct_id, params);
   } catch (error) { 
     console.log("mixpanel error", error);
   }

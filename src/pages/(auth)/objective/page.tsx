@@ -40,7 +40,7 @@ export default function ObjectivePage() {
   const formSchema = z.object({
     objective: z.string({
         required_error: t('Please add objective note')
-    })
+    }).min(1, t('Please add objective note'))
   })
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -127,9 +127,10 @@ export default function ObjectivePage() {
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 max-w-[560px] m-auto mb-[100px]">
 
           <FormTextarea
-            label=""
+          required={true}
+            label={t("Small brief about yourself")}
             name="objective"
-            placeholder={t("Small brief about yourself")}
+            placeholder=""
             form={form as any}
           />
 

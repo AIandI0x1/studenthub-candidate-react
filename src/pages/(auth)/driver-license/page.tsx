@@ -25,7 +25,7 @@ export default function DriverLicensePage() {
   const [loading, setLoading] = useState(false);
   const { user } = useAppSelector(state => state.user);
 
-  const [haveLicence, setHaveLicence] = useState<number | undefined>(user?.candidate_driving_license || undefined);
+  const [haveLicense, setHaveLicense] = useState<number | undefined>(user?.candidate_driving_license || undefined);
   const dispatch = useAppDispatch();
   const router = useIonRouter();
   
@@ -33,9 +33,9 @@ export default function DriverLicensePage() {
 
   useEffect(() => {
 
-    page('Driver Licence Page');
+    page('Driver License Page');
 
-    setHaveLicence(user?.candidate_driving_license || 0);
+    setHaveLicense(user?.candidate_driving_license || 0);
 
     /*if (match && match.params.fromProfile)
       //router.prefetch('/profile');
@@ -43,7 +43,7 @@ export default function DriverLicensePage() {
       //router.prefetch('/personal-photo');*/
 
     return () => {
-      track('page_exit', { page: 'Driver Licence Page' });
+      track('page_exit', { page: 'Driver License Page' });
     }
   }, []);
 
@@ -56,7 +56,7 @@ export default function DriverLicensePage() {
 
       profile().then(res => {
         dispatch(setUser({ user: res }));
-        setHaveLicence(res.candidate_driving_license || 0);
+        setHaveLicense(res.candidate_driving_license || 0);
       }).finally(() => {
         setLoading(false);
       });
@@ -65,18 +65,18 @@ export default function DriverLicensePage() {
 
   function onSubmit() {
 
-    if (!haveLicence) {
+    if (!haveLicense) {
       return;
     }
 
     setLoading(true);
-    updateDrivingLicense(haveLicence).then((res: any) => {
+    updateDrivingLicense(haveLicense).then((res: any) => {
         if (res.operation == 'success') {
 
           dispatch(setUser({ 
             user: {
               ...user,
-              candidate_driving_license: haveLicence
+              candidate_driving_license: haveLicense
             }
           }));
 
@@ -107,24 +107,24 @@ export default function DriverLicensePage() {
         <div className="max-w-[650px] m-auto">
             <div className="flex items-center justify-center">
             
-                <button onClick={ () => setHaveLicence(1) } className={ `flex-[1_0_0] flex-col xs:me-[8px] sm:me-[16px] px-6 py-5 rounded-2xl border-solid
+                <button onClick={ () => setHaveLicense(1) } className={ `flex-[1_0_0] flex-col xs:me-[8px] sm:me-[16px] px-6 py-5 rounded-2xl border-solid
                     
-                    ${haveLicence == 1? 'border-[color:var(--Blue-Tint-Main,#4C70F2)] [background:var(--Blue-Tint-1,#F5F7FF)] border-2' :
+                    ${haveLicense == 1? 'border-[color:var(--Blue-Tint-Main,#4C70F2)] [background:var(--Blue-Tint-1,#F5F7FF)] border-2' :
                         'border border-[color:var(--Neutral-30,#EEEEF0)] background:var(--Neutral-0,#FFF)]' }
 
                     `}>
                     {t("Yes")}
                 </button>
-                <button onClick={ () => setHaveLicence(2) } className={ `flex-[1_0_0] flex-col xs:ms-[8px] xs:me-[8px] sm:ms-[16px] sm:me-[16px] px-6 py-5 rounded-2xl border-solid
+                <button onClick={ () => setHaveLicense(2) } className={ `flex-[1_0_0] flex-col xs:ms-[8px] xs:me-[8px] sm:ms-[16px] sm:me-[16px] px-6 py-5 rounded-2xl border-solid
                     
-                    ${haveLicence == 2 ? 'border-[color:var(--Blue-Tint-Main,#4C70F2)] [background:var(--Blue-Tint-1,#F5F7FF)] border-2' :
+                    ${haveLicense == 2 ? 'border-[color:var(--Blue-Tint-Main,#4C70F2)] [background:var(--Blue-Tint-1,#F5F7FF)] border-2' :
                         'border border-[color:var(--Neutral-30,#EEEEF0)] background:var(--Neutral-0,#FFF)]' }
                     `}>
                     {t("No")}
                 </button>
             </div>
 
-            <SubmitButton onClick={onSubmit} disabled={!haveLicence || loading} loading={loading}></SubmitButton>
+            <SubmitButton onClick={onSubmit} disabled={!haveLicense || loading} loading={loading}></SubmitButton>
         </div>
         <OnboardFooter></OnboardFooter>
       </AuthLayout>

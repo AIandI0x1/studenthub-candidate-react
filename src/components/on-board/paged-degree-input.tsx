@@ -19,10 +19,11 @@ interface DegreeInputProps {
     selectedDegree: any | null;
     onSelect: (degree: any) => void;
     name: string;
+    required?: boolean;
     form: any;
 }
 
-export default function PagedDegreeInput({ selectedDegree, onSelect, name, form }: DegreeInputProps) {
+export default function PagedDegreeInput({ selectedDegree, onSelect, name, form, required = false }: DegreeInputProps) {
 
     const [open, setOpen] = React.useState(false)
     const [loading, setLoading] = useState(false);
@@ -86,6 +87,7 @@ export default function PagedDegreeInput({ selectedDegree, onSelect, name, form 
                     label={ form.getValues(name) == "" ? "Search Degree" : "Degree"}
                     form={form as any}    
                     autoComplete="off"
+                    required={required} 
                     ></FormInput>
                  
                  { /** absolute */}

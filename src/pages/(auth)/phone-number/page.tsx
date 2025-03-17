@@ -27,9 +27,6 @@ import { useTranslation } from "react-i18next";
 import Loading from "./loading";
 import AuthLayout from "../layout";
 
-const formSchema = z.object({
-  phone: z.string()
-})
 
 export default function PhoneNumberPage() {
 
@@ -41,6 +38,12 @@ export default function PhoneNumberPage() {
 
   const { t } = useTranslation();
 
+  const formSchema = z.object({
+    phone: z.string({
+      required_error: t('Please enter phone number')
+    }).min(1, t('Please enter phone number'))   
+  })
+  
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     mode: "all",
@@ -132,6 +135,7 @@ export default function PhoneNumberPage() {
                 render={({ field }) => (
                   <FormItem className="relative">
                     <PhoneInput
+                      required={true}
                       value={form.watch('phone')}
                       onChange={handlePhoneChange}
                       defaultCountry="KW"

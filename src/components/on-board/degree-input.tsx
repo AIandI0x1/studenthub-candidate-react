@@ -25,9 +25,10 @@ interface DegreeInputProps {
     degree_uuid?: string;
     selectedDegreeGroup?: any;
     onSelect: (degree: any) => void;
+    required?: boolean;
 }
 
-export default function DegreeInput({ degree_uuid, selectedDegreeGroup, onSelect }: DegreeInputProps) {
+export default function DegreeInput({ degree_uuid, selectedDegreeGroup, onSelect, required = false }: DegreeInputProps) {
 
     const [open, setOpen] = React.useState(false)
     const [loading, setLoading] = useState(false);
@@ -96,7 +97,7 @@ export default function DegreeInput({ degree_uuid, selectedDegreeGroup, onSelect
                                 
                             `}
                     >
-                        Degree
+                        {t('Degree')} {required && <span className='text-destructive'>*</span>}
                     </FormLabel>
                     <FormMessage />
                 </FormItem>

@@ -139,9 +139,9 @@ export async function initializeApp(urlParams: any) {
 
     includeOneSignalJs();
 
-    setTimeout(() => {
+    //setTimeout(() => {
       setMixpanel();
-    }, 1000);
+    //}, 1000);
   }
 
   /**

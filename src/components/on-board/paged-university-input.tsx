@@ -19,9 +19,10 @@ interface NationalityInputProps {
     onSelect: (university: any) => void;
     name: string;
     form: any;
+    required?: boolean;
 }
 
-export default function PagedUniversityInput({ selectedUniversity, onSelect, name, form }: NationalityInputProps) {
+export default function PagedUniversityInput({ selectedUniversity, onSelect, name, form, required = false    }: NationalityInputProps) {
 
     const [open, setOpen] = React.useState(false)
     const [loading, setLoading] = useState(false);
@@ -85,6 +86,7 @@ export default function PagedUniversityInput({ selectedUniversity, onSelect, nam
                     label={ form.getValues(name) == "" ? "Search University" : "University"}
                     form={form as any}    
                     autoComplete="off"
+                    required={required}
                     ></FormInput>
                  
                  { /** absolute */}

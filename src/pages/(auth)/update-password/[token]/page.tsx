@@ -47,7 +47,7 @@ const { t } = useTranslation();
 const formSchema = z.object({
   password: z.string({
     required_error: t('Please add new password.')
-  })
+  }).min(1, t('Please add new password.'))
 })
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -123,6 +123,7 @@ const formSchema = z.object({
               label="Password"
               form={form as any}
               type="password"
+              required={true}
             />
  
             <SubmitButton disabled={!form.formState.isValid || loading } loading={loading}></SubmitButton>

@@ -40,7 +40,9 @@ export default function SkillsPage() {
   // 1. Define your form.
 
   const formSchema = z.object({
-    skills: z.array(z.string()).min(1, {
+    skills: z.array(z.string({
+      required_error: t("Please add at least one skill")
+    })).min(1, {
       message: t("Please add at least one skill")
     })
   })

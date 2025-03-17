@@ -47,16 +47,29 @@ export default function EducationsPage() {
 
   const formSchema = z.object({
     candidateEducations: z.array(z.object({
-      university: z.string(),
-      degree: z.string(),
-      major: z.string(),
-
+      university: z.string({
+        required_error: t('University is required')
+      }).min(1, t('University is required')),
+      degree: z.string({
+        required_error: t('Degree is required')
+      }).min(1, t('Degree is required')),
+      major: z.string({
+        required_error: t('Major is required')
+      }).min(1, t('Major is required')),
       education_uuid: z.string().nullable(),
-      graduation_year: z.coerce.number().min(1900)
+      graduation_year: z.coerce.number({
+        required_error: t('Year of Graduation is required')
+      }).min(1900)
         .max((new Date()).getFullYear()).nullable().optional(), //.min(1, 'End year is required'),
-      university_id: z.coerce.number().min(1, t("University is required")),
-      degree_uuid: z.string(),
-      major_uuid: z.string(),
+      university_id: z.coerce.number({
+        required_error: t('University is required')
+      }).min(1, t("University is required")),
+      degree_uuid: z.string({
+        required_error: t('Degree is required')
+      }).min(1, t('Degree is required')),
+      major_uuid: z.string({
+        required_error: t('Major is required')
+      }).min(1, t('Major is required')) ,
       is_currently_studying: z.boolean(),
     }))
   })
@@ -123,7 +136,7 @@ export default function EducationsPage() {
       university_id: edu.university?.university_id || 0,
       degree_uuid: edu.degree?.degree_uuid || '',
       major_uuid: edu.major?.major_uuid || '',
-      is_currently_studying: edu.is_currently_studying || false,
+      is_currently_studying: edu.is_currently_studying || !edu.graduation_year || false,
     }));
   }
 
@@ -172,6 +185,7 @@ export default function EducationsPage() {
               <div key={field.id} className="space-y-4">
 
                 <PagedUniversityInput
+                  required={true}
                   selectedUniversity={form.getValues(`candidateEducations.${index}.university`)}
                   onSelect={(university: any) => {
                     if (university) {
@@ -202,11 +216,13 @@ export default function EducationsPage() {
                   }}
                   name={`candidateEducations.${index}.degree`}
                   form={form as any}
+                  required={true}
                 />  
   
                 <div className="flex">
                   <div className="flex-1 me-[16px]">
                     <PagedMajorInput
+                      required={true}
                       selectedMajor={form.getValues(`candidateEducations.${index}.major`)}
                       
                       onSelect={(major: any) => {

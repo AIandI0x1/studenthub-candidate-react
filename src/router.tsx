@@ -10,7 +10,7 @@ import LoadingCivilId from './pages/(auth)/civil-id/loading';
 import LoadingComplete from './pages/(auth)/complete/loading';
 import LoadingContact from './pages/(auth)/contact/loading';
 import LoadingDob from './pages/(auth)/dob/loading';
-import LoadingDriverLicence from './pages/(auth)/driver-licence/loading';
+import LoadingDriverLicense from './pages/(auth)/driver-license/loading';
 import LoadingEducations from './pages/(auth)/educations/loading';
 import LoadingEmail from './pages/(auth)/email/loading';
 import LoadingExperiences from './pages/(auth)/experience/loading';
@@ -66,7 +66,7 @@ const CivilIdPage = React.lazy(() => import('./pages/(auth)/civil-id/page'));
 const DobPage = React.lazy(() => import('./pages/(auth)/dob/page'));
 const CompletePage = React.lazy(() => import('./pages/(auth)/complete/page'));
 const ContactPage = React.lazy(() => import('./pages/(auth)/contact/page'));
-const DriverLicensePage = React.lazy(() => import('./pages/(auth)/driver-licence/page'));
+const DriverLicensePage = React.lazy(() => import('./pages/(auth)/driver-license/page'));
 const EducationCompletedPage = React.lazy(() => import('./pages/(auth)/education-complete/page'));
 const EducationsPage = React.lazy(() => import('./pages/(auth)/educations/page'));
 const EmailPage = React.lazy(() => import('./pages/(auth)/email/page'));
@@ -218,7 +218,7 @@ export default function RouterComponent() {
               </Suspense>
             </Route>
             <Route exact={true} path="/driver-license">
-              <Suspense fallback={<LoadingDriverLicence />}>
+              <Suspense fallback={<LoadingDriverLicense />}>
                 <DriverLicensePage />
               </Suspense>
             </Route>

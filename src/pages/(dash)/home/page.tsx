@@ -3,7 +3,7 @@
 
 import { useEffect, useState } from 'react';
 import { useIonRouter } from '@ionic/react';
-import { profile } from '@/providers/logged-in/account.service';
+import { getNextRouteToCompleteProfile, profile } from '@/providers/logged-in/account.service';
 //import { workHistory } from '@/providers/logged-in/candidate.service';
 import AccountStatus from '@/components/app/account-status';
 import { useAppDispatch, useAppSelector } from '@/store/store';
@@ -20,7 +20,7 @@ import { Link } from 'react-router-dom';
 import { dateTimeFormat } from '@/utils/common';
 import LoadingHomePage from './loading';
 import DashLayout from '../layout';
-
+import { Candidate } from '@/models/candidate';
 
 const HomePage = () => {
     
@@ -37,8 +37,11 @@ const HomePage = () => {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        if (!user)
+        if (!user) {
             loadProfile();
+        } else if (!user?.isProfileCompleted) {
+            completeProfile(user);
+        }
 
         loadWorkHistoryData();
         //setInvitationSubscription();
@@ -52,12 +55,19 @@ const HomePage = () => {
     }, []);
 
     const loadProfile = async () => {
+        
         setLoadingProfile(true);
+        
         try {
             const data = await profile();
+ 
             dispatch(setUser({
                 user: data
             }));
+
+            if (!data?.isProfileCompleted) {
+                completeProfile(data);
+            }
 
         } catch (error) {
             console.error(error);
@@ -75,42 +85,91 @@ const HomePage = () => {
         setWorkHistory(response);
     };
  
-    const completeProfile = () => {
-        console.log(user);
-        if (!user?.pendingField || user?.pendingField?.length == 0) {
+    const completeProfile = (user: Candidate) => {
+        
+        const nextRoute: string | undefined = getNextRouteToCompleteProfile(user);
+ 
+        if (nextRoute) {
+            router.push('/' + nextRoute);
+        } else {
+            router.push('/profile');
+        }
+
+        /*if (!user?.pendingField || user?.pendingField?.length == 0) {
             router.push('/profile');
         } else {
             switch(user?.pendingField[0]) {
-                case 'university':
-                    router.push('/education-complete');
-                    break;
-                case 'country':
-                    router.push('/area');
-                    break;
+                
                 case 'name':
                     router.push('/name');
                     break;
                 case 'Name Arabic':
                     router.push('/name');
                     break;
-                case 'gender':
-                    router.push('/gender');
-                    break;
-                case 'objective':
-                    router.push('/objective');
-                    break;
-                case 'personal photo':
-                    router.push('/personal-photo');
-                    break;
                 case 'email':
                     router.push('/email');
                     break;
+
                 case 'phone':
                     router.push('/phone-number');
                     break;
+
                 case 'birth date':
                     router.push('/dob');
+                    break;    
+
+                case 'gender':
+                    router.push('/gender');
                     break;
+
+                case 'nationality':
+                    router.push('/nationality');
+                    break;
+
+                case 'country':
+                    router.push('/area');
+                    break;
+
+                case 'location':
+                    router.push('/area');
+                    break;
+
+                case 'educations':
+                    router.push('/educations');
+                    break;
+
+                case 'university':
+                    router.push('/educations');
+                    break;
+
+                case 'skill':
+                    router.push('/skills');
+                    break;
+
+                case 'experience':
+                    router.push('/experience');
+                    break;
+
+                case 'driving license':
+                    router.push('/driving-license');
+                    break;
+
+                case 'personal photo':
+                    router.push('/personal-photo');
+                    break;
+
+                case 'objective':
+                    router.push('/objective');
+                    break;
+
+                case 'about-yourself':
+                    router.push('/about-yourself');
+                    break;
+
+                case 'video':
+                    router.push('/video');
+                    break;
+
                 case 'civil id':
                     router.push('/civil-id');
                     break;
@@ -123,23 +182,12 @@ const HomePage = () => {
                 case 'civil photo back':
                     router.push('/civil-id');
                     break;
-                case 'driving license':
-                    router.push('/driving-license');
-                    break;
-                case 'location':
-                    router.push('/area');
-                    break;
-                case 'experience':
-                    router.push('/experience');
-                    break;
-                case 'skill':
-                    router.push('/skills');
-                    break;
+
                 default:
                     router.push('/profile');
                     break;
             }
-        }
+        }*/
     };
 
     //todo: 
@@ -174,7 +222,7 @@ const HomePage = () => {
                         <CardContent>      
                             <p className="mt-[2px] mb-4 text-[#68687a] text-sm font-normal leading-tight">
                                 { t("Please complete your profile to start working with StudentHub.") }</p>
-                            <Button variant={'outline'} onClick={() => completeProfile()}>
+                            <Button variant={'outline'} onClick={() => completeProfile(user)}>
                                 { t("Complete profile") }
                             </Button>
                         </CardContent>

@@ -40,10 +40,10 @@ export default function ChangePasswordPage() {
   const formSchema = z.object({
     oldPassword: z.string({
         required_error: t('Please add old password.')
-    }),
+    }).min(1, t('Please add old password.')),
     newPassword: z.string({
         required_error: t('Please add new password.')
-    })
+    }).min(1, t('Please add new password.'))
   })
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -107,6 +107,7 @@ export default function ChangePasswordPage() {
               label="Old Password"
               form={form as any}
               type="text"
+              required={true}
             />
 
           <FormInput
@@ -114,6 +115,7 @@ export default function ChangePasswordPage() {
               label="New Password"
               form={form as any}
               type="text"
+              required={true}
             />
  
             <SubmitButton disabled={!form.formState.isValid || loading } loading={loading}></SubmitButton>
