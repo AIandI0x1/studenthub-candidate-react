@@ -1,5 +1,15 @@
 
 {
+    
+    "You are currently": "أنت حاليا",
+    "Candidate’s Job Seeking Status": "حالة البحث عن وظيفة للمتقدم",
+    "Adjust your preferences to control how and when we connect you with potential opportunities.": "قم بتعديل التفضيلات للتحكم في كيفية وأوقات الاتصال بك بالفرص المحتملة.",
+    "Not looking but open to offers": "لست مطلوب عمل ومفتوح للفرص",
+    "We will reach out to you about offers that match your preferences.": "سنتواصل معك لتقديم الفرص التي تناسب تفضيلاتك.",
+    "Not Looking and closed to offers": "لست مطلوب عمل ومغلق للفرص",
+    "Can manage assignees, review worked hours, and request for hire": "يمكن إدارة المتقدمين، مراجعة الساعات العملية، وطلب التعيين",
+    "Actively Looking for a Job": "مطلوب عمل حالي",
+    "We will reach out to you to offer and discuss job opportunities.": "سنتواصل معك لتقديم الفرص والمناقشة حول الوظائف.",
     "Previous": "سابق",
     "More pages": "أكثر صفحات",
     "Go to next page": "الذهاب إلى الصفحة التالية",

@@ -26,7 +26,7 @@ import { Suspense, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Loading from './loading';
 import DashLayout from '../layout';
-
+import JobSearchStatus from '@/components/app/job-search-status';
 
 const ProfilePage = () => { 
     const [loading, setLoading] = useState(false);
@@ -178,6 +178,8 @@ const ProfilePage = () => {
                                         </div>
                                     </div>
                                 </div>
+
+                                <JobSearchStatus candidate={user} />
 
                                 {user.certificates && user.certificates.length > 0 && <>
                                     <h5 className='text-[color:var(--Neutral-95,#23233D)] text-lg font-semibold leading-7 my-4'>
