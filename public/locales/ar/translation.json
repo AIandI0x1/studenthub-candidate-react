@@ -1,6 +1,11 @@
 
 {
-    
+    "Add Links to Your Profile": "إضافة روابط إلى الملف الشخصي",
+    "Add Link": "إضافة رابط",
+    "Update Link": "تحديث الرابط",
+    "Link Title": "عنوان الرابط",
+    "URL": "الرابط",
+    "Custom Links": "روابط مخصصة",
     "You are currently": "أنت حاليا",
     "Candidate’s Job Seeking Status": "حالة البحث عن وظيفة للمتقدم",
     "Adjust your preferences to control how and when we connect you with potential opportunities.": "قم بتعديل التفضيلات للتحكم في كيفية وأوقات الاتصال بك بالفرص المحتملة.",

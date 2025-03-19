@@ -11,7 +11,7 @@ const _accountEndpoint = '/account';
  * load profile details
  */
 export async function profile(): Promise<any> {
-  const url = _accountEndpoint + '/profile?expand=certificates,certificates.exam,certificates.store,certificates.company,candidateTags,' +
+  const url = _accountEndpoint + '/profile?expand=candidateLinks,certificates,certificates.exam,certificates.store,certificates.company,candidateTags,' +
     'candidateEducations,candidateEducations.major,candidateEducations.university,' +
     'candidateEducations.degree,isWorking,bank,area,isProfileCompleted,nationality,country,university,candidateSkills,candidateExperiences,totalInterviewScheduled';
     const response = await axios.get(url);

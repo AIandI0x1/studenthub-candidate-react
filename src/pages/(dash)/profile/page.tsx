@@ -7,7 +7,7 @@ import { Name } from '@/components/app/profile/name';
 import { PersonalDdetail } from '@/components/app/profile/personal-detail';
 import { Segments } from '@/components/app/profile/segments';
 import { WorkHistoryComponent } from '@/components/app/profile/work-history';
- 
+
 import { Candidate } from '@/models/candidate';
 import { CandidateEducation } from '@/models/candidate-education';
 import { CandidateWorkHistory } from '@/models/candidate-work-history';
@@ -27,11 +27,19 @@ import { useTranslation } from 'react-i18next';
 import Loading from './loading';
 import DashLayout from '../layout';
 import JobSearchStatus from '@/components/app/job-search-status';
+import { CandidateLink } from '@/models/candidate-link';
+import CandidateLinkComponent from '@/components/app/profile/candidate-link';
+import { IonIcon } from '@ionic/react';
+import { addOutline } from 'ionicons/icons';
+import { DialogTrigger } from '@/components/ui/dialog';
+import { Dialog } from '@/components/ui/dialog';
+import { DialogContent } from '@/components/ui/dialog';
+import { CandidateLinkForm } from '@/components/app/profile/candidate-link-form';
 
 const ProfilePage = () => { 
     const [loading, setLoading] = useState(false);
     const [segment, setSegment] = useState("work-details");
-
+    const [open, setOpen] = useState(false);
     const [workHistories, setWorkHistories] = useState<CandidateWorkHistory[]>([]);
     const [currentAssignments, setCurrentAssignments] = useState<CandidateWorkHistory[]>([]);   
     const { user } = useAppSelector(state => state.user) as { user: Candidate };
@@ -180,6 +188,28 @@ const ProfilePage = () => {
                                 </div>
 
                                 <JobSearchStatus candidate={user} />
+
+                                <div className="my-6">
+                                    <h5 className='text-[color:var(--Neutral-95,#23233D)] text-lg font-semibold leading-7 my-4'>
+                                        <img className='w-6 h-6 inline me-2' src="/assets/icons/icon-link.svg" /> 
+                                        {t("Custom Links")}
+                                        <div className='inline-block float-end'>
+                                            <Dialog open={open} onOpenChange={setOpen}>
+                                                <DialogTrigger asChild>
+                                                <button className="p-2 bg-white rounded-md outline outline-1 outline-offset-[-1px] outline-slate-200 inline-flex justify-center items-center gap-2">
+                                                    <IonIcon icon={addOutline} />
+                                                </button>
+                                                </DialogTrigger> 
+                                                <DialogContent className="sm:max-w-[425px]">
+                                                    <CandidateLinkForm onClose={() => setOpen(false)} candidateLink={null} />
+                                                </DialogContent>
+                                            </Dialog>
+                                        </div>
+                                    </h5>
+                                    { user.candidateLinks?.map((candidateLink: CandidateLink) => (
+                                        <CandidateLinkComponent key={candidateLink.cl_uuid} candidateLink={candidateLink} />
+                                    ))}
+                                </div>
 
                                 {user.certificates && user.certificates.length > 0 && <>
                                     <h5 className='text-[color:var(--Neutral-95,#23233D)] text-lg font-semibold leading-7 my-4'>
