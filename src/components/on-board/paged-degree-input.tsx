@@ -64,7 +64,7 @@ export default function PagedDegreeInput({ selectedDegree, onSelect, name, form,
 
         setLoading(true);   
  
-        listDegrees(page, "&q=" + form.getValues(name)).then((res: any) => {
+        listDegrees(page, "&limit=5&q=" + form.getValues(name)).then((res: any) => {
             setDegreeList(res.data);
 
             setPagination({
@@ -118,7 +118,7 @@ export default function PagedDegreeInput({ selectedDegree, onSelect, name, form,
                     )} 
                 </ul>
 
-                { pagination.total_pages > 1 && (
+                {/* pagination.total_pages > 1 && (
                     <Pagination>
                         <PaginationContent>
                         <PaginationItem>
@@ -127,7 +127,7 @@ export default function PagedDegreeInput({ selectedDegree, onSelect, name, form,
                                 onClick={() => loadPage(pagination.current_page - 1)} />
                         </PaginationItem>
 
-{/**Math.min(pagination.total_pages, 2) */}
+{/**Math.min(pagination.total_pages, 2) *}
                         {Array.from({ length: pagination.total_pages }, (_, i) => i + 1).map((page) => (
                             <PaginationItem key={page}>
                                 <PaginationLink 
@@ -144,7 +144,7 @@ export default function PagedDegreeInput({ selectedDegree, onSelect, name, form,
                             pagination.total_pages > 2 && (
                                 <PaginationEllipsis />
                             )
-                         */}
+                         *}
 
                         <PaginationItem>
                             <PaginationNext 
@@ -154,7 +154,7 @@ export default function PagedDegreeInput({ selectedDegree, onSelect, name, form,
                         </PaginationContent>
                     </Pagination>
                 )  
-                }
+                */}
                 </CardContent>
                 </Card>
                 ) : null

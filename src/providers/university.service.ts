@@ -3,8 +3,8 @@ import axios from "@/providers/AxiosService";
   /**
    * Filter university
    */
-  export async function  filterUniversities(keyword: string = '', page: number = -1): Promise<any> {
-    const response = await axios.get(`/universities?q=${keyword}&page=${page}`);
+  export async function  filterUniversities(keyword: string = '', page: number = -1, pageSize: number = 5): Promise<any> {
+    const response = await axios.get(`/universities?q=${keyword}&page=${page}&limit=${pageSize}`);
     return response;
   }
 
