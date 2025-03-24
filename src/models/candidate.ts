@@ -9,7 +9,7 @@ import { Area } from './area';
 import { CandidateEducation } from './candidate-education';
 import { Certificate } from "./certificate";
 import { CandidateTag } from "./candidate-tag";
-
+import { CandidateLink } from "./candidate-link";
 export class Candidate {
     employee_id?:number;
     candidate_id?: string;
@@ -76,6 +76,7 @@ export class Candidate {
     candidateExperiences?: CandidateExperience[];
     candidateSkills?: CandidateSkill[];
     candidateTags?: CandidateTag[];
+    candidateLinks?: CandidateLink[];
 }
 
 export class CandidateWorkingHour {
