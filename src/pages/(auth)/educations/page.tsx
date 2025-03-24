@@ -1,5 +1,3 @@
-
-
 import { OnboardProgress } from "@/components/on-board/progress";
 
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -50,33 +48,42 @@ export default function EducationsPage() {
       university: z.string({
         required_error: t('University is required')
       }).min(1, t('University is required')),
+
       degree: z.string({
         required_error: t('Degree is required')
       }).min(1, t('Degree is required')),
+      
       major: z.string({
         required_error: t('Major is required')
       }).min(1, t('Major is required')),
-      education_uuid: z.string().nullable(),
-      graduation_year: z.coerce.number({
-        required_error: t('Year of Graduation is required')
-      }).min(1900)
-        .max((new Date()).getFullYear()).nullable().optional(), //.min(1, 'End year is required'),
-      university_id: z.coerce.number({
+      
+      education_uuid: z.string().nullable().optional(),
+      
+      graduation_year: z.string()
+        .transform((val) => (val ? parseInt(val) : null))
+        .pipe(z.number().min(1900).nullable().optional()),
+      
+      university_id: z.number({
         required_error: t('University is required')
       }).min(1, t("University is required")),
+
       degree_uuid: z.string({
         required_error: t('Degree is required')
       }).min(1, t('Degree is required')),
+      
       major_uuid: z.string({
         required_error: t('Major is required')
       }).min(1, t('Major is required')) ,
-      is_currently_studying: z.boolean(),
+      
+      is_currently_studying: z.boolean().optional(),
     }))
   })
-
+//
+        //.max((new Date()).getFullYear()), //.min(1, 'End year is required'),
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     mode: "all",
+    //reValidateMode: "all",
     defaultValues: {
       candidateEducations: generateFormValue(user?.candidateEducations || [])
     },
@@ -112,9 +119,18 @@ export default function EducationsPage() {
 
   //const { fields, append, remove } = form.control._formValues.candidateEducations
 
+  /*useEffect(() => {
+    // Trigger validation whenever fields change
+    const subscription = form.watch(() => {
+      form.trigger('candidateEducations');
+    });
+
+    return () => subscription.unsubscribe();
+  }, [form]);*/
+
   const { fields, append, remove } = useFieldArray({
     control: form.control, // Connect the field array to the form
-    name: 'candidateEducations', // Name of the field array
+    name: 'candidateEducations', // Name of the field array  
   });
 
   /*useEffect(() => {
@@ -131,12 +147,12 @@ export default function EducationsPage() {
       major: langContent(edu.major?.major_name_en, edu.major?.major_name_ar),
     
       education_uuid: edu.education_uuid || null,
-      graduation_year: edu.graduation_year,
+      graduation_year: edu.graduation_year ? parseInt(edu.graduation_year + '') : null,
     
       university_id: edu.university?.university_id || 0,
       degree_uuid: edu.degree?.degree_uuid || '',
       major_uuid: edu.major?.major_uuid || '',
-      is_currently_studying: edu.is_currently_studying || !edu.graduation_year || false,
+      is_currently_studying: !!edu.is_currently_studying || !edu.graduation_year || false,
     }));
   }
 
