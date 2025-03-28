@@ -59,7 +59,9 @@ export default function EducationsPage() {
       
       education_uuid: z.string().nullable().optional(),
       
-      graduation_year: z.string()
+      graduation_year: z.string({
+        required_error: t('Year of Graduation is required')
+      })
         .transform((val) => (val ? parseInt(val) : null))
         .pipe(z.number().min(1900).nullable().optional()),
       
