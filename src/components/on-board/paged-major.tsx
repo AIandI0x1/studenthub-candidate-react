@@ -63,7 +63,7 @@ export default function PagedMajorInput({ selectedMajor, onSelect, name, form, r
 
         setLoading(true);   
  
-        listMajors(page, "&q=" + form.getValues(name)).then((res) => {
+        listMajors(page, "&limit=5&q=" + form.getValues(name)).then((res) => {
             setMajorList(res.data);
 
             setPagination({
@@ -115,7 +115,7 @@ export default function PagedMajorInput({ selectedMajor, onSelect, name, form, r
                     )} 
                 </ul>
 
-                { pagination.total_pages > 1 && (
+                { /* pagination.total_pages > 1 && (
                     <Pagination>
                         <PaginationContent>
                         <PaginationItem>
@@ -124,7 +124,7 @@ export default function PagedMajorInput({ selectedMajor, onSelect, name, form, r
                                 onClick={() => loadPage(pagination.current_page - 1)} />
                         </PaginationItem>
 
-                        {/*Math.min(pagination.total_pages, 2)*/}
+                        {/*Math.min(pagination.total_pages, 2)*
 
                         {Array.from({ length: pagination.total_pages }, (_, i) => i + 1).map((page) => (
                             <PaginationItem key={page}>
@@ -142,7 +142,7 @@ export default function PagedMajorInput({ selectedMajor, onSelect, name, form, r
                             pagination.total_pages > 2 && (
                                 <PaginationEllipsis />
                             )
-                         */}
+                         *
 
                         <PaginationItem>
                             <PaginationNext 
@@ -152,7 +152,7 @@ export default function PagedMajorInput({ selectedMajor, onSelect, name, form, r
                         </PaginationContent>
                     </Pagination>
                 )  
-                }
+                */}
                 </CardContent>
                 </Card>
                 ) : null

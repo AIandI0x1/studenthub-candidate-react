@@ -63,7 +63,7 @@ export default function PagedUniversityInput({ selectedUniversity, onSelect, nam
 
         setLoading(true);   
  
-        filterUniversities(form.getValues(name), page).then((res) => {
+        filterUniversities(form.getValues(name), page, 5).then((res) => {
             setUniversityList(res.data);
 
             setPagination({
@@ -115,7 +115,7 @@ export default function PagedUniversityInput({ selectedUniversity, onSelect, nam
                     )} 
                 </ul>
 
-                { pagination.total_pages > 1 && (
+                { /* pagination.total_pages > 1 && (
                     <Pagination>
                         <PaginationContent>
                         <PaginationItem>
@@ -124,7 +124,7 @@ export default function PagedUniversityInput({ selectedUniversity, onSelect, nam
                                 onClick={() => loadPage(pagination.current_page - 1)} />
                         </PaginationItem>
 
-                        {/**Math.min(pagination.total_pages, 2) */}
+                        {/**Math.min(pagination.total_pages, 2) *
                         {Array.from({ length: pagination.total_pages }, (_, i) => i + 1).map((page) => (
                             <PaginationItem key={page}>
                                 <PaginationLink 
@@ -141,7 +141,7 @@ export default function PagedUniversityInput({ selectedUniversity, onSelect, nam
                             pagination.total_pages > 2 && (
                                 <PaginationEllipsis />
                             )
-                         */}
+                         *}
 
                         <PaginationItem>
                             <PaginationNext 
@@ -151,7 +151,7 @@ export default function PagedUniversityInput({ selectedUniversity, onSelect, nam
                         </PaginationContent>
                     </Pagination>
                 )  
-                }
+                */}
                 </CardContent>
                 </Card>
                 ) : null
