@@ -8,7 +8,7 @@ import { IonReactRouter } from '@ionic/react-router';
 import { setCanGoForward } from "@/store/slices/appSlice";
 import { useEffect } from "react";
 import i18n from "./18n";
-//import './sentry';
+import './sentry';
 
 declare global {
   interface Window {
