@@ -10,7 +10,7 @@ import {
 import { FormInput } from "@/components/ui/form-input";
 import OnboardFooter from "@/components/on-board/layout/footer";
 import SubmitButton from "@/components/ui/submit-button";
-import { setCredentials } from "@/store/slices/authSlice";
+import { setCredentials, setUnVerifiedToken } from "@/store/slices/authSlice";
 import { useAppDispatch } from "@/store/store";
 import { basicAuth } from "@/providers/auth.service";
 import { Suspense, useEffect, useState } from "react";
@@ -91,7 +91,22 @@ export default function LoginPage() {
 
     basicAuth(values.email, values.password, values.token).then(res => {
  
-      if (res.token_status == 0) {
+      if (res.operation != "success") {
+
+        if (res.errorType == "email-not-verified") {
+          dispatch(setUnVerifiedToken({
+            token: res.unVerifiedToken
+          }));
+        
+          const url = '/verify-email/' + values.email + '?fromProfile=1';
+          router.push(url);
+        } else {
+          alertDialog({
+            title: t('Invalid email or password'),
+            description: t('The information entered is incorrect. Please try again.'),
+          });
+        }
+      } else if (res.token_status == 0) {
         router.push('/login-two-step/' + res.token); 
       } else {
         
