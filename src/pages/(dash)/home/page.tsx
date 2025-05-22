@@ -90,7 +90,7 @@ const HomePage = () => {
         const nextRoute: string | undefined = getNextRouteToCompleteProfile(user);
  
         if (nextRoute) {
-            router.push('/' + nextRoute);
+            router.push('/' + nextRoute + '?fromProfile=1');
         } else {
             router.push('/profile');
         }
