@@ -588,8 +588,6 @@ export function getNextRouteToCompleteProfile(user: Candidate | null) {
     return 'educations';
   } else if (!user.candidateSkills || user.candidateSkills.length == 0) {
     return 'skills';
-  } else if (!user.candidateExperiences || user.candidateExperiences.length == 0) {
-    return 'experience';
   } else if (!user.candidate_driving_license) {
     return 'driver-license';
   } else if (!user.candidate_personal_photo) {
