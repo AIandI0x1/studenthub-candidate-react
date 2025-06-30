@@ -41,7 +41,8 @@ let s3: S3Client;
                 credentials: {
                     accessKeyId: config.key,
                     secretAccessKey: config.secret
-                }
+                },
+                requestChecksumCalculation: "WHEN_REQUIRED",
             });
 
             // Set AWS config with credentials object
