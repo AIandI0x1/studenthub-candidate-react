@@ -97,6 +97,17 @@ export default function PersonalPhotoPage() {
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
     setLoading(true);
+    
+    const isSamePhoto = form.getValues().candidate_personal_photo == user.candidate_personal_photo;
+
+    if (isSamePhoto) {
+      if (query.get('fromProfile'))
+        router.push('/profile');
+      else
+        router.push('/about-yourself');
+
+      setLoading(false);
+    }
 
     updateProfilePhoto(values.candidate_personal_photo).then(res => {
       if (res.operation == 'success') {
@@ -207,7 +218,7 @@ export default function PersonalPhotoPage() {
                     }}
                 />
 
-            <SubmitButton disabled={ (form.getValues().candidate_personal_photo == user.candidate_personal_photo) || loading || uploading } float={ false } 
+            <SubmitButton disabled={ !form.getValues().candidate_personal_photo || loading || uploading } float={ false } 
               loading={loading}></SubmitButton>
             
           </form>
