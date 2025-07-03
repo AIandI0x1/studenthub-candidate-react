@@ -19,16 +19,11 @@ const EndSessionPage = ({ onClose }: { onClose: any }) => {
   }, []);
 
   return (
-    <div className='inset-0 flex items-center justify-center'>
+    <div className='fixed inset-0 flex items-center justify-center z-50 bg-black/30'>
       <Backdrop onClick={() => onClose()}></Backdrop>
  
-      <div className="fixed 
-
-        xs:bottom-[0] xs:w-full xs:start-0
-
-        sm:top-[calc(50%-122px)] sm:start-[calc(50%-244px)] sm:w-[488px] sm:rounded-[30px]
-
-        h-[256px] bg-white xs:rounded-tl-[30px] xs:rounded-tr-[30px]">
+      <div className="relative z-50 bg-white rounded-2xl shadow-lg w-full max-w-[95vw] sm:max-w-[488px] max-h-[90vh] overflow-y-auto
+ flex flex-col">
  
         <div className='p-6 border-b border-[color:var(--Neutral-40,#E2E2E6)]'>
           <h5 className=" text-[#22223d] text-xl font-bold leading-7">
