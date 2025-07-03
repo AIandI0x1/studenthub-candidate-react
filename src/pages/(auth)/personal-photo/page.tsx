@@ -107,6 +107,7 @@ export default function PersonalPhotoPage() {
         router.push('/about-yourself');
 
       setLoading(false);
+      return;
     }
 
     updateProfilePhoto(values.candidate_personal_photo).then(res => {
