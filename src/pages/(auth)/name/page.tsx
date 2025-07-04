@@ -42,7 +42,9 @@ export default function NamePage() {
   const formSchema = z.object({
     name_en: z.string({
       required_error: t("Please enter your first and last name.")
-    }).refine((data: any) => {
+    })
+    .max(200, t("Name must be at most 200 characters"))
+    .refine((data: any) => {
       const nameParts = data.split(' ');
       return nameParts.length >= 2 && nameParts[0] && nameParts[1];
     }, {
@@ -50,7 +52,9 @@ export default function NamePage() {
     }),  
     name_ar: z.string({
       required_error: t("Please enter your first and last name in Arabic.")
-    }).refine((data: any) => {
+    })
+    .max(200, t("Name must be at most 200 characters"))
+    .refine((data: any) => {
       const nameParts = data.split(' ');
       return nameParts.length >= 2 && nameParts[0] && nameParts[1];
     }, {

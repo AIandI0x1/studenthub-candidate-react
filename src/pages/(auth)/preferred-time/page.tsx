@@ -24,6 +24,7 @@ import { alertDialog } from "@/hooks/use-alert-dialog";
 import { useTranslation } from "react-i18next";
 import Loading from "./loading";
 import AuthLayout from "../layout";
+import { FormTimeInput } from "@/components/ui/form-time";
 
 
 export default function PreferredTimePage() {
@@ -126,11 +127,10 @@ export default function PreferredTimePage() {
         <Form {...form} >
           <form suppressHydrationWarning={true} onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 max-w-[560px] m-auto mb-[100px]">
   
-          <FormInput
+          <FormTimeInput
               name="preferred_time"
               label="Preferred Time"
               form={form as any}
-              type="text"
               required={true}
             />
  
