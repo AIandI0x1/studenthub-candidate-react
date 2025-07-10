@@ -14,6 +14,7 @@ import { listDegrees } from "@/providers/logged-in/candidate-education.service";
 import { FormInput } from "../ui/form-input";
 import { Card, CardContent } from "../ui/card";
 import { langContent } from "@/utils/common";
+import { z } from 'zod';
 
 interface DegreeInputProps {
     selectedDegree: any | null;
@@ -22,6 +23,8 @@ interface DegreeInputProps {
     required?: boolean;
     form: any;
 }
+
+const degreeNameSchema = z.string().min(1, 'Name is required').regex(/^[a-zA-Z0-9\s\'-.]*$/, 'Only alphanumeric characters, spaces, hyphens, dots, and apostrophes are allowed.');
 
 export default function PagedDegreeInput({ selectedDegree, onSelect, name, form, required = false }: DegreeInputProps) {
 
@@ -36,14 +39,22 @@ export default function PagedDegreeInput({ selectedDegree, onSelect, name, form,
     });
 
     useEffect(() => {
-         
-        if (!open || form.getValues(name) == "") {
+        const value = form.getValues(name);
+        if (!open) {
             return;
         }
+        const result = degreeNameSchema.safeParse(value);
+        if (!result.success) {
+            form.setError(name, { type: 'manual', message: result.error?.errors[0]?.message });
+            return;
+        } else {
+            form.clearErrors(name);
+        }
+        if (value !== '') {
+            loadPage(1);
+        }
+    }, [form.watch(name)]);
 
-        loadPage(1)
-
-    }, [form.watch(name)])
  
     const handleSelect = (degree: any) => {
         setOpen(false)
