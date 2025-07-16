@@ -419,12 +419,12 @@ export default function AreaPage() {
 
         <OnboardFooter></OnboardFooter>
 
-        <Script
+        {/* <Script
           src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBSM8o4WSIIRn-sNhn-PvO2s0ovZuLDAaw&libraries=places" // Replace with your script URL
           strategy="lazyOnload" // Load the script after the page has loaded
           onLoad={() => {
          }}
-        />
+        /> */}
     </AuthLayout>
     </Suspense>
   );
