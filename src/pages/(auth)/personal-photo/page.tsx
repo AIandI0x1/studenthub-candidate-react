@@ -192,30 +192,49 @@ export default function PersonalPhotoPage() {
                     className="hidden"
                     accept="image/*"
                     onChange={(e) => {
-                        const file = e.target.files?.[0];
-                        if (file) {
-                            setUploading(true);
+                      const file = e.target.files?.[0];
+                      if (!file) return;
+                      
+                      // File validations
+                      const isDNG = file.name.toLowerCase().endsWith('.dng') || file.type === 'image/x-adobe-dng';
+                      const isTooLarge = file.size > 10 * 1024 * 1024; // 10MB
+                      if(isDNG){
+                        alertDialog({
+                          title: t("Invalid File Format"),
+                          description: t("DNG format is not supported. Please upload a different image format.")
+                        });
+                        e.target.value = '';
+                        return;
+                      }
+                      if(isTooLarge){
+                        alertDialog({
+                          title: t("File Too Large"),
+                          description: t("The selected file is too large. Maximum allowed size is 10MB.")
+                        });
+                        e.target.value = '';
+                        return;
+                      }
+                      setUploading(true);
 
-                            const upload = uploadFileToTempS3(file);
+                      const upload = uploadFileToTempS3(file);
 
-                            upload.on('httpUploadProgress', (progress: any) => {
-                              console.log(progress);
-                            });
+                      upload.on('httpUploadProgress', (progress: any) => {
+                        console.log(progress);
+                      });
 
-                            upload.done().then((response: any) => {
-                              
-                              form.setValue('candidate_personal_photo', response.Key);
-                              form.trigger('candidate_personal_photo');
-                              form.setValue('candidate_personal_photo_url', response.Location);
-                              form.trigger('candidate_personal_photo_url');
+                      upload.done().then((response: any) => {
 
-                            }).catch((error) => {
-                              // Handle upload error
-                              console.error('Upload failed:', error);
-                            }).finally(() => {
-                              setUploading(false);
-                            });
-                        }
+                        form.setValue('candidate_personal_photo', response.Key);
+                        form.trigger('candidate_personal_photo');
+                        form.setValue('candidate_personal_photo_url', response.Location);
+                        form.trigger('candidate_personal_photo_url');
+
+                      }).catch((error) => {
+                        // Handle upload error
+                        console.error('Upload failed:', error);
+                      }).finally(() => {
+                        setUploading(false);
+                      });
                     }}
                 />
 
