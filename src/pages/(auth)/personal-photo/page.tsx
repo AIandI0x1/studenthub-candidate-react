@@ -133,6 +133,8 @@ export default function PersonalPhotoPage() {
           description: errorMessage(res.message),
         });
       }
+    }).catch((err) => {
+      alertDialog({ title: t("Error"), description: t("Failed to update photo.") });
     }).finally(() => {
       setLoading(false);
     });
