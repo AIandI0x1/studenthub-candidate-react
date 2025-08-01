@@ -817,5 +817,9 @@
     "Enter your login detail to sign in" : "أدخل تفاصيل تسجيل الدخول الخاصة بك لتسجيل الدخول",
     "New Job Invitation!" : "دعوة عمل جديدة!",
     "View details & apply for job" : "عرض التفاصيل والتقدم للوظيفة",
-    "Profile Url" : "URL الملف الشخصي"
+    "Profile Url" : "URL الملف الشخصي",
+    "Invalid File Format": "تنسيق ملف غير صالح",
+    "DNG format is not supported. Please upload a different image format.": "تنسيق DNG غير مدعوم. يرجى تحميل صيغة صورة مختلفة.",
+    "File Too Large": "الملف كبير جدًا",
+    "The selected file is too large. Maximum allowed size is 10MB.": "الملف المحدد كبير جدًا. الحد الأقصى المسموح به هو 10 ميجابايت."
 }
