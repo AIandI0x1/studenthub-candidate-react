@@ -19,6 +19,7 @@ export class CandidateEducation {
     major?: Major;
     degree?: Degree;
     university?: University;
+    custom_major?: string | null;
 
     constructor(init?: Partial<CandidateEducation>) {
         Object.assign(this, {

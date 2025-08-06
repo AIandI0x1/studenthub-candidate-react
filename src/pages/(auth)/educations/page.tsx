@@ -80,16 +80,19 @@ export default function EducationsPage() {
           }
         }),
       
-      major_uuid: z.string().nullable().optional()
+      major_uuid: z.string().nullable().optional(),
+      custom_major: z.string().nullable().optional()
         .superRefine((val, ctx) => {
-          const data = form.getValues(`candidateEducations`)[ctx.path[1]];
-          if (data?.education_type !== 'not_studying' && !data?.major_uuid) {
-            ctx.addIssue({
-              code: z.ZodIssueCode.custom,
-              message: t('Major is required')
-            });
-          }
-        }),
+        const data = form.getValues(`candidateEducations`)[ctx.path[1]];
+        if (data?.education_type === 'not_studying') return true;
+        
+        if (data.major_uuid == null && !data.custom_major) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: t('Please specify your field of study')
+          });
+        }
+      }),
       
       graduation_year: z.preprocess((val) => (val ? parseInt(val) : null), z.number().nullable().optional()
       .superRefine((val, ctx) => {
@@ -185,6 +188,7 @@ export default function EducationsPage() {
       // New fields
       education_type: edu.education_type || 'standard',
       custom_institution_name: edu.custom_institution_name || '',
+      custom_major: edu.custom_major || ''
     }));
   }
 
@@ -300,7 +304,11 @@ export default function EducationsPage() {
                           required={true}
                           selectedMajor={form.getValues(`candidateEducations.${index}.major`)}
                           onSelect={(major: any) => {
-                            if (major) {
+                            if (major.other) {
+                              form.setValue(`candidateEducations.${index}.major`, "Other");
+                              form.setValue(`candidateEducations.${index}.major_uuid`, "");
+                              
+                            } else if (major) {
                               form.setValue(`candidateEducations.${index}.major`, 
                                 langContent(major.major_name_en, major.major_name_ar));
                               form.setValue(`candidateEducations.${index}.major_uuid`, major.major_uuid);
@@ -311,6 +319,7 @@ export default function EducationsPage() {
                             form.trigger();
                           }}
                           name={`candidateEducations.${index}.major`}
+                          custom_major={`candidateEducations.${index}.custom_major`}  
                           form={form as any}
                         />
                       </div>  
