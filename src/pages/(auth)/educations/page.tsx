@@ -45,46 +45,72 @@ export default function EducationsPage() {
 
   const formSchema = z.object({
     candidateEducations: z.array(z.object({
-      university: z.string({
-        required_error: t('University is required')
-      }).min(1, t('University is required')),
-
-      degree: z.string({
-        required_error: t('Degree is required')
-      }).min(1, t('Degree is required')),
-      
-      major: z.string({
-        required_error: t('Major is required')
-      }).min(1, t('Major is required')),
-      
+      university: z.string().optional(),
+      degree: z.string().optional(),
+      major: z.string().optional(),
       education_uuid: z.string().nullable().optional(),
       
-      graduation_year: z.string({
-        required_error: t('Year of Graduation is required')
-      })
-        .transform((val) => (val ? parseInt(val) : null))
-        .pipe(z.number().min(1900).nullable().optional()),
+      // New fields
+      education_type: z.enum(['standard', 'custom_university', 'studying_abroad', 'not_studying'], {
+        required_error: t('Please select an option')
+      }),
       
-      university_id: z.number({
-        required_error: t('University is required')
-      }).min(1, t("University is required")),
+      custom_institution_name: z.string().nullable().optional(),
+      
+      // Conditional validation based on education_type
+      university_id: z.number().nullable().optional()
+        .superRefine((val, ctx) => {
+          const data = form.getValues(`candidateEducations`)[ctx.path[1]];
+          if (data?.education_type === 'standard' && !data?.university_id) {
+            ctx.addIssue({
+              code: z.ZodIssueCode.custom,
+              message: t('University is required')
+            });
+          }
+        }),
 
-      degree_uuid: z.string({
-        required_error: t('Degree is required')
-      }).min(1, t('Degree is required')),
+      degree_uuid: z.string().nullable().optional()
+        .superRefine((val, ctx) => {
+          const data = form.getValues(`candidateEducations`)[ctx.path[1]];
+          if (data?.education_type !== 'not_studying' && !data?.degree_uuid) {
+            ctx.addIssue({
+              code: z.ZodIssueCode.custom,
+              message: t('Degree is required')
+            });
+          }
+        }),
       
-      major_uuid: z.string({
-        required_error: t('Major is required')
-      }).min(1, t('Major is required')) ,
+      major_uuid: z.string().nullable().optional()
+        .superRefine((val, ctx) => {
+          const data = form.getValues(`candidateEducations`)[ctx.path[1]];
+          if (data?.education_type !== 'not_studying' && !data?.major_uuid) {
+            ctx.addIssue({
+              code: z.ZodIssueCode.custom,
+              message: t('Major is required')
+            });
+          }
+        }),
       
-      is_currently_studying: z.boolean().optional(),
+      graduation_year: z.preprocess((val) => (val ? parseInt(val) : null), z.number().nullable().optional()
+      .superRefine((val, ctx) => {
+        const data = form.getValues(`candidateEducations`)[ctx.path[1]];
+        
+        if (data?.education_type !== 'not_studying' && !data?.graduation_year) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: t('Graduation year is required')
+          });
+        }
+      })),
+      
+      is_currently_studying: z.boolean().default(false).optional()
     }))
   })
 //
         //.max((new Date()).getFullYear()), //.min(1, 'End year is required'),
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    mode: "all",
+    mode: "onChange",
     //reValidateMode: "all",
     defaultValues: {
       candidateEducations: generateFormValue(user?.candidateEducations || [])
@@ -131,8 +157,8 @@ export default function EducationsPage() {
   }, [form]);*/
 
   const { fields, append, remove } = useFieldArray({
-    control: form.control, // Connect the field array to the form
-    name: 'candidateEducations', // Name of the field array  
+    control: form.control,
+    name: 'candidateEducations',
   });
 
   /*useEffect(() => {
@@ -155,20 +181,24 @@ export default function EducationsPage() {
       degree_uuid: edu.degree?.degree_uuid || '',
       major_uuid: edu.major?.major_uuid || '',
       is_currently_studying: !!edu.is_currently_studying || !edu.graduation_year || false,
+      
+      // New fields
+      education_type: edu.education_type || 'standard',
+      custom_institution_name: edu.custom_institution_name || '',
     }));
   }
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-
+    
     setLoading(true);
-
+      
     saveEducation(values.candidateEducations).then(res => {
       if (res.operation == 'success') {
 
         if (user) {
           dispatch(setUser({ user: {
-            ...user,
-            candidateEducations: res.candidateEducations
+              ...user,
+              candidateEducations: res.candidateEducations
           } }));
         }
 
@@ -177,11 +207,11 @@ export default function EducationsPage() {
         else
           router.push('/skills');
       } else {
-        alertDialog({
-          title: t("Error"),
+      alertDialog({
+        title: t("Error"),
           description: errorMessage(res.message),
-        });
-      }
+      });
+    }
     }).finally(() => {
       setLoading(false);
     });
@@ -202,71 +232,100 @@ export default function EducationsPage() {
             {fields?.map((field: { id: string }, index: number) => (
               <div key={field.id} className="space-y-4">
 
-                <PagedUniversityInput
-                  required={true}
-                  selectedUniversity={form.getValues(`candidateEducations.${index}.university`)}
-                  onSelect={(university: any) => {
-                    if (university) {
-                      form.setValue(`candidateEducations.${index}.university`, 
-                        langContent(university.university_name_en, university.university_name_ar));
-                      form.setValue(`candidateEducations.${index}.university_id`, university.university_id);
-                    } else {
-                      form.setValue(`candidateEducations.${index}.university`, "");
-                      form.setValue(`candidateEducations.${index}.university_id`, 0);
-                    }
-                    form.trigger();
-                  }}
-                  name={`candidateEducations.${index}.university`}
-                  form={form as any}
-                />
-
-                <PagedDegreeInput 
-                  selectedDegree={form.getValues(`candidateEducations.${index}.degree`)}
-                  onSelect={(degree: any) => {
-                    if (degree) {
-                      form.setValue(`candidateEducations.${index}.degree`, 
-                        langContent(degree.degree_name_en, degree.degree_name_ar));
-                      form.setValue(`candidateEducations.${index}.degree_uuid`, degree.degree_uuid);
-                    } else {
-                      form.setValue(`candidateEducations.${index}.degree`, "");
-                      form.setValue(`candidateEducations.${index}.degree_uuid`, "");
-                    }
-                  }}
-                  name={`candidateEducations.${index}.degree`}
-                  form={form as any}
-                  required={true}
-                />  
-  
-                <div className="flex">
-                  <div className="flex-1 me-[16px]">
-                    <PagedMajorInput
-                      required={true}
-                      selectedMajor={form.getValues(`candidateEducations.${index}.major`)}
-                      
-                      onSelect={(major: any) => {
-                        if (major) {
-                          form.setValue(`candidateEducations.${index}.major`, 
-                            langContent(major.major_name_en, major.major_name_ar));
-                          form.setValue(`candidateEducations.${index}.major_uuid`, major.major_uuid);
-                        } else {
-                          form.setValue(`candidateEducations.${index}.major`, "");
-                          form.setValue(`candidateEducations.${index}.major_uuid`, "");
-                        }
-                        form.trigger();
-                      }}
-                      name={`candidateEducations.${index}.major`}
-                      form={form as any}
-                    />
-                  </div>  
-                  <div className="flex-1">
-                    <FormInput
-                        name={`candidateEducations.${index}.graduation_year`}
-                        label="Year of Graduation"
-                        form={form as any}
-                        type="number"
-                    />
-                  </div>  
+                <div className="mb-4">
+                  <PagedUniversityInput
+                    required={true}
+                    educationDetail={form.getValues(`candidateEducations.${index}`)}
+                    onSelect={(university: any) => {
+                      if (university?.is_special) {
+                        // Handle special options (custom university, studying abroad, not studying)
+                        form.setValue(`candidateEducations.${index}.education_type`, university.type);
+                        form.setValue(`candidateEducations.${index}.university`, university.label);
+                        form.setValue(`candidateEducations.${index}.university_id`, null);
+                      } else if (university) {
+                        // Handle regular university selection
+                        form.setValue(`candidateEducations.${index}.education_type`, 'standard');
+                        form.setValue(`candidateEducations.${index}.university`, 
+                          langContent(university.university_name_en, university.university_name_ar));
+                        form.setValue(`candidateEducations.${index}.university_id`, university.university_id);
+                        form.setValue(`candidateEducations.${index}.custom_institution_name`, null);
+                      } else {
+                        form.setValue(`candidateEducations.${index}.university`, "");
+                        form.setValue(`candidateEducations.${index}.university_id`, null);
+                        form.setValue(`candidateEducations.${index}.education_type`, 'standard');
+                      }
+                      form.trigger();
+                    }}
+                    name={`candidateEducations.${index}.university`}
+                    custom_institution_name={`candidateEducations.${index}.custom_institution_name`}
+                    form={form as any}
+                  />
+                  
+                  {/* Hidden field for education_type */}
+                  <input
+                    type="hidden"
+                    {...form.register(`candidateEducations.${index}.education_type`)}
+                    defaultValue={form.getValues(`candidateEducations.${index}.education_type`) || 'standard'}
+                  />
+                  
+                  {/* Hidden field for custom_institution_name */}
+                  <input
+                    type="hidden"
+                    {...form.register(`candidateEducations.${index}.custom_institution_name`)}
+                  />
                 </div>
+
+                {form.watch(`candidateEducations.${index}.education_type`) !== 'not_studying' && (
+                  <>
+                    <PagedDegreeInput 
+                      selectedDegree={form.getValues(`candidateEducations.${index}.degree`)}
+                      onSelect={(degree: any) => {
+                        if (degree) {
+                          form.setValue(`candidateEducations.${index}.degree`, 
+                            langContent(degree.degree_name_en, degree.degree_name_ar));
+                          form.setValue(`candidateEducations.${index}.degree_uuid`, degree.degree_uuid);
+                        } else {
+                          form.setValue(`candidateEducations.${index}.degree`, "");
+                          form.setValue(`candidateEducations.${index}.degree_uuid`, "");
+                        }
+                      }}
+                      name={`candidateEducations.${index}.degree`}
+                      form={form as any}
+                      required={true}
+                    />
+      
+                    <div className="flex">
+                      <div className="flex-1 me-[16px]">
+                        <PagedMajorInput
+                          required={true}
+                          selectedMajor={form.getValues(`candidateEducations.${index}.major`)}
+                          onSelect={(major: any) => {
+                            if (major) {
+                              form.setValue(`candidateEducations.${index}.major`, 
+                                langContent(major.major_name_en, major.major_name_ar));
+                              form.setValue(`candidateEducations.${index}.major_uuid`, major.major_uuid);
+                            } else {
+                              form.setValue(`candidateEducations.${index}.major`, "");
+                              form.setValue(`candidateEducations.${index}.major_uuid`, "");
+                            }
+                            form.trigger();
+                          }}
+                          name={`candidateEducations.${index}.major`}
+                          form={form as any}
+                        />
+                      </div>  
+                      <div className="flex-1">
+                        <FormInput
+                          name={`candidateEducations.${index}.graduation_year`}
+                          label="Year of Graduation"
+                          form={form as any}
+                          type="number"
+                          required={!form.watch(`candidateEducations.${index}.is_currently_studying`)}
+                        />
+                      </div>  
+                    </div>
+                  </>
+                )}
 
                 {fields.length > 1 && (
                   
@@ -293,17 +352,24 @@ export default function EducationsPage() {
               onClick={() => {
     
                 append({ 
-                  university: '', degree: '', major: '', 
-                  graduation_year: undefined, education_uuid: "", 
-                  university_id: 0, degree_uuid: '', major_uuid: '', 
-                  is_currently_studying: false 
+                  university: '', 
+                  degree: '', 
+                  major: '', 
+                  graduation_year: null, 
+                  education_uuid: "", 
+                  university_id: null, 
+                  degree_uuid: '', 
+                  major_uuid: '', 
+                  is_currently_studying: false,
+                  education_type: 'standard',
+                  custom_institution_name: null
                 });
               }}
               className="text-[color:var(--Primary-Main,#4C70F2)] text-sm font-medium leading-5"
             >
               
               <img src="/assets/icons/plus.svg" /> {t("Add education")}
-            </Button>
+                    </Button>
 
             <SubmitButton disabled={!form.formState.isValid || loading } loading={loading}></SubmitButton>
           </form>
