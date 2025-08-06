@@ -15,10 +15,18 @@ export function Education({ education }: { education: CandidateEducation }) {
                         { i18n.language == 'ar' && education.major.major_name_ar? education.major.major_name_ar: education.major.major_name_en }
                     </div> }
                     
+                { education.custom_major && <div className="self-stretch text-[#4b4b61] text-sm font-normal leading-tight">
+                    { education.custom_major }
+                </div> }
+                    
                 <div className="self-stretch h-5 justify-start items-center gap-4 inline-flex">
                    
                     { education.university && <div className="grow shrink basis-0 text-[#4b4b61] text-sm font-normal leading-tight">
                         { i18n.language == 'ar' && education.university.university_name_ar? education.university.university_name_ar: education.university.university_name_en }
+                    </div> }
+                    
+                    { education.education_type !== "standard" && education.custom_institution_name && <div className="grow shrink basis-0 text-[#4b4b61] text-sm font-normal leading-tight">
+                        { education.custom_institution_name }
                     </div> }
 
                     { education.graduation_year && 
