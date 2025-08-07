@@ -60,7 +60,7 @@ export default function EducationsPage() {
       // Conditional validation based on education_type
       university_id: z.number().nullable().optional()
         .superRefine((val, ctx) => {
-          const data = form.getValues(`candidateEducations`)[ctx.path[1]];
+          const data = form.getValues(`candidateEducations`)[Number(ctx.path[1])];
           if (data?.education_type === 'standard' && !data?.university_id) {
             ctx.addIssue({
               code: z.ZodIssueCode.custom,
@@ -71,7 +71,7 @@ export default function EducationsPage() {
 
       degree_uuid: z.string().nullable().optional()
         .superRefine((val, ctx) => {
-          const data = form.getValues(`candidateEducations`)[ctx.path[1]];
+          const data = form.getValues(`candidateEducations`)[Number(ctx.path[1])];
           if (data?.education_type !== 'not_studying' && !data?.degree_uuid) {
             ctx.addIssue({
               code: z.ZodIssueCode.custom,
@@ -83,7 +83,7 @@ export default function EducationsPage() {
       major_uuid: z.string().nullable().optional(),
       custom_major: z.string().nullable().optional()
         .superRefine((val, ctx) => {
-        const data = form.getValues(`candidateEducations`)[ctx.path[1]];
+        const data = form.getValues(`candidateEducations`)[Number(ctx.path[1])];
         if (data?.education_type === 'not_studying') return true;
         
         if (data.major_uuid == null && !data.custom_major) {
@@ -94,9 +94,9 @@ export default function EducationsPage() {
         }
       }),
       
-      graduation_year: z.preprocess((val) => (val ? parseInt(val) : null), z.number().nullable().optional()
+      graduation_year: z.preprocess((val) => (typeof(val) === 'string' ? parseInt(val) : null), z.number().nullable().optional()
       .superRefine((val, ctx) => {
-        const data = form.getValues(`candidateEducations`)[ctx.path[1]];
+        const data = form.getValues(`candidateEducations`)[Number(ctx.path[1])];
         
         if (data?.education_type !== 'not_studying' && !data?.graduation_year) {
           ctx.addIssue({
@@ -177,7 +177,7 @@ export default function EducationsPage() {
       degree: langContent(edu.degree?.degree_name_en, edu.degree?.degree_name_ar),
       major: langContent(edu.major?.major_name_en, edu.major?.major_name_ar),
     
-      education_uuid: edu.education_uuid || null,
+      education_uuid: edu.education_uuid || "",
       graduation_year: edu.graduation_year ? parseInt(edu.graduation_year + '') : null,
     
       university_id: edu.university?.university_id || 0,
@@ -239,7 +239,7 @@ export default function EducationsPage() {
                 <div className="mb-4">
                   <PagedUniversityInput
                     required={true}
-                    educationDetail={form.getValues(`candidateEducations.${index}`)}
+                    educationDetail={form.getValues(`candidateEducations.${index}`) as CandidateEducation}
                     onSelect={(university: any) => {
                       if (university?.is_special) {
                         // Handle special options (custom university, studying abroad, not studying)
