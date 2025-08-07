@@ -23,7 +23,8 @@ interface FormInputProps {
   onFocus?: () => void,
   onChange?: () => void,
   autoComplete?: string,
-  required?: boolean
+  required?: boolean,
+  readOnly?: boolean
 }
 
 export function FormInput({
@@ -36,7 +37,8 @@ export function FormInput({
   onFocus,
   onChange,
   autoComplete = "on",
-  required = false
+  required = false,
+  readOnly = false
 }: FormInputProps) {
   const id = useId()
 
@@ -56,6 +58,7 @@ export function FormInput({
               {...field}
               id={id}
               type={type}
+              readOnly={readOnly}
               placeholder=" "  // Empty space needed for peer styling
               onFocus={onFocus}
               onKeyUp={onChange}
