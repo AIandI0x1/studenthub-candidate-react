@@ -60,7 +60,8 @@ export default function EducationsPage() {
       // Conditional validation based on education_type
       university_id: z.number().nullable().optional()
         .superRefine((val, ctx) => {
-          const data = form.getValues(`candidateEducations`)[ctx.path[1]];
+          const index = Number(ctx.path[1]);
+          const data = form.getValues(`candidateEducations`)[Number(ctx.path[1])];
           if (data?.education_type === 'standard' && !data?.university_id) {
             ctx.addIssue({
               code: z.ZodIssueCode.custom,
@@ -71,7 +72,7 @@ export default function EducationsPage() {
 
       degree_uuid: z.string().nullable().optional()
         .superRefine((val, ctx) => {
-          const data = form.getValues(`candidateEducations`)[ctx.path[1]];
+          const data = form.getValues(`candidateEducations`)[Number(ctx.path[1])];
           if (data?.education_type !== 'not_studying' && !data?.degree_uuid) {
             ctx.addIssue({
               code: z.ZodIssueCode.custom,
@@ -83,7 +84,7 @@ export default function EducationsPage() {
       major_uuid: z.string().nullable().optional(),
       custom_major: z.string().nullable().optional()
         .superRefine((val, ctx) => {
-        const data = form.getValues(`candidateEducations`)[ctx.path[1]];
+        const data = form.getValues(`candidateEducations`)[Number(ctx.path[1])];
         if (data?.education_type === 'not_studying') return true;
         
         if (data.major_uuid == null && !data.custom_major) {
@@ -96,7 +97,7 @@ export default function EducationsPage() {
       
       graduation_year: z.preprocess((val) => (val ? parseInt(val) : null), z.number().nullable().optional()
       .superRefine((val, ctx) => {
-        const data = form.getValues(`candidateEducations`)[ctx.path[1]];
+        const data = form.getValues(`candidateEducations`)[Number(ctx.path[1])];
         
         if (data?.education_type !== 'not_studying' && !data?.graduation_year) {
           ctx.addIssue({
