@@ -69,7 +69,9 @@ export default function PagedUniversityInput({ educationDetail, onSelect, name, 
 
     // Initialize form values in useEffect
     useEffect(() => {
-        handleSelect(SPECIAL_OPTIONS.find(opt => opt.type === educationDetail.education_type) || selectedUniversity);
+        if(educationDetail.education_type !== 'standard'){
+            handleSelect(SPECIAL_OPTIONS.find(opt => opt.type === educationDetail.education_type));
+        }
     }, [educationDetail, form]);
 
     useEffect(() => {
