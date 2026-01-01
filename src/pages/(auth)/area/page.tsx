@@ -14,9 +14,10 @@ import { FormInput } from "@/components/ui/form-input";
 import OnboardFooter from "@/components/on-board/layout/footer";
 import SubmitButton from "@/components/ui/submit-button";
 
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useEffect, useState, useRef, useCallback } from "react";
 import { getAreaByLocation, profile, updateLocation } from "@/providers/logged-in/account.service";
 import { errorMessage, langContent, useQuery } from "@/utils/common";
+import { debounce } from "lodash";
  
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { setUser } from "@/store/slices/userSlice";
@@ -177,8 +178,7 @@ export default function AreaPage() {
    * Return search result
    * @param ev
    */
-  const getItems = async ( ) => {
-
+  const getItems = useCallback(async () => {
     const { query, country_name } = form.getValues();
  
     if (query.length == 0) {
@@ -196,43 +196,71 @@ export default function AreaPage() {
 
     setLoading(true);
     
-    getPlacePredictions(query, country_name).then(result => {
+    getPlacePredictions(query, country_name)
+      .then(result => {
         setLoading(false);
 
-      if (!result || result.length == 0) {
-        return null;
-      }
-
-      setPlaces([]);
-
-      let a = [];
-      let filteredPlaces = [];
-
-      // political
-      for (const i of result) {
-
-        if (i.types.indexOf('country') > -1) {
-          continue;
+        if (!result || result.length == 0) {
+          setPlaces([]);
+          return;
         }
 
-        // to avoid duplicate
+        setPlaces([]);
 
-        const b = i.structured_formatting.main_text + i.terms[i.terms.length - 1].value;
+        let a = [];
+        let filteredPlaces = [];
 
-        if (a.indexOf(b) > -1) {
-          continue;
+        // political
+        for (const i of result) {
+
+          if (i.types.indexOf('country') > -1) {
+            continue;
+          }
+
+          // to avoid duplicate
+
+          const b = i.structured_formatting.main_text + i.terms[i.terms.length - 1].value;
+
+          if (a.indexOf(b) > -1) {
+            continue;
+          }
+
+          a.push(b);
+
+          // show place to user
+
+          filteredPlaces.push(i);
         }
 
-        a.push(b);
+        setPlaces(filteredPlaces);
+      })
+      .catch((error) => {
+        setLoading(false);
+        setPlaces([]);
+        console.error('Error fetching place predictions:', error);
+        // Optionally show error to user only if it's not a network cancellation
+        if (error?.message && !error.message.includes('canceled')) {
+          alertDialog({
+            title: t("Error"),
+            description: t("Failed to load locations. Please try again."),
+          });
+        }
+      });
+  }, [form, t]);
 
-        // show place to user
+  // Create debounced version of getItems
+  const debouncedGetItemsRef = useRef<ReturnType<typeof debounce>>();
 
-        filteredPlaces.push(i);
-      }
+  useEffect(() => {
+    debouncedGetItemsRef.current = debounce(() => {
+      getItems();
+    }, 500);
 
-      setPlaces(filteredPlaces);
-    });
-  }
+    // Cleanup debounced function on unmount
+    return () => {
+      debouncedGetItemsRef.current?.cancel();
+    };
+  }, [getItems]);
 
   /**
    * Place selected from search result
@@ -397,7 +425,7 @@ export default function AreaPage() {
                     type="text"
                     label={getPlaceholderText()}
                     autoComplete="off"
-                    onChange={() => setTimeout(() => getItems(), 500)}
+                    onChange={() => debouncedGetItemsRef.current?.()}
                     />
              
                 { !loading && places.length > 0 && <div className="border border-gray-300 rounded-lg overflow-hidden">
