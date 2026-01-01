@@ -37,11 +37,7 @@ export default function DobPage() {
   let query = useQuery();
   
   const formSchema = z.object({
-    candidate_birth_date: z.date().min(new Date(new Date().setFullYear(new Date().getFullYear() - 25)), {
-      message: t("Candidate age should be between 16 to 25."),
-    }).max(new Date(new Date().setFullYear(new Date().getFullYear() - 16)), {
-      message: t("Candidate age should be between 16 to 25."),
-    }),
+    candidate_birth_date: z.date(),
   })
 
   const form = useForm<z.infer<typeof formSchema>>({
