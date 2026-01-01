@@ -7,7 +7,7 @@
     "dev": "vite",
     "dev:docker": "vite --mode docker",
     "build": "tsc && vite build",
-    "build:dev": "tsc && vite build --mode development",
+    "build:devserver": "tsc && vite build --mode devserver",
     "build:docker": "tsc && vite build --mode docker",
     "preview": "vite preview",
     "test.e2e": "cypress run",
